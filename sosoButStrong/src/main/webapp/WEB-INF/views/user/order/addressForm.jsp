@@ -67,7 +67,7 @@
 						// 부모에 있는 요소 											자식요소
 
 						// 주소값 넘기기
-						window.opener.document.getElementById('dvAddress').innerText = $('#sample3_Address').text() + $('#sample3_detailAddress').val();
+						window.opener.document.getElementById('dvAddress').innerText = $('#sample3_Address').text() + ' ' + $('#sample3_detailAddress').val();
 						// 휴대폰 넘기기
 						window.opener.document.getElementById('dvPhone').innerText = $('#phone').val();						
 						

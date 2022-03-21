@@ -15,4 +15,9 @@ public class SellerController {
 	public String productEnrollForm() {
 		return "user/seller/sellerUploadForm";
 	}
+	
+	@RequestMapping("orderManage.se")
+	public String orderListManageForm() {
+		return "user/seller/orderManageForm";
+	}
 }

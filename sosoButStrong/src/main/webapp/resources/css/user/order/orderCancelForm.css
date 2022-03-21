@@ -1,0 +1,39 @@
+div{    
+    box-sizing: border-box;
+}
+.cancel_outer{
+    width:535px;
+    height:485px;
+    padding:10px;	
+    border: 2px solid rgb(255, 163, 63);	
+    border-radius: 10px;    
+}
+.orderCancel, .cancel_info{
+    width: 95%;
+    margin: auto;
+}
+.orderCancel img{
+    width: 100px;
+    height: 75px;   
+}
+table{
+    width: 100%;
+}
+.cancel_info td{
+    padding: 6px;
+}
+#btn_orderCancel{
+    display: block;
+    margin: auto;		
+    width: 250px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: rgb(182, 238, 86);
+    border: none;
+    border-radius: 5px;
+}
+#btn_orderCancel:hover{
+    cursor: pointer;
+}
