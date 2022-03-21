@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap type="member" id="memberResultset">
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_TYPE" property="userType"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="PASSWORD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="EMAIL" property="email"/>
+		<result column="PHONE" property="phone"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="GENDER" property="gender"/>
+		<result column="BIRTH" property="birth"/>
+		<result column="POINT" property="point"/>
+		<result column="STATUS" property="status"/>
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="loginMember" resultMap="memberResultset" parameterType="member">
+		SELECT USER_NO, USER_TYPE, USER_ID, PASSWORD, USER_NAME, EMAIL, PHONE, ADDRESS, GENDER, BIRTH, POINT, STATUS
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+		AND STATUS = 'Y'
+	</select>
+	
+	<!-- 일반회원 가입용 쿼리문 -->
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO 
+			 MEMBER
+				   (USER_NO, USER_TYPE, USER_ID, PASSWORD, USER_NAME, EMAIL, PHONE, ADDRESS, GENDER, BIRTH)
+			 VALUES
+			 	   (SEQ_MNO.nextval, 1, #{userId}, #{userPwd}, #{userName}, #{email}, #{phone}, #{address}, #{gender}, #{birth})
+	</insert>
+	<!-- 아이디 중복체크 -->
+	<select id="idCheck" resultType="_int">
+		 SELECT COUNT(*)
+		 FROM MEMBER
+		 WHERE USER_ID = #{checkId}
+	</select>
+
+</mapper>

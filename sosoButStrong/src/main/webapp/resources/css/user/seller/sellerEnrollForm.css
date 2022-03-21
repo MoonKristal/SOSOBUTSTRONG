@@ -1,0 +1,147 @@
+
+		/*레이아웃 나누기*/
+        div.bodyLR {
+	        width: 1200px;
+			margin: auto;
+	    }
+	    
+	    div.left {
+	        width: 50%;
+	        float: left;
+	        box-sizing: border-box;
+	 
+	    }
+	    div.right {
+	        width: 50%;
+	        float: right;
+	        box-sizing: border-box;
+	        
+	    }
+  
+       /*-----------------------*/
+        #enrollForm {
+            height:1100px;
+        }
+  
+  		#header1>h4{
+  			font-weight: 900;
+  		}
+  		
+  		#header2>h5, #header3>h5 {
+  			font-weight: 600;
+  		}
+  		
+        #header1{
+            padding-top: 100px;
+            padding-bottom: 50px;
+            text-align: center;
+        }
+        
+        #header2{
+            padding-top: 30px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+        
+        #header3{
+            padding-top: 30px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+
+        #wrapper {
+            position: relative;
+            height: 100%;
+        }
+        
+        #content {
+			margin:auto;
+			left: 50%;
+            transform: translate(-50%);
+            width: 360px;
+        }
+        
+        /* 입력폼 */
+
+        .box {
+            display: block;
+            width: 100;
+            height: 51px;
+            border: solid 1px #dadada;
+            padding: 10px 14px 10px 14px;
+            box-sizing: border-box;
+            background: #white;
+            position: relative;
+        }
+        
+        .box_address {
+            display: block;
+            width: 100;
+            height: 51px;
+            padding: 10px 14px 10px 14px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        .int {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 29px;
+            border: none;
+            background: #white;
+            font-size: 13px;
+        }
+        
+        /*성별*/
+        .input_gender{
+        	width:auto;
+            height:auto;
+        }
+        .font_gender{
+        	font-size: 13px;
+        }
+        
+        
+        /*중복확인 버튼*/
+        #id_btn, #sellerName_btn {
+            width: auto;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 7px;
+            margin-top: -15px;
+        }
+        
+        /*우편번호검색 버튼*/
+        #address_btn {
+            width: auto;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 1px;
+            margin-top: -30px;
+        }
+       
+        /* 회원가입 버튼 */
+        .btn_area {
+			padding-top: 100px;
+            padding-bottom: 50px; 
+        }
+        
+        #btnJoin {
+            width: 300px;
+            padding: 21px 17px; /*버튼 두깨*/
+            border: 0; /*테두리 없애기*/
+            cursor: pointer;
+            color: #fff;
+            border-radius: 7px; /*모서리 둥글게*/
+            background-color: rgb(255, 163, 63);
+            font-size: 15px;
+            font-weight: 900;
+        }
+        
+        span{
+        	border-radius: 4px;
+        	display: block;
+        }

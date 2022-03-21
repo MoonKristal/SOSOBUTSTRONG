@@ -40,20 +40,26 @@
                 <p class="logo_e">We Make Salad</p>
             </div>
             <div>
-                <div class="service_area">
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                </div>
-                <div class="service_area">
-                    <a href="#">로그아웃</a>
-
-                    <a href="#">마이페이지</a>
-
-
-                    <a href="#">장바구니</a>
-                </div>
+                <c:choose>
+            		<c:when test="${ empty loginUser }">
+		            	<!-- 로그인 전 -->
+		                <div class="service_area">
+		                    <a href="loginPage.me">로그인</a>
+		                    <a href="enroll.me">회원가입</a>
+		                </div>
+		            </c:when>
+		            <c:otherwise>
+		                <!-- 로그인 후 -->
+		                <div class="service_area">
+		                    <a href="logout.me">로그아웃</a>
+		                    <a href="#">마이페이지</a>
+		                    <a href="#">장바구니</a>
+	                	</div>
+	                </c:otherwise>
+	            </c:choose>
             </div>
         </div>
+
         <div class="navi_area">
             <div class="group_navi">
                 <ul class="list_navi">
