@@ -1,0 +1,60 @@
+div{
+    box-sizing: border-box;
+}
+.list_outer{
+    width: 1200px;
+    margin: auto;      
+}
+.content{
+    width: 1000px;
+    margin-left: 200px;
+    padding: 25px;
+}
+.order-btn{
+    margin: 5px;
+    width: 210px;
+    height: 48px;
+    border-radius: 10px;
+    font-weight: bold;  
+    font-size: 23px;  
+    color: white;
+    border-style: none;
+}
+.orderList table{
+    margin-top: 20px;
+    width: 100%;      
+}
+td{
+    padding: 13px;
+}
+.detail{
+    color:rgb(255, 163, 63);
+    text-decoration: none;
+    font-size: 23px;
+}
+.detail:hover{
+    color:rgb(255, 163, 63);
+    text-decoration: none;
+    cursor: pointer;
+}
+.cancel{
+    margin-bottom: 90px;
+}
+.pagination a{
+    color: rgb(255, 163, 63);
+}
+.pagination a:hover{
+    color: rgb(255, 163, 63);
+}
+#orderDate{
+    width: 200px;
+}
+#orderImage{
+    width: 100px;
+}
+.nothing{    
+    height: 600px;
+}
+.nothing table{
+    border: 2px solid;
+}

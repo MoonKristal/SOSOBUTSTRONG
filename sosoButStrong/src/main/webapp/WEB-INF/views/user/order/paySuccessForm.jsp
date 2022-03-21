@@ -25,9 +25,10 @@
 		<h5 align="center" style="font-weight: bold;">주문이 정상적으로 완료 되었습니다.</h5>
 
 		<br><br>
-		<div align="center">
-			<a href="#"><input type="button" class="order-btn detail" value="주문 상세보기"></a>
-			<a href="#"><input type="button" class="order-btn continue" value="쇼핑 계속하기"></a>
+		<div align="center">			
+			<a id="btn_orderNo"><input type="button" class="order-btn detail" value="주문 상세보기"></a>
+			<a href="<c:url value='/'/>"> <input type="button" class="order-btn continue" value="쇼핑 계속하기"></a>
+				<!-- contextroot -->
 		</div>
 
 		<br><br>
@@ -41,19 +42,19 @@
 					</tr>
 					<tr>
 						<th height="40">받는사람</th>
-						<td style="border-right-style: solid; border-right-color: #ccc;">${name}</td>	
+						<td style="border-right-style: solid; border-right-color: #ccc; font-size: 13px;">${name}</td>	
 						<th height="40"  align="right">주문금액</th>
-						<td ></td>	
+						<td align="right">${price}</td>	
 					</tr>								
 					<tr>
 						<th height="40">배송주소</th>
-						<td style="border-right-style: solid; border-right-color: #ccc;"></td>
+						<td style="border-right-style: solid; border-right-color: #ccc; font-size: 13px;">${address}</td>
 						<th height="40"  align="right">사용 포인트</th>
-						<td ></td>
+						<td align="right">${point}</td>
 					</tr>					
 					<tr>
 						<th height="40">배송시 요청사항</th>
-						<td style="border-right-style: solid; border-right-color: #ccc;"></td>
+						<td style="border-right-style: solid; border-right-color: #ccc; font-size: 13px;">${message}</td>
 						<th height="40" style="color:rgb(255, 163, 63); font-size: 18px;">총 결제 금액</th>
 						<td align="right" style="color: red; font-size: 19px; font-weight: bold;"><fmt:formatNumber value="${totalPay}"/> 원</td>
 					</tr>
@@ -65,8 +66,17 @@
 
 	</div>	
 
+	<script>
+		$(function(){
+			$('#btn_orderNo').attr('href', 'orderDetail.od?orderNo=' + '${orderNo}');
+		})
+
+	</script>
+
 	<br>
 	<jsp:include page="../common/footer.jsp"/>
+	
+	<br><br><br>
 
 </body>
 </html>

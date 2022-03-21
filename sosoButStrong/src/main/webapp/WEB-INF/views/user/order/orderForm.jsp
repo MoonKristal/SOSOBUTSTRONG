@@ -1,16 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-
-
 <title>주문하기</title>
 <!-- style -->
 <link rel="stylesheet" href="resources/css/user/order/orderForm.css">
@@ -85,15 +80,15 @@
 				<table id="dv">
 					<tr>
 						<th>이름</th>
-						<td name="" id="dvName" height="42"></td>
+						<td id="dvName" height="42"></td>
 					</tr>
 					<tr>
 						<th>배송주소</th>
-						<td name="" id="dvAddress" height="42"></td>
+						<td id="dvAddress" height="42"></td>
 					</tr>
 					<tr>
 						<th>연락처</th>
-						<td name="" id="dvPhone" height="42"></td>
+						<td id="dvPhone" height="42"></td>
 					</tr>
 				</table>
 			</div>
@@ -148,7 +143,7 @@
 	
 				<!-- 장바구니안의 모든 price 반복문으로 더하기 -->
 				<c:set var="sum" value="0"/>				
-				<c:forEach var="test" items="${list }">				
+				<c:forEach var="test" items="${list}">				
 				 	<c:set var="sum" value="${sum + test.price * test.quantity}"/>					
 				</c:forEach>
 				
@@ -170,8 +165,8 @@
 						<tr>
 							<th>결제수단</th>
 							<td height="42">
-								<input type="radio" id="card" name="payMethod" value="html5_inicis" data-how="card">  <label for="card">신용/체크 카드</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;								
-								<input type="radio" id="phonePay" name="payMethod" value="danal" data-how="phone">  <label for="phonePay">휴대폰 소액결제</label>
+								<input type="radio" id="card" name="payMethod" value="html5_inicis" data-how="카드결제">  <label for="card">신용/체크 카드</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;								
+								<input type="radio" id="phonePay" name="payMethod" value="danal" data-how="휴대폰결제">  <label for="phonePay">휴대폰 소액결제</label>
 							</td>
 						</tr>									
 					</table>
@@ -242,7 +237,7 @@
 
 				// 배송지변경 팝업창
 				$('#changeAdd').click(function(){
-					var windowObj = window.open('address','배송지 변경','width=510,height=580,location=no,status=no,scrollbars=yes');
+					var windowObj = window.open('address','배송지 변경','width=508,height=580,location=no,status=no,scrollbars=yes');
 				})
 
 
@@ -254,35 +249,34 @@
 
 
 				// 판매자별로 각각 다른 상품들 반복문으로 각각 주문서객체로 만들어서 배열에 담기 객체 만들어주기
+				var $orderNo = new Date().getTime();
 				var arr = new Array();							
 				<c:forEach var="item" items="${list}">				
 						var order = new Object();
-						order.seller = "${item.seller}",
-						order.orderItem = "${item.option}",
-						order.orderPrice = "${item.price}",
-						order.quantity = "${item.quantity}",
-						order.sellerName = "${item.sellerName}",
-						order.orderer = 2	
+						order.seller = "${item.seller}";
+						order.orderItem = "${item.option}";
+						order.orderPrice = "${item.price}";
+						order.quantity = "${item.quantity}";
+						order.sellerName = "${item.sellerName}";
+						order.orderer = 2;	
+						order.orderNo = $orderNo;
 
-						arr.push(order)
-				</c:forEach>
+						arr.push(order);
+				</c:forEach>					
 				
-				
-				
-				
-				$('#btn-pay').click(function(){
-
-				// 공통배송정보데이터 객체배열에 마저 추가
-				for(var i in arr){						
-										arr[i].usePoint = $('.usePoint').val(),
-										arr[i].payMethod = $("input[name=payMethod]:checked").attr('data-how'),
-										arr[i].deliveryName = $('#dvName').text(),
-										arr[i].deliveryAddress = $('#dvAddress').text(),
-										arr[i].deilveryPhone = $('#dvPhone').text(),
-										arr[i].deliveryMessage = $('#deliveryMessage').val()
-									}				
+				$('#btn-pay').click(function(){						
+					// 공통배송정보데이터 객체배열에 마저 추가
+					for(var i in arr){						
+						arr[i].usePoint = $('.usePoint').val(),
+						arr[i].payMethod = $("input[name=payMethod]:checked").attr('data-how'),
+						arr[i].deliveryName = $('#dvName').text(),
+						arr[i].deliveryAddress = $('#dvAddress').text(),
+						arr[i].deilveryPhone = $('#dvPhone').text(),
+						arr[i].deliveryMessage = $('#deliveryMessage').val()
+						
+					}				
 									
-									console.log(arr);
+					console.log(arr);
 									// jQuery로 HTTP 요청
 									$.ajax({
 											url: "insertOrder.od", 
@@ -292,21 +286,26 @@
 												data: JSON.stringify(arr) // 자바스크립트 배열 JSON문자열화 시키기
 											},											
 											success:function(result){
-												if(result == 'success'){
-													<c:url var="query" value="paySuccess.od">
-														<c:param name="totalPay" value="$('#finalPay').attr('data-final')"/>
-														
-													</c:url>												
-
-													location.href = "${query}";
-													//location.href='paySuccess.od?totalPay=' + $('#finalPay').attr('data-final');
+												if(result == 'success'){	// 결제를 성공했다면 주문성공페이지에 넘어가기위한 정보 쿼리로 담기
+													var query = {
+														totalPay : $('#finalPay').attr('data-final'), //총결제금액
+														price : $howPay, //주문금액
+														point : $('.usePoint').val(), 
+														name : $('#dvName').text(),
+														address : $('#dvAddress').text(),
+														message : $('#deliveryMessage').val()
+													}
+													var qr = $.param(query); //쿼리스트링 만들어주는 메소드													
+	
+													location.href='paySuccess.od?' + qr;
 												}
 											}		
 											,error: function(){
 												alert("결제 실패");
 											}		
 									})		
-					})	
+				})
+					
 				
 				
 				/*
@@ -320,8 +319,7 @@
 						IMP.request_pay({
 							pg: $("input[name=payMethod]:checked").val(),
 							pay_method: 'card',
-							merchant_uid: 'WeMaSal' + new Date().getTime(),
-							
+							merchant_uid: $orderNo,
 							
 							name: 'We Make Salad 결제',
 							// 결제창에서 보여질 이름
@@ -340,31 +338,42 @@
 									// 공통배송정보데이터 객체배열에 마저 추가
 									for(var i in arr){						
 										arr[i].usePoint = $('.usePoint').val(),
-										arr[i].payMethod = $("input[name=payMethod]:checked").val(),
+										arr[i].payMethod = $("input[name=payMethod]:checked").attr('data-how'),
 										arr[i].deliveryName = $('#dvName').text(),
 										arr[i].deliveryAddress = $('#dvAddress').text(),
 										arr[i].deilveryPhone = $('#dvPhone').text(),
 										arr[i].deliveryMessage = $('#deliveryMessage').val()
+										
 									}				
-									
+													
 									console.log(arr);
 									// jQuery로 HTTP 요청
-									$.ajax({
-											url: "insertOrder.od", 
-											method: "POST",	
-											traditional: true, 	//배열 자바로 넘기기								
-											data: {								
-												data: JSON.stringify(arr) // 자바스크립트 배열 JSON문자열화 시키기
-											},											
-											success:function(result){
-												if(result == 'success'){													
-													location.href='paySuccess.od';
-												}
-											}		
-											,error: function(){
-												alert("결제 실패");
-											}		
-									})														
+										$.ajax({
+												url: "insertOrder.od", 
+												method: "POST",	
+												traditional: true, 	//배열 자바로 넘기기								
+												data: {								
+													data: JSON.stringify(arr) // 자바스크립트 배열 JSON문자열화 시키기
+												},											
+												success:function(result){
+													if(result == 'success'){	// 결제를 성공했다면 주문성공페이지에 넘어가기위한 정보 쿼리로 담기
+														var query = {
+															totalPay : $('#finalPay').attr('data-final'), //총결제금액
+															price : $howPay, //주문금액
+															point : $('.usePoint').val(), 
+															name : $('#dvName').text(),
+															address : $('#dvAddress').text(),
+															message : $('#deliveryMessage').val()
+														}
+														var qr = $.param(query); //쿼리스트링 만들어주는 메소드													
+		
+														location.href='paySuccess.od?' + qr;
+													}
+												}		
+												,error: function(){
+													alert("결제 실패");
+												}		
+										})											
 					
 							} else {
 								var msg = '결제에 실패하였습니다.';
@@ -378,6 +387,7 @@
 					*/
 					
 				})
+				
 			
 			</script>
 
@@ -389,7 +399,7 @@
 	<br>
 	<jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 
-	<br><br><br><br><br><br><br><br><br><br>
+	<br><br><br>
 
 
 </body>

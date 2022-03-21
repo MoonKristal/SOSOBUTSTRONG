@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Order {
 	
-	private int orderNo; //ORDER_NO	NUMBER
+	private String orderNo; //ORDER_NO	NUMBER
 	private String orderItem; //ORDER_ITEM	VARCHAR2(200 BYTE)
 	private int orderPrice; //ORDER_PRICE	NUMBER	
 	private int usePoint;
@@ -24,5 +24,7 @@ public class Order {
 	private String orderer; //ORDERER	NUMBER
 	private int seller; //판매자 번호
 	private String sellerName; // 판매자 상호명
-
+	private String sellerImage; // 판매자 프로필 이미지
+	private String deliveryNo;// 운송장번호
+	private int sellerCount;// 사용자가 주문한 가게의 수
 }

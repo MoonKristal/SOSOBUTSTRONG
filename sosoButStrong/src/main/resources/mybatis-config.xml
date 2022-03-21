@@ -40,6 +40,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="/mappers/main-mapper.xml" />
 		
 		<mapper resource="/mappers/community-mapper.xml" />
+		
+		<mapper resource="/mappers/question-mapper.xml" />	
 
 
 	</mappers>

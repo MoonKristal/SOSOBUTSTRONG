@@ -1,0 +1,13 @@
+div{
+    border: 1px solid tomato;
+    box-sizing: border-box;
+}
+.list_outer{
+    width: 1200px;
+    margin: auto;      
+}
+.content{
+    width: 1000px;
+    margin-left: 200px;
+    padding: 25px;
+}
