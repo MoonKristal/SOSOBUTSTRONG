@@ -24,7 +24,7 @@
                     <div class="menu_item"><a href="#" class="link menu">주문목록/배송조회</a></div>
                     <div class="menu_item"><a href="#" class="link menu">장바구니</a></div>
                     <div class="menu_item"><a href="#" class="link menu">회원정보수정</a></div>
-                    <div class="menu_item"><a href="#" class="link menu">1:1문의 내역</a></div>
+                    <div class="menu_item"><a href="buyerList.qu" class="link menu">1:1문의 내역</a></div>
                 </div>
             </div>
         </div>
