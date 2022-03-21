@@ -20,7 +20,7 @@ public class CoAttachment {
 	private String saladComment;
 	private String report;
 	private String createDate;
-	private String modifyDate;
+	private String modifyDate; 
 	
 	// attachment
 	private int fileNo; // 첨부파일 번호
