@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 public class SaveFile {
-	public String saveFile(MultipartFile upfile, HttpSession session) { // 실제 넘어온 파일의 이름을 변경해서 서버에 업로드하는 역할밖에 하지 않음
+	public static String saveFile(MultipartFile upfile, HttpSession session) { // 실제 넘어온 파일의 이름을 변경해서 서버에 업로드하는 역할밖에 하지 않음
 		
 		// 파일 명 수정 작업 후 서버에 업로드 시키기("bono.png" => "2022022115374012135.png")
 		String originName = upfile.getOriginalFilename(); // 첨부파일의 원본명 ("bono.png")

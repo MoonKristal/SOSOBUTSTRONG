@@ -11,6 +11,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<typeAliases>
 		<typeAlias type="com.sbs.wemasal.order.model.vo.Order" alias="order"/>	
+		
+		<typeAlias type="com.sbs.wemasal.member.model.vo.Member" alias="member"/>
 
 		<typeAlias type="com.sbs.wemasal.cart.model.vo.Cart" alias="cart"/>
 
@@ -20,6 +22,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<typeAlias type="com.sbs.wemasal.community.model.vo.CoAttachment" alias="coAttachment" />
 
+		<typeAlias type="com.sbs.wemasal.seller.model.vo.Seller" alias="seller" />
+	
 	</typeAliases>
 	
 	<!--  
@@ -31,17 +35,18 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mappers>
 
 		<mapper resource="/mappers/order-mapper.xml" />	
-		<!--<mapper resource="/mappers/member-mapper.xml"/> memberMapper추가하기 -->
-	
+		
+		<mapper resource="/mappers/member-mapper.xml"/>
 
 		<mapper resource="/mappers/question-mapper.xml" />	
-
 		
 		<mapper resource="/mappers/main-mapper.xml" />
 		
 		<mapper resource="/mappers/community-mapper.xml" />
 		
 		<mapper resource="/mappers/question-mapper.xml" />	
+		
+		<mapper resource="/mappers/seller-mapper.xml" />
 
 
 	</mappers>
