@@ -41,6 +41,7 @@ public class CustomerController {
 	public ModelAndView selectSaladDetailView(int pno, ModelAndView mv) {
 		
 		Customer c = customerService.selectSaladDetailView(pno);
+		System.out.println(pno);
 		
 		mv.addObject("c",c).setViewName("user/customer/saladDetailView");
 		
