@@ -1,0 +1,57 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+div{
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+}
+.footer{
+    width:1200px;
+    margin: auto;
+    height: 150px;
+    position: relative;
+    background-color: rgb(240, 240, 240);
+}
+.footer .logo_bg{
+    width: 30%;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    float: left;
+    padding-top: 30px;
+}
+.footer .logo_k{
+    font-size: 40px;
+    font-weight: bolder;
+    margin-left: 120px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    color: rgb(255, 163, 63);
+}
+.footer .logo_e{
+    margin-top: 0px;
+    font-size: 15px;
+    margin-left: 180px;
+    font-weight: bolder;
+    color: rgb(255, 163, 63);
+}
+.footer .company_info{
+    width: 100%;
+    height: 100%;
+}
+.footer .company_info p{
+    font-size: 13px;
+    text-align: center;
+    padding-top: 30px;
+}
+
+
+
+
+
+
+
+
+

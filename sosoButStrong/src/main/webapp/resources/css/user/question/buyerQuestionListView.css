@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+div{
+    /* border: 1px solid green; */
+    box-sizing: border-box;
+}
+
+/* 헤더 아래 영역 전체 */
+.outer{
+    width: 1200px;
+    margin: auto;
+    height: 1000px;
+}
+
+/* 중간~우측 내용 영역 */
+.content{
+    width: 1000px;
+    height: 100%;
+	float: left;
+    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
+}
+
+.orangeBtn{
+    background-color: rgb(255, 163, 63);
+}

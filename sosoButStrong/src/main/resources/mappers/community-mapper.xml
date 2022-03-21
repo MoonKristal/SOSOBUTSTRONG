@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="communityMapper">
+	
+	<resultMap id="communityResultSet" type="community">
+		<result column="COM_NO" property="comNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="COM_TITLE" property="comTitle" />
+		<result column="SALAD_NAME" property="saladName" />
+		<result column="SALAD_MATERIAL" property="saladMaterial" />
+		<result column="SALAD_SAUCE" property="saladSauce" />
+		<result column="SALAD_COMMENT" property="saladComment" />
+		<result column="REPORT" property="report" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+	</resultMap>
+	
+	<resultMap id="coAttachmentResultSet" type="coAttachment">
+		<result column="COM_NO" property="comNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_ID" property="userId" />
+		<result column="COM_TITLE" property="comTitle" />
+		<result column="SALAD_NAME" property="saladName" />
+		<result column="SALAD_MATERIAL" property="saladMaterial" />
+		<result column="SALAD_SAUCE" property="saladSauce" />
+		<result column="SALAD_COMMENT" property="saladComment" />
+		<result column="REPORT" property="report" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		
+		<result column="FILE_NO" property="fileNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="UPLOAD_DATE" property="uploadDate" />
+		<result column="REF_CNO" property="refCno" />
+	</resultMap>
+	
+	<select id="selectCommunityCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM COMMUNITY
+		 WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectCommunityList" resultMap="coAttachmentResultSet">
+		SELECT
+				COM_NO
+			  , C.USER_NO
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , REPORT
+			  , CREATE_DATE
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+		WHERE
+				STATUS = 'Y'
+		ORDER
+				BY
+					CREATE_DATE DESC
+	
+	</select>
+	
+	<select id="selectPic">
+		SELECT
+				FILE_NO
+				, ORIGIN_NAME
+				, CHANGE_NAME
+				, TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') AS "UPLOAD_DATE"
+				, REF_CNO
+		 FROM
+				ATTACHMENT
+		WHERE
+				REF_CNO IS NOT NULL	
+		ORDER
+			 BY
+			 	FILE_NO DESC
+	</select>
+	
+	
+	<insert id="insertCommunity" parameterType="community">
+		INSERT INTO COMMUNITY(
+							   COM_NO
+							 , USER_NO
+							 , COM_TITLE
+							 , SALAD_NAME
+							 , SALAD_MATERIAL
+							 , SALAD_SAUCE
+							 , SALAD_COMMENT
+							 )
+							 VALUES
+							 (
+							 SEQ_CMNO.NEXTVAL
+							 , #{userNo}
+							 , #{comTitle}
+							 , #{saladName}
+							 , #{saladMaterial}
+							 , #{saladSauce}
+							 , #{saladComment}
+							 )
+	</insert>
+	
+	<insert id="insertPic" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , UPLOAD_DATE
+							  , REF_CNO
+							  )
+							  VALUES
+							  (
+							    SEQ_ATNO.NEXTVAL
+							  , #{originName}
+							  , #{changeName}
+							  , SYSDATE
+							  , SEQ_CMNO.CURRVAL
+							  )
+	</insert>
+
+	<select id="selectCommunity" resultMap="coAttachmentResultSet">
+		SELECT
+				COM_NO
+			  , USER_ID
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , REPORT
+			  , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+        LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+		WHERE
+				C.STATUS = 'Y'
+		  AND
+		  		COM_NO = #{cno}
+	</select>
+
+
+
+
+
+
+
+
+</mapper>

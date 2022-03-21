@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+div{
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+}
+.ad_header{
+    width:280px;
+    height: auto;
+    background-color: rgb(127, 140, 141);
+}
+.ad_header>.logo_area{
+    width: 100%;
+    height: 150px;
+}
+.ad_header .logo_k{
+    font-size: 40px;
+    padding-top: 25px;
+    font-weight: bolder;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-left: 60px;
+    color: rgb(182, 238, 86);
+}
+.ad_header .logo_e{
+    margin-top: 0px;
+    font-size: 15px;
+    margin-left: 125px;
+    font-weight: bolder;
+    color: rgb(182, 238, 86);
+}
+.ad_menubar{
+    height: 650px;
+}
+.menubar {
+    list-style-type: none;
+    padding-left: 30px;
+    margin: 0px;
+    height: 100%;
+    overflow: auto;
+}
+.menubar li{
+    list-style-type: none;
+}
+.menubar li a{
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+.menubar li a:hover{
+    color: rgb(182, 238, 86);
+    font-weight: bolder;
+    font-size: 19px;
+}
+
+
+

@@ -1,0 +1,25 @@
+
+#sellerMyMenu-area {
+    height: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    border: 1px solid #bcbcbc;
+    background-color: rgb(127, 140, 141);
+}
+
+#sellerMyMenu-area>ul {
+    list-style: none;
+    font-size: 20pt;
+    line-height: 1.9cm;
+}
+
+#sellerMyMenu-area>ul>li>a {
+    text-decoration: none;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+}
+
+#sellerMyMenu-area>ul>li>a:hover {
+    color: rgb(182, 238, 86);
+}

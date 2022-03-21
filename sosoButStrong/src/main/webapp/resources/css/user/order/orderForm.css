@@ -1,0 +1,73 @@
+.order_outer{		
+    width: 1200px;
+    margin: auto;
+    border: 4px solid rgb(255, 163, 63);
+    border-radius: 20px;
+    padding: 30px;
+}
+.od_img{
+    width: 50px;
+    height: 55px;
+}
+.line{
+    border: 0;
+    height: 2px;
+    background: #ccc;
+    margin-top: 10px !important;
+}
+h4{
+    margin-left:20px;
+    font-weight: bold !important;
+}
+.orderList table{
+    margin: auto;
+    width: 91%;		
+}
+.orderList #od{
+    text-align: center;
+}
+.orderList img{
+    width: 100px;	
+    height: 90px;
+}
+/*
+.orderList #dv, #od_person{
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}*/
+
+#od td{
+    padding: 15px;
+    border-bottom-style:double;    
+    border-bottom-color:rgb(236, 236, 236);
+    
+}	
+th{
+    border-right-style: solid;
+    border-right-color: rgb(255, 163, 63);
+    width: 20%;
+}
+.odLine td{
+    padding-left: 20px;
+}
+#btn-pay{		
+    display: block;
+    margin: auto;		
+    width: 300px;
+    height: 70px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    background: rgb(255, 163, 63);
+    border: none;
+    border-radius: 5px;
+}	
+input[type=text]:read-only{
+    background: white !important;
+    cursor:default;
+}
+input[name=payMethod]:checked+label{
+    font-weight: bold;
+    color: rgb(255, 163, 63);
+    font-size: 20px;
+}

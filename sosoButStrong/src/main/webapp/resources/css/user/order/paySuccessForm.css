@@ -1,0 +1,32 @@
+.paySuccess_outer{		
+    width: 1200px;
+    margin: auto; 
+    border: 4px solid rgb(255, 163, 63);
+    border-radius: 20px;
+    padding: 30px;   
+}
+.order-btn{
+    margin: 20px;
+    width: 250px;
+    height: 48px;
+    border-radius: 10px;
+    font-weight: bold;  
+    font-size: 23px;  
+    color: white;
+    border-style: none;
+}
+.detail{
+    background:rgb(255, 163, 63);    
+}
+.continue{
+    background:rgb(182, 238, 86);
+}
+table{
+    width: 93%;    
+}
+th{
+    width: 15%;    
+}
+th,td{
+    padding-left: 13px;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	
+	<!-- 빈문자열 db로 넘어갈때 null로 대체하겠다는 옵션 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.sbs.wemasal.order.model.vo.Order" alias="order"/>	
+
+		<typeAlias type="com.sbs.wemasal.cart.model.vo.Cart" alias="cart"/>
+
+		<typeAlias type="com.sbs.wemasal.common.model.vo.Attachment" alias="attachment" />
+		
+		<typeAlias type="com.sbs.wemasal.community.model.vo.Community" alias="community" />
+		
+		<typeAlias type="com.sbs.wemasal.community.model.vo.CoAttachment" alias="coAttachment" />
+
+	</typeAliases>
+	
+	<!--  
+		environment, dataSource 같은 DB연결정보 => root-context.xml에 기술함
+		왜? DB등록정보는 서버 켜지자마자 연동이되어야 하기 때문에
+		서버 켜짐과 동시에 바로 읽혀지는 파일인 root-context.xml에 기술한다 
+	-->	
+	
+	<mappers>
+
+		<mapper resource="/mappers/order-mapper.xml" />	
+		<!--<mapper resource="/mappers/member-mapper.xml"/> memberMapper추가하기 -->
+	
+
+		<mapper resource="/mappers/question-mapper.xml" />	
+
+		
+		<mapper resource="/mappers/main-mapper.xml" />
+		
+		<mapper resource="/mappers/community-mapper.xml" />
+
+
+	</mappers>
+
+</configuration>

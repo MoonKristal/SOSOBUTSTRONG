@@ -1,0 +1,29 @@
+.wrap{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+}
+div{
+    /* border: 1px solid black; */
+}
+#demo{
+    /* border: 1px solid red; */
+}
+.carousel-item>img{
+    width: 1200px;
+    height: 500px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

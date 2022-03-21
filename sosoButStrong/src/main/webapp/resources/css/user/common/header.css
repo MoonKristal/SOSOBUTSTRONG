@@ -1,0 +1,98 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+div{
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+}
+.header{
+    width:1200px;
+    margin: auto;
+    height: 200px;
+    position: relative;
+}
+.header .logo_area{
+    position: relative;
+    height: 150px;
+    width: 1200px;
+    margin: auto;
+    padding-top: 20px;
+    background-color: white;
+}
+.header .logo_bg{
+    position: relative;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    background-color: white;
+    float: left;
+}
+.header .logo_k{
+    font-size: 40px;
+    padding-top: 25px;
+    margin-left: 300px;
+    font-weight: bolder;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    color: rgb(182, 238, 86);
+}
+.header .logo_e{
+    margin-top: 0px;
+    font-size: 15px;
+    margin-left: 410px;
+    font-weight: bolder;
+    color: rgb(182, 238, 86);
+}
+.service_area{
+    margin: auto;
+}
+.service_area a{
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+}
+.service_area a:hover{
+    color: rgb(182, 238, 86);
+    font-size: 14px;
+    font-weight: bolder;
+}
+.group_navi{
+    position: relative;
+    width: 1200px;
+    margin: auto;
+    height: 50px;
+}
+.list_navi{
+    font-size: 20px;
+    font-weight: 600;
+    list-style: none;
+    display: block;
+}
+.navi_item{
+    display: inline-block;
+    width: 18%;
+    text-align: center;
+    position: relative;
+    padding-top: 8px;
+}
+.navi:hover{
+    color: rgb(255, 163, 63);
+    font-weight: bolder;
+}
+.list_navi a{
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+.list_navi>li>a:hover{
+    display: block;
+}
+
+
+
+
+
+
+

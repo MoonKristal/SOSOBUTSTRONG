@@ -1,0 +1,14 @@
+.outer{
+    margin-bottom: 50px;
+}
+.list-area>thead>tr{
+    text-align: center;
+    border: 1px solid black;
+}
+.list-area>tbody>tr{
+    text-align: center;
+    border: 1px solid black;
+}
+.list-area{
+    margin-left: 350px;
+}

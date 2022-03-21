@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+
+	<resultMap id="attachmentResultSet" type="attachment">
+		<result column="FILE_NO" property="fileNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="UPLOAD_DATE" property="uploadDate" />
+		<result column="USER_NO" property="userNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="REF_MPNO" property="refMpno" />
+		<result column="REF_CNO" property="refCno" />
+		<result column="REF_RNO" property="refRno" />
+		<result column="REF_NNO" property="refNno" />
+		<result column="REF_QNO" property="refQno" />
+		<result column="REF_ANO" property="refAno" />
+	</resultMap>
+	
+	<select id="selectMainCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM ATTACHMENT
+		 WHERE REF_MPNO IS NOT NULL
+	</select>
+
+	<select id="selectMain" resultMap="attachmentResultSet">
+		SELECT
+				FILE_NO
+				, ORIGIN_NAME
+				, CHANGE_NAME
+				, TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') AS "UPLOAD_DATE"
+				, REF_MPNO
+		 FROM
+				ATTACHMENT
+		WHERE
+				REF_MPNO IS NOT NULL	
+		ORDER
+			 BY
+			 	FILE_NO DESC
+	</select>
+	
+	<insert id="insertPic" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+								, ORIGIN_NAME
+								, CHANGE_NAME
+								, UPLOAD_DATE
+								, REF_MPNO
+								)
+								VALUES
+								(
+								SEQ_ATNO.NEXTVAL
+								, #{originName}
+								, #{changeName}
+								, SYSDATE
+								, SEQ_MPNO.NEXTVAL
+								)
+	</insert>
+	
+	<delete id="deletePic">
+		DELETE FROM ATTACHMENT
+		WHERE CHANGE_NAME = #{changeName}
+	</delete>
+	
+	
+</mapper>

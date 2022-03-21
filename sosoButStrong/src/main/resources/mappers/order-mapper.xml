@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+	 
+	<resultMap id="cartResultSet" type="cart" >
+		<result column="USER_NO" property="seller"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="OPTION" property="option"/>
+		<result column="PRICE" property="price"/>
+		<result column="QUANTITY" property="quantity"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>	
+	</resultMap>
+
+	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
+		SELECT 
+				C.PRODUCT_NAME, 
+				C."OPTION", 
+				C.PRICE, 
+				C.QUANTITY, 
+				S.SELLER_NAME, 
+				S.SELLER_IMAGE, 
+				S.USER_NO
+		FROM CART C
+		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
+		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)
+		WHERE C.USER_NO = #{userNo}
+	</select>
+	
+	<insert id="insertOrder" parameterType="java.util.Map">
+		INSERT INTO "ORDER"(
+						ORDER_NO,
+						ORDER_ITEM,
+						ORDER_PRICE,
+						USE_POINT,
+						PAY_METHOD,
+						DELIVERY_NAME,
+						DELIVERY_ADDRESS,
+						DELIVERY_PHONE,
+						DELIVERY_MESSAGE,
+						QUANTITY,
+						ORDERER,
+						SELLER,
+						SELLER_NAME
+						)
+		VALUES
+		
+			(			
+						SEQ_ONO.NEXTVAL,
+						#{orderItem},
+						#{orderPrice},
+						#{usePoint},
+						#{payMethod},
+						#{deliveryName},
+						#{deliveryAddress},
+						#{deilveryPhone},
+						#{deliveryMessage},
+						#{quantity},
+						#{orderer},
+						#{seller},
+						#{sellerName}
+			)			
+		
+	</insert>
+ 
+ 
+</mapper>
