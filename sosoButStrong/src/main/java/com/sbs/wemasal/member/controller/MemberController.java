@@ -9,10 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sbs.wemasal.common.template.SaveFile;
 import com.sbs.wemasal.member.model.service.MemberService;
 import com.sbs.wemasal.member.model.vo.Member;
+import com.sbs.wemasal.member.model.vo.Seller;
+import com.sbs.wemasal.seller.model.service.SellerService;
 
 @Controller
 public class MemberController {
@@ -108,4 +112,48 @@ public class MemberController {
 	public void updateMember() {
 		
 	}
+	
+	
+	// --------------------------------------------
+		@RequestMapping("sellerInsert.se")
+		public String insertSeller(Member m, Seller s, Model model, HttpSession session, MultipartFile upfile) {
+			
+			// 암호화 작업(암호문을 만들어내는 과정)
+			String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+			m.setUserPwd(encPwd); // Member객체에 userPwd에 평문이 아닌 암호문으로 변경
+			System.out.println(upfile);
+			
+			String changeName = SaveFile.saveFile(upfile, session); // 파일경로설정
+			s.setSellerImage(upfile.getOriginalFilename()); // Seller객체에 이미지 원본명 추가 (String으로 반환해서 넣어주기)
+			s.setSellerImagePath(changeName); // Seller객체에 imagePath에 사진경로 추가 
+			
+			int result = memberService.insertSeller(m,s);
+			
+			if(result > 0) { // 성공 => 메인페이지 url 재요청
+				session.setAttribute("alertMsg", "성공적으로 판매자 신청이 되었습니다.");
+				return "redirect:/";
+				
+			} else { // 실패 
+				session.setAttribute("alertMsg", "실패하였습니다.");
+				return "redirect:/";
+			}
+			
+		}
+		// 상호 중복체크
+		@ResponseBody
+		@RequestMapping("sellerNameCheck.se")
+		public String sellerIdCheck(String checkName) {
+
+			return memberService.sellerNameCheck(checkName) > 0 ? "NN" : "NY";
+		}
+		
+		// -----------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	
 }

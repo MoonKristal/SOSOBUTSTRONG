@@ -1,29 +1,39 @@
 package com.sbs.wemasal.seller.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.sbs.wemasal.member.model.vo.Member;
-import com.sbs.wemasal.seller.model.vo.Seller;
+import com.sbs.wemasal.common.model.vo.Attachment;
+import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.seller.model.vo.Product;
 
 @Repository
 public class SellerDao {
+	
+	public int selectProductCount(SqlSessionTemplate sqlSession, int uploader) {
+		return sqlSession.selectOne("sellerMapper.selectProductCount", uploader);
+	}
 
-	@Transactional
-	public int insertSeller (SqlSessionTemplate sqlSession, Member m, Seller s) {
-		int result = sqlSession.insert("sellerMapper.insertSeller1", m);
+	public ArrayList<Product> selectProduct(SqlSessionTemplate sqlSession, PageInfo pi, int uploader) {
 		
-		if (result > 0) {
-		return sqlSession.insert("sellerMapper.insertSeller2", s);
-		}
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
 		
-		return result;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("sellerMapper.selectProduct", uploader, rowBounds);
 	}
-	
-	
-	public int sellerNameCheck(SqlSessionTemplate sqlSession, String checkName) {
-		return sqlSession.selectOne("sellerMapper.checkName", checkName);
+
+	public int uploadAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("sellerMapper.uploadAttachment", at);
 	}
+
+	public int uploadProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.insert("sellerMapper.uploadProduct", p);
+	}
+
 
 }

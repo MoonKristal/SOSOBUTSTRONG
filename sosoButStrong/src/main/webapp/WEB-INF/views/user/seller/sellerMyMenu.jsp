@@ -14,7 +14,7 @@
 		<h2>판매자 My Menu</h2>
 
 		<ul>
-			<li><a href="sellerMyMenuForm.se">상품조회/수정</a></li>
+			<li><a href="sellerProductList.se">상품조회/수정</a></li>
 			<li><a href="productEnrollForm.se">상품등록</a></li>
 			<li><a href="#">주문/배송관리</a></li>
 			<li><a href="#">정산관리</a></li>

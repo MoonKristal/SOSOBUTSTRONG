@@ -1,4 +1,4 @@
-package com.sbs.wemasal.seller.model.vo;
+package com.sbs.wemasal.member.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

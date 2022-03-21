@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="customerMapper">
+
+	<resultMap id="customerResultSet" type="customer">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="UPLOADER" property="uploader" />
+		<result column="SELL_STATUS" property="sellStatus" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRICE" property="price" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="OPTION" property="option" />
+		<result column="P_TAG" property="pTag" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="SELLER_NAME" property="sellerName" />
+		<result column="SELLER_BRN" property="sellerBrn" />
+		<result column="SELLER_PHONE" property="sellerPhone" />
+		<result column="SELLER_LOCATION" property="sellerLocation" />
+		<result column="SELLER_INTRO" property="sellerIntro" />
+		<result column="SELLER_IMAGE" property="sellerImage" />
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
+
+	<select id="selectSaladList" resultMap="customerResultSet">
+		SELECT
+				PRODUCT_NO,
+				UPLOADER,
+				SELL_STATUS,
+				PRODUCT_NAME,
+				PRICE,
+				"DESCRIPTION",
+				"OPTION",
+				"P_TAG",
+				TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') as "CREATE_DATE",
+				TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD HH24:MI:SS') as "MODIFY_DATE",
+                SELLER_NAME,
+                CHANGE_NAME
+		  FROM
+				"PRODUCT" P
+          JOIN SELLER ON (UPLOADER = USER_NO)
+          LEFT JOIN ATTACHMENT USING (PRODUCT_NO)
+		 WHERE
+				P.STATUS = 'Y'
+		   AND
+		   		SELL_STATUS = '판매중'
+      ORDER BY
+                PRODUCT_NO DESC
+	</select>
+
+	<select id="selectSaladDetailView" parameterType="int" resultMap="customerResultSet">
+		SELECT
+				PRODUCT_NO,
+				UPLOADER,
+				SELL_STATUS,
+				PRODUCT_NAME,
+				PRICE,
+				"DESCRIPTION",
+				"OPTION",
+				"P_TAG",
+				TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') as "CREATE_DATE",
+				TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD HH24:MI:SS') as "MODIFY_DATE",
+                SELLER_NAME,
+                SELLER_BRN,
+                SELLER_PHONE,
+                SELLER_LOCATION,
+                SELLER_INTRO,
+                SELLER_IMAGE,
+                CHANGE_NAME
+		  FROM
+				PRODUCT
+          JOIN SELLER ON (UPLOADER = USER_NO)
+          LEFT JOIN ATTACHMENT USING (PRODUCT_NO)
+		 WHERE
+				PRODUCT_NO = #{pno}
+	</select>
+ 
+</mapper>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sbs.wemasal.member.model.vo.Member;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Repository
 public class MemberDao {
@@ -21,4 +22,27 @@ public class MemberDao {
 	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
+	
+	@Transactional
+	public int insertSeller (SqlSessionTemplate sqlSession, Member m, Seller s) {
+		int result = sqlSession.insert("memberMapper.insertSeller1", m);
+		
+		if (result > 0) {
+		return sqlSession.insert("memberMapper.insertSeller2", s);
+		}
+		
+		return result;
+	}
+	
+	
+	public int sellerNameCheck(SqlSessionTemplate sqlSession, String checkName) {
+		return sqlSession.selectOne("memberMapper.checkName", checkName);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -22,7 +22,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<typeAlias type="com.sbs.wemasal.community.model.vo.CoAttachment" alias="coAttachment" />
 
-		<typeAlias type="com.sbs.wemasal.seller.model.vo.Seller" alias="seller" />
+		<typeAlias type="com.sbs.wemasal.member.model.vo.Seller" alias="seller" />
+		
+		<typeAlias type="com.sbs.wemasal.seller.model.vo.Product" alias="product"/>
+		
+		<typeAlias type="com.sbs.wemasal.customer.model.vo.Customer" alias="customer"/>
 	
 	</typeAliases>
 	
@@ -47,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="/mappers/question-mapper.xml" />	
 		
 		<mapper resource="/mappers/seller-mapper.xml" />
+		
+		<mapper resource="/mappers/customer-mapper.xml" />	
 
 
 	</mappers>

@@ -1,45 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sellerMapper">
 
-	<resultMap type="seller" id="sellerResultset">
-		<result column="SELLER_NAME" property="sellerName"/>
-		<result column="SELLER_BRN" property="sellerBRN"/>
-		<result column="SELLER_PHONE" property="sellerPhone"/>
-		<result column="SELLER_LOCATION" property="sellerLocation"/>
-		<result column="SELLER_INTRO" property="sellerIntro"/>
-		<result column="SELLER_IMAGE" property="sellerImage"/>
-		<result column="SELLER_IMAGEPATH" property="sellerImagePath"/>
-		<result column="STATUS" property="sellerStatus"/>
+	<resultMap id="productResultSet" type="product">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="UPLOADER" property="uploader" />
+		<result column="SELL_STATUS" property="sellStatus" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRICE" property="price" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="OPTION" property="option" />
+		<result column="P_TAG" property="pTag" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
 	</resultMap>
 	
-	
-	<!-- 상호 중복체크 -->
-	<select id="checkName" resultType="_int">
-		 SELECT COUNT(*)
-		 FROM SELLER
-		 WHERE SELLER_NAME = #{checkName}
+	<select id="selectProductCount" parameterType="int" resultType="_int">
+		SELECT
+				COUNT(*)
+		  FROM
+		  		"PRODUCT"
+		 WHERE
+		 		STATUS = 'Y'
+		   AND
+		   		UPLOADER = #{uploader}
 	</select>
-	
-	<!-- 판매자 회원가입  -->
-	<insert id="insertSeller1" parameterType="member">
-		INSERT INTO 
-			 MEMBER
-				   (USER_NO, USER_TYPE, USER_ID, PASSWORD, USER_NAME, EMAIL, PHONE, ADDRESS, GENDER, BIRTH)
-			 VALUES
-			 	   (SEQ_MNO.nextval, 2, #{userId}, #{userPwd}, #{userName}, #{email}, #{phone}, #{address}, #{gender}, #{birth})
-	</insert>
-	
-	<!-- 판매자 회원가입2  -->
-	<insert id="insertSeller2" parameterType="seller">
-		INSERT INTO 
-			 SELLER
-				   (USER_NO, SELLER_NAME, SELLER_BRN, SELLER_PHONE, SELLER_LOCATION, SELLER_INTRO, SELLER_IMAGE , SELLER_IMAGEPATH)
-			 VALUES
-			 	   (SEQ_MNO.currval, #{sellerName}, #{sellerBRN}, #{sellerPhone}, #{sellerLocation}, #{sellerIntro}, #{sellerImage}, #{sellerImagePath})
-	</insert>
 
-	
+	<select id="selectProduct" parameterType="int" resultMap="productResultSet">
+		SELECT
+				PRODUCT_NO,
+				UPLOADER,
+				SELL_STATUS,
+				PRODUCT_NAME,
+				PRICE,
+				"DESCRIPTION",
+				"OPTION",
+				"P_TAG",
+				TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') as "CREATE_DATE",
+				TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD HH24:MI:SS') as "MODIFY_DATE"
+		  FROM
+				"PRODUCT"
+		 WHERE
+				STATUS = 'Y'
+		   AND
+		   		UPLOADER = #{uploader}
+      ORDER BY
+                PRODUCT_NO DESC
+	</select>
+
+	<insert id="uploadProduct" parameterType="product">
+		INSERT INTO PRODUCT(
+						PRODUCT_NO,
+						UPLOADER,
+						SELL_STATUS,
+						PRODUCT_NAME,
+						PRICE,
+						"DESCRIPTION",
+						"OPTION",
+						P_TAG
+						)
+		VALUES
+			(			
+						SEQ_PNO.NEXTVAL,
+						#{uploader},
+						#{sellStatus},
+						#{productName},
+						#{price},
+						#{description},
+						#{option},
+						#{pTag}
+			)			
+	</insert>
+ 
+ 	<insert id="uploadAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+						FILE_NO,
+						ORIGIN_NAME,
+						CHANGE_NAME,
+						PRODUCT_NO
+						)
+		VALUES
+			(			
+						SEQ_ATNO.NEXTVAL,
+						#{originName},
+						#{changeName},
+						SEQ_PNO.CURRVAL
+			)			
+	</insert>
+ 
 </mapper>

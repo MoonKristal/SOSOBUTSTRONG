@@ -19,6 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="seller" id="sellerResultset">
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_BRN" property="sellerBRN"/>
+		<result column="SELLER_PHONE" property="sellerPhone"/>
+		<result column="SELLER_LOCATION" property="sellerLocation"/>
+		<result column="SELLER_INTRO" property="sellerIntro"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>
+		<result column="SELLER_IMAGEPATH" property="sellerImagePath"/>
+		<result column="STATUS" property="sellerStatus"/>
+	</resultMap>
+	
 	<!-- 로그인 -->
 	<select id="loginMember" resultMap="memberResultset" parameterType="member">
 		SELECT USER_NO, USER_TYPE, USER_ID, PASSWORD, USER_NAME, EMAIL, PHONE, ADDRESS, GENDER, BIRTH, POINT, STATUS
@@ -41,5 +52,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 FROM MEMBER
 		 WHERE USER_ID = #{checkId}
 	</select>
+	
+	
 
+	<!-- 상호 중복체크 -->
+	<select id="checkName" resultType="_int">
+		 SELECT COUNT(*)
+		 FROM SELLER
+		 WHERE SELLER_NAME = #{checkName}
+	</select>
+	
+	<!-- 판매자 회원가입  -->
+	<insert id="insertSeller1" parameterType="member">
+		INSERT INTO 
+			 MEMBER
+				   (USER_NO, USER_TYPE, USER_ID, PASSWORD, USER_NAME, EMAIL, PHONE, ADDRESS, GENDER, BIRTH)
+			 VALUES
+			 	   (SEQ_MNO.nextval, 2, #{userId}, #{userPwd}, #{userName}, #{email}, #{phone}, #{address}, #{gender}, #{birth})
+	</insert>
+	
+	<!-- 판매자 회원가입2  -->
+	<insert id="insertSeller2" parameterType="seller">
+		INSERT INTO 
+			 SELLER
+				   (USER_NO, SELLER_NAME, SELLER_BRN, SELLER_PHONE, SELLER_LOCATION, SELLER_INTRO, SELLER_IMAGE , SELLER_IMAGEPATH)
+			 VALUES
+			 	   (SEQ_MNO.currval, #{sellerName}, #{sellerBRN}, #{sellerPhone}, #{sellerLocation}, #{sellerIntro}, #{sellerImage}, #{sellerImagePath})
+	</insert>
+	
+	
+	
+	
 </mapper>
