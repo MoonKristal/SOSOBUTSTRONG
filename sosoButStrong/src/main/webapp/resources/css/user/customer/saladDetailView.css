@@ -1,0 +1,18 @@
+.pInfo{
+    border: 0.1px solid lightgray;
+    margin-bottom: 50px;
+}
+.pInfo tr{
+    border: 0.1px solid lightgray;
+}
+.pInfo th{
+    text-align: center;
+    border: 0.1px solid lightgray;
+}
+.pInfo td{
+    border: 0.1px solid lightgray;
+    font-size: small;
+}
+.pInfoTitle{
+    background-color:lightgrey;
+}

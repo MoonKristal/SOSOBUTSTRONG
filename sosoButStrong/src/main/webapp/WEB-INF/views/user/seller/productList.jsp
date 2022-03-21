@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="resources/css/user/seller/productList.css">
 </head>
 <body>
-    <%@ include file="../common/header.jsp" %>
-    <%@ include file="sellerMyMenu.jsp" %>
+	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
     <div class="outer">
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품조회/수정</h2>
@@ -28,99 +28,46 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
-                <tr>
-                    <td><button>수정</button></td>
-                    <td><button>삭제</button></td>
-                    <td>a124324</td>
-                    <td>샐러드에 고기가 빠질 수 없지</td>
-                    <td>판매중</td>
-                    <td>7,900</td>
-                    <td>2022.02.14 15:33</td>
-                    <td>2022.02.25 16:21</td>
-                </tr>
+                <c:forEach var="p" items="${ list }">
+	                	<tr>
+		                    <td><button>수정</button></td>
+		                    <td><button>삭제</button></td>
+		                    <td>${ p.productNo }</td>
+		                    <td>${ p.productName }</td>
+		                    <td>${ p.sellStatus }</td>
+		                    <td>${ p.price }</td>
+		                    <td>${ p.createDate }</td>
+		                    <td>${ p.modifyDate }</td>
+	               	 	</tr>
+                 </c:forEach>
             </tbody>
         </table>
     </div>
-    <%@ include file="../common/footer.jsp" %>
+        <!-- 페이징 영역-->
+        <div id="pagingArea">
+            <ul class="pagination">
+                <c:choose>
+                <c:when test="${ pi.currentPage eq 1 }">
+                    <li class="page-item" style="display: none;"><a class="page-link" href="#">이전</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item"><a class="page-link" href="sellerProductList.se?pPage=${ pi.currentPage - 1 }">이전</a></li>
+                </c:otherwise>
+                </c:choose>
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                        <li class="page-item"><a class="page-link" href="sellerProductList.se?pPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${ pi.currentPage eq pi.endPage }">
+                <li class="page-item" style="display: none;"><a class="page-link" href="#">다음</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="sellerProductList.se?pPage=${ pi.currentPage + 1 }">다음</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
+
+    <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 </body>
 </html>

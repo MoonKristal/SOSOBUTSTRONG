@@ -12,3 +12,10 @@
 .list-area{
     margin-left: 350px;
 }
+#pagingArea{
+    margin-top: 10px;
+    margin-left: 550px;
+}
+#pagingArea a{
+    color: black;
+}

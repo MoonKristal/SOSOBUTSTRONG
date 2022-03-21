@@ -64,7 +64,7 @@
             <div class="group_navi">
                 <ul class="list_navi">
                     <li class="navi_item"><a href="#" class="link navi">ABOUT</a></li>
-                    <li class="navi_item"><a href="#" class="link navi">SALA:D</a></li>
+                    <li class="navi_item"><a href="saladListView.se" class="link navi">SALA:D</a></li>
                     <li class="navi_item"><a href="communityList.co" class="link navi">COMMUNITY</a></li>
                     <li class="navi_item"><a href="#" class="link navi">SERVICE</a></li>
                 </ul>

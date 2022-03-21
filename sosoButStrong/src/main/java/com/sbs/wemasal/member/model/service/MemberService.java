@@ -3,6 +3,7 @@ package com.sbs.wemasal.member.model.service;
 import org.springframework.stereotype.Service;
 
 import com.sbs.wemasal.member.model.vo.Member;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Service
 public interface MemberService {
@@ -13,6 +14,13 @@ public interface MemberService {
 
 	int idCheck(String checkId);
 
+	
+	
+	
+	
+	
+	int insertSeller(Member m, Seller s);
 
+	int sellerNameCheck(String checkName);
 
 }
