@@ -17,10 +17,12 @@
         <jsp:include page="/WEB-INF/views/user/common/buyerMyPageMenuBar.jsp"/>
 
         <div class="content">
-			여기는 content div입니다
+			<div>여기는 content div입니다</div>            
         </div>
 
     </div>
+
+    <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>
 
 </body>
 </html>
