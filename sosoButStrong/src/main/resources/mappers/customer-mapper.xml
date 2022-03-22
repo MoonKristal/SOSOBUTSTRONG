@@ -18,7 +18,7 @@
 		<result column="SELLER_PHONE" property="sellerPhone" />
 		<result column="SELLER_LOCATION" property="sellerLocation" />
 		<result column="SELLER_INTRO" property="sellerIntro" />
-		<result column="SELLER_IMAGE" property="sellerImage" />
+		<result column="SELLER_IMAGEPATH" property="sellerImagePath" />
 		<result column="CHANGE_NAME" property="changeName" />
 	</resultMap>
 
@@ -65,7 +65,7 @@
                 SELLER_PHONE,
                 SELLER_LOCATION,
                 SELLER_INTRO,
-                SELLER_IMAGE,
+                SELLER_IMAGEPATH,
                 CHANGE_NAME
 		  FROM
 				PRODUCT

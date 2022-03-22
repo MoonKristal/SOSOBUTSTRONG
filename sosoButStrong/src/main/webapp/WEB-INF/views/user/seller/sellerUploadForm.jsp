@@ -27,7 +27,7 @@
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품등록</h2>
         <form id="enrollForm" action="uploadProduct.se" method="post" enctype="multipart/form-data">
             <table align="center">
-                <input type="hidden" value="10" name="uploader"> <!-- 상품등록 작성자 -->
+                <input type="hidden" value="${loginUser.userNo}" name="uploader"> <!-- 상품등록 작성자 -->
                 <tr>
                     <th><div class="cFrame" style="width: 100px;">대표이미지</div></th>
                     <td><input type="file" style="width: 950px;" class="form-control-file border" name="thumbnail" required></td>

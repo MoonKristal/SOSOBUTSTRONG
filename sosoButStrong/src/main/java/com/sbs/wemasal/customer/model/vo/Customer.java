@@ -19,7 +19,7 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 	private String sellerPhone; //	SELLER_PHONE	VARCHAR2(13 BYTE) 업체 연락처
 	private String sellerLocation; //	SELLER_LOCATION	VARCHAR2(200 BYTE) 업체 소재지
 	private String sellerIntro; //	SELLER_INTRO	VARCHAR2(1000 BYTE) 업체 소개글
-	private String sellerImage; //	SELLER_IMAGE	VARCHAR2(200 BYTE) 업체 대표이미지
+	private String sellerImagePath; //	SELLER_IMAGE	VARCHAR2(200 BYTE) 업체 대표이미지
 	private String changeName; // 상품등록 시 첨부한 썸네일 저장경로
 	
 	public Customer() {
@@ -28,7 +28,7 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 
 	public Customer(int productNo, int uploader, String productName, String sellStatus, int price, String description,
 			String option, String pTag, String createDate, String modifyDate, String status, String sellerName,
-			String sellerBrn, String sellerPhone, String sellerLocation, String sellerIntro, String sellerImage,
+			String sellerBrn, String sellerPhone, String sellerLocation, String sellerIntro, String sellerImagePath,
 			String changeName) {
 		super();
 		this.productNo = productNo;
@@ -47,7 +47,7 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 		this.sellerPhone = sellerPhone;
 		this.sellerLocation = sellerLocation;
 		this.sellerIntro = sellerIntro;
-		this.sellerImage = sellerImage;
+		this.sellerImagePath = sellerImagePath;
 		this.changeName = changeName;
 	}
 
@@ -179,12 +179,12 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 		this.sellerIntro = sellerIntro;
 	}
 
-	public String getSellerImage() {
-		return sellerImage;
+	public String getSellerImagePath() {
+		return sellerImagePath;
 	}
 
-	public void setSellerImage(String sellerImage) {
-		this.sellerImage = sellerImage;
+	public void setSellerImagePath(String sellerImagePath) {
+		this.sellerImagePath = sellerImagePath;
 	}
 
 	public String getChangeName() {
@@ -201,7 +201,7 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 				+ ", sellStatus=" + sellStatus + ", price=" + price + ", description=" + description + ", option="
 				+ option + ", pTag=" + pTag + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
 				+ status + ", sellerName=" + sellerName + ", sellerBrn=" + sellerBrn + ", sellerPhone=" + sellerPhone
-				+ ", sellerLocation=" + sellerLocation + ", sellerIntro=" + sellerIntro + ", sellerImage=" + sellerImage
-				+ ", changeName=" + changeName + "]";
+				+ ", sellerLocation=" + sellerLocation + ", sellerIntro=" + sellerIntro + ", sellerImagePath="
+				+ sellerImagePath + ", changeName=" + changeName + "]";
 	}
 }

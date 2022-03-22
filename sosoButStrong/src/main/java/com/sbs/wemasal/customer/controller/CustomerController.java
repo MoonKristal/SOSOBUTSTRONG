@@ -22,7 +22,7 @@ public class CustomerController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping("saladListView.se")
+	@RequestMapping("saladListView.cmm")
 	public ModelAndView selectSaladList(ModelAndView mv) {
 		
 		ArrayList<Customer> list = customerService.selectSaladList();
@@ -37,7 +37,7 @@ public class CustomerController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping("saladDetailView.se")
+	@RequestMapping("saladDetailView.cmm")
 	public ModelAndView selectSaladDetailView(int pno, ModelAndView mv) {
 		
 		Customer c = customerService.selectSaladDetailView(pno);

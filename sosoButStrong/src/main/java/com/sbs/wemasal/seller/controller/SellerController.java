@@ -28,6 +28,7 @@ import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
 import com.sbs.wemasal.seller.model.service.SellerService;
 import com.sbs.wemasal.seller.model.vo.Product;
+import com.sbs.wemasal.member.model.vo.Member;
 
 
 @Controller
@@ -43,9 +44,9 @@ public class SellerController {
 	 * @return
 	 */
 	@RequestMapping("sellerProductList.se")
-	public ModelAndView selectList(@RequestParam(value="pPage", defaultValue="1")int currentPage, ModelAndView mv) {
+	public ModelAndView selectList(@RequestParam(value="pPage", defaultValue="1")int currentPage, ModelAndView mv, HttpServletRequest request) {
 		
-		int uploader = 10;//((Member)request.getSession().getAttribute("loginUser")).getUserNo();
+		int uploader = ((Member)request.getSession().getAttribute("loginUser")).getUserNo(); // 로그인된 회원의 회원번호(식별자) 가져와서 변수에 담기
 		
 		int listCount = sellerService.selectProductCount(uploader); // 등록되어있는 상품 총 개수 조회
 		

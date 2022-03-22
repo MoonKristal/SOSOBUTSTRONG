@@ -19,24 +19,26 @@
               <div class="col-sm-5">
                <img src="${ c.changeName }" width="350" height="350"> <!-- 상품이미지(썸네일) -->
               </div>
-              
               <div class="col-sm-5">
                
                <table class="table table-borderless">
                 <tr>
-                    <th style="font-size: large;">${ c.productName } &nbsp; ${ c.price } 원</th>
+                    <th style="font-size:x-large;">${ c.productName } &nbsp; ${ c.price } 원</th>
                 </tr>
                 <tr>
-                    <td>${ c.sellerName }</td>
+                    <td><img src="${ c.sellerImagePath }" width="70" height="70" alt="판매자대표이미지">&nbsp;&nbsp;<b>${ c.sellerName }</b></td>
                 </tr>
-                <tr>
+                <tr class="sellerInfo">
+                    <td>사업자 등록번호 : ${ c.sellerBrn }</td>
+                </tr>
+                <tr class="sellerInfo">
                     <td>${ c.sellerIntro }</td>
                 </tr>
-                <tr>
+                <tr class="sellerInfo">
                     <td>${ c.sellerLocation }</td>
                 </tr>
-                <tr>
-                    <td>${ c.sellerPhone }</td>
+                <tr class="sellerInfo">
+                    <td>TEL. ${ c.sellerPhone }</td>
                 </tr>
                 <tr>
                     <td>
@@ -99,8 +101,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="#" class="btn btn-outline-success" style="font-weight: bolder;">주문하기</a> &nbsp;&nbsp;
+                    <td><!-- 주문하기 누르면, 위 6가지 옵션 값 가지고 주문화면으로 넘어갈 것, 옵션 6개 전부 선택해야 주문정보화면으로 넘어가게 제약을 걸어야 함 -->
+                        <a href="#" class="btn btn-outline-success" style="font-weight: bolder;">주문하기</a> &nbsp;&nbsp;
                         <a href="#" class="btn btn-outline-info" style="font-weight: bolder;">장바구니</a>
+                        <!-- 장바구니 누르면 AJAX(비동기식)으로 , 위 옵션값 장바구니에 저장시키기 중복저장 가능, 단 옵션6개 전부 선택해야함 -->
                     </td>
                 </tr>
                </table>
