@@ -2,6 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="questionMapper">
 
+	<resultMap id="orderResultSet" type="order">
+		<result column="ORDER_ITEM" property="orderItem"/>
+		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="USE_POINT" property="usePoint"/>
+		<result column="PAY_METHOD" property="payMethod"/>
+		<result column="DELIVERY_NAME" property="deliveryName"/>
+		<result column="DELIVERY_ADDRESS" property="deliveryAddress"/>
+		<result column="DELIVERY_PHONE" property="deilveryPhone"/>
+		<result column="DELIVERY_MESSAGE" property="deliveryMessage"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="QUANTITY" property="quantity"/>
+		<result column="SELLER" property="seller"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="ORDER_NO" property="orderNo"/>	
+		<result column="DELIVERY_NO" property="deliveryNo"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>
+		<result column="SELLER_COUNT" property="sellerCount"/>		
+	</resultMap>
+
+	<!--2022.3.22(화) 16h10-->
+	<select id="selectBuyerOrderListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM "ORDER"
+		WHERE ORDERER = #{userNo}
+		ORDER BY ORDER_DATE DESC
+	</select>
+	
+	<!--2022.3.22(화) 19h-->
+	<select id="selectBuyerOrderList" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_NO, ORDER_DATE, SELLER, SELLER_NAME, ORDER_ITEM, QUANTITY,  ORDER_PRICE
+		FROM "ORDER"
+		WHERE ORDERER = #{userNo}
+		ORDER BY ORDER_DATE DESC
+	</select>
+	
+	<!--2022.3.23(수) 2h-->
+	<select id="countOrderNo" parameterType="Question" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_WRITER = ${questionWriter}
+			AND QUESTION_SELLER = ${questionSeller}
+			AND ORDER_NO = ${orderNo}
+			AND STATUS = 'Y'
+	</select>
+	
+	
+	
+
 
 
 </mapper>

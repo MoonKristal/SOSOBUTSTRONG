@@ -109,10 +109,68 @@
 				$.ajax({
 					url : "buyerOrderList.qu",
 					data : {
-						userNo : ${ loginUser.userNo }
+						// userNo : ${ loginUser.userNo }
+						userNo : 2
 					},
 					success : function(result) {
-						console.log(result);
+						// console.log(result);
+						
+						// 2022.3.22(화) 23h5
+						let list = result.list;
+						// console.log(list);
+						
+						let tbody = "";
+						
+						if (!result.list.length) { // 주문 내역이 없는 경우
+							tbody = "<tr><td colspan=8>주문 내역이 없습니다.</td></tr>"
+						} else { // 주문 내역이 있는 경우
+							// 주문 내역 목록 띄우기
+							$.each(list, function(index, order) {
+								tbody += "<tr>"
+										+ "<td>" + order.orderNo + "</td>" 
+										+ "<td>" + order.orderDate + "</td>" 
+										+ "<td>" + order.seller + "</td>" 
+										+ "<td>" + order.sellerName + "</td>" 
+										+ "<td>" + order.orderItem.substr(0, 30) + "...</td>" 
+										+ "<td>" + order.quantity + "</td>" 
+										+ "<td>" + order.orderPrice + "</td>" 
+										+ "<td><input type='radio' name='selectOrderNo'></td>"
+										+ "</tr>";
+										// 라디오버튼 1개가 checked되면, Ajax 요청 보내서 이 구매자가 이 주문번호로 문의한 내역이 QUESTION 테이블에 있는지 확인
+										// -> 해당 사항 있으면 confirm 창 띄우고,
+										// -> 구매자가 true 선택 시 modal창 닫으며(근데 이걸 어떻게 하지?) checked 라디오버튼 행의 주문번호와 판매자명을 입력 양식 칸에 각각 입력함-
+							})
+							
+							$("#order-list").html(tbody);
+							
+							// 주문 내역 페이징 처리
+							let pi = result.pi;
+							// console.log(pi);
+							// console.log(pi.currentPage);
+							
+							var pagingArea = ""; // 여기 페이징바가 떠야 하는데..
+							
+							if (pi.currentPage != 1) {
+								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + ">&gt;</a></li>";
+								// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + "''>&lt;</button>";
+							}
+							
+							for (let i = pi.startPage; i <= pi.endPage; i++) {
+								if (i != pi.currentPage) {
+									pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + i + ">" + i + "</a></li>";
+									// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + i + "''>" + i + "</button>";
+								} else {
+									pagingArea += "<li class='page-item'><a class='page-link' href='#'>" + i + "</a></li>";
+								}
+							}
+							
+							if (pi.currentPage != pi.maxPage && pi.maxPage != 0) {
+								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage + 1) + ">&gt;</a></li>";
+							}
+							
+							$("#paging-area>ul").html(pagingArea);
+						} // else문 영역 끝
+						
 					},
 					error : function() {
 						console.log("주문 목록 조회 실패")
@@ -141,7 +199,8 @@
 								<tr>
 									<th>주문번호</th>
 									<th>주문일자</th>
-									<th>판매자</th>
+									<th>판매자 번호</th>
+									<th>판매자명</th>
 									<th>주문상품</th>
 									<th>수량</th>
 									<th>주문금액</th>
@@ -149,68 +208,27 @@
 								</tr>
 							</thead>
 							<tbody id="order-list">
-								<tr>
+								<!-- <tr>
 									<td>1234567890</td>
 									<td>2022-01-31 15:31</td>
 									<td>판매자1</td>
 									<td>샐러드1c</td>
 									<td>2</td>
 									<td>18,000원</td>
-									<td>
-										<!--라디오버튼 1개가 checked되면, Ajax 요청 보내서 이 구매자가 이 주문번호로 문의한 내역이 QUESTION 테이블에 있는지 확인
-											-> 해당 사항 있으면 confirm 창 띄우고,
-											-> 구매자가 true 선택 시 modal창 닫으며(근데 이걸 어떻게 하지?) checked 라디오버튼 행의 주문번호와 판매자명을 입력 양식 칸에 각각 입력함-->
-										<input type="radio" name="selectOrderNo">
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
 									<td><input type="radio" name="selectOrderNo"></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><input type="radio" name="selectOrderNo"></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><input type="radio" name="selectOrderNo"></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><input type="radio" name="selectOrderNo"></td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 
 						<div id="paging-area">
 							<ul class="pagination justify-content-center" style="margin:20px 0">
-								<li class="page-item"><a class="page-link" href="#">&lt;&lt;</a></li>
+								<!-- <li class="page-item"><a class="page-link" href="#">&lt;&lt;</a></li>
 								<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
 								<li class="page-item"><a class="page-link" href="#">1</a></li>
 								<li class="page-item disabled"><a class="page-link" href="#">2</a></li>
 								<li class="page-item"><a class="page-link" href="#">3</a></li>
 								<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-								<li class="page-item"><a class="page-link" href="#">&gt;&gt;</a></li>
+								<li class="page-item"><a class="page-link" href="#">&gt;&gt;</a></li> -->
 							</ul>
 						</div> <!--div id="paging-area" 영역 끝-->
 
@@ -240,22 +258,11 @@
 		// 	})
 		// })
 
-		// 휴대전화 번호 형식 검사 정규표현식 -> 2022.3.17(목) 18h20 테스트 시 문제점 = 정규표현식에 부합하는 전화번호 입력한 다음, 그 번호 수정해서 다시 이상한 형식이 되었을 때 오류 메시지가 안 뜸
-		$("input[name=phone]").blur(function() {
-			let $phone = $(this).val();
-			let regExp = /^010-\d{4}-\d{4}$/;
-
-			if (!regExp.test($phone)) {
-				$(".phoneCheckResult").text("잘못된 전화번호 형식입니다. 확인해 주세요~").css("display", "block");
-				$("input[name=phone]").focus();
-			} else {
-				$(".phoneCheckResult").css("display", "none");
-			}
-		})
-
 		// 선택된 주문번호 관련하여 기존 문의 내역이 있는지 확인하는 함수
 		function confirmOrderNo() {
 			let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
+			let $seller = $("#order-list input[type=radio]:checked").parent().siblings().eq(2).text();
+			// console.log($seller);
 
 			// 2022.3.18(금) 11h50 소영님이 알려주신, 주문번호 생성 테스트
 			/*
@@ -263,40 +270,71 @@
 			console.log(sampleOrderNo); // 1647571870181
 			*/
 			
-			if (window.confirm("주문번호" + $orderNo + " 관련 기존 문의 내역이 있습니다. 그래도 새로운 문의 글을 작성하시겠습니까?")) {
+			/*
+			if (window.confirm("선택하신 주문번호" + $orderNo + " 관련 기존 문의 내역이 있습니다. 그래도 새로운 문의 글을 작성하시겠습니까?")) {
 				addOrderNo($orderNo);
 			} else {
 				
-			} 
+			}
+			*/
 			
-			/*
+			// 2022.3.23(수) 1h40
 			$.ajax({
 				url : "confirmOrderNo.qu",
-				data : {orderNo : $orderNo},
+				data : {
+					// userNo : ${ loginUser.userNo }
+					questionWriter : 2,
+					questionSeller : $seller,
+					orderNo : $orderNo
+				},
 				success : function(result) {
 					console.log(result);
 					
-					if (result) { // 해당 주문번호로 기존 1:1 문의 내역이 있는 경우 = result는 1 이상의 정수 = db에서 select count(*) 조회한 결과
+					if (result == "Y") { // 해당 주문번호로 기존 1:1 문의 내역이 있는 경우 = result는 1 이상의 정수 = db에서 select count(*) 조회한 결과
 						if (window.confirm("주문번호" + $orderNo + " 관련 기존 문의 내역이 있습니다. 그래도 새로운 문의 글을 작성하시겠습니까?")) {
 							addOrderNo($orderNo);
+						} else { // 사용자가 해당 주문번호로 새로운 문의 글 작성을 희망하지 않는 경우, 모달 창 띄워두고 싶은데, 모달 창 닫힘 -> 어떻게 코드 써야 할지 잘 모르겠음
+							console.log("해당 주문번호로 기존 1:1 문의 내역 있는데, 새로운 문의 글 작성을 희망하지 않음");
 						}
+					} else { // 해당 주문번호로 기존 1:1 문의 내역 없는 경우, 특별히 처리할 일 없음
+						console.log("해당 주문번호로 기존 1:1 문의 내역 없음");
 					}
 				},
 				error : function() {
-					console.log("주문번호 관련 문의 글 작성 조회 실패")
+					console.log("주문번호 관련 문의 글 조회 실패")
 				}
 			})
-			*/
 		}
 
 		// 문의 글 작성 양식에 주문번호 및 판매자 입력
 		function addOrderNo($orderNo) {
 			// let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
-			let $seller = $("#order-list input[type=radio]:checked").parent().siblings().eq(2).text();
+			let $sellerName = $("#order-list input[type=radio]:checked").parent().siblings().eq(3).text();
 
 			$("input[name=orderNo]").val($orderNo).attr("readonly", true);
-			$("input[name=questionSeller]").val($seller).attr("readonly", true);
+			$("input[name=questionSeller]").val($sellerName).attr("readonly", true);
 		}
+		
+		$(function() {
+			// 판매자 입력
+			$("input[name=questionSeller]").keyup(function() {
+				
+			})
+			
+			// 휴대전화 번호 형식 검사 정규표현식 -> 2022.3.17(목) 18h20 테스트 시 문제점 = 정규표현식에 부합하는 전화번호 입력한 다음, 그 번호 수정해서 다시 이상한 형식이 되었을 때 오류 메시지가 안 뜸
+			$("input[name=phone]").blur(function() {
+				let $phone = $(this).val();
+				let regExp = /^010-\d{4}-\d{4}$/;
+
+				if (!regExp.test($phone)) {
+					$(".phoneCheckResult").text("잘못된 전화번호 형식입니다. 확인해 주세요~").css("display", "block");
+					$("input[name=phone]").focus();
+				} else {
+					$(".phoneCheckResult").css("display", "none");
+				}
+			})
+		})
+		
 	</script>
 
 </body>

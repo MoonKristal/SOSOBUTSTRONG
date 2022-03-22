@@ -1,11 +1,13 @@
 package com.sbs.wemasal.question.model.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // 2022.3.7(월) 16h5 은영
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
@@ -14,7 +16,7 @@ public class Question {
 	private int questionWriter; // QUESTION_WRITER	NUMBER	No		2	문의글 작성 회원(구매자) 번호
 	private int questionSeller; // QUESTION_SELLER	NUMBER	No		3	해당 문의글을 받을 판매자 번호
 	private String category; // CATEGORY	VARCHAR2(30 BYTE)	No		4	문의글 주제 카테고리; 배송지연, 주문/결제문의, 상품정보문의, 기타문의
-	private int orderNo; // ORDER_NO	NUMBER	Yes		5	특정 주문 관련 문의일 경우, 관련 주문 번호
+	private String orderNo; // ORDER_NO	NUMBER	Yes		5	특정 주문 관련 문의일 경우, 관련 주문 번호
 	private String questionTitle; // QUESTION_TITLE	VARCHAR2(500 BYTE)	No		6	문의글 제목
 	private String questionContent; // QUESTION_CONTENT	VARCHAR2(4000 BYTE)	No		7	문의글 내용
 	private String createDate; // CREATE_DATE	DATE	No	"SYSDATE	"	8	문의글 작성 날짜(및 시간)

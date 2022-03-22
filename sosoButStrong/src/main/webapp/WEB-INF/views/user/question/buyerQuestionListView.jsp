@@ -42,6 +42,7 @@
                                 <button type="button" class="searchPeriod 1month" value="4">1개월</button>
                                 <button type="button" class="searchPeriod 3months" value="5">3개월</button>
                                 <button type="button" class="searchPeriod 1year" value="6">1년</button>
+                                <button type="button" class="searchPeriod customized" value="7">직접 입력</button>
 
                                 <input type="date" name="startDate"> ~ <input type="date" name="endDate">
                             </td>
@@ -85,90 +86,97 @@
                                         $(this).siblings().css('background-color', '#EFEFEF'); // 클릭된 버튼을 제외하고 나머지 버튼의 배경색은 default 값으로 함
                                         $(this).css('background-color', 'rgb(182, 238, 86)'); // 클릭된 버튼의 배경색은 연두색으로 변경
                                         
-                                        // 조회 시작일 변수 startDate 선언 + 오늘 날짜로 값 초기화
-                                        let startDate = new Date();
+                                        // 2022.3.22(화) 14h20 '직접 입력' 버튼 추가
+                                        if ($(this).val() != 7) {
+                                        	// 조회 시작일 변수 startDate 선언 + 오늘 날짜로 값 초기화
+                                            let startDate = new Date();
 
-                                        // 조회 종료일로써 'YYYY-MM-DD' 형식의 오늘 날짜를 입력
-                                        // console.log("오늘은 " + now.getFullYear() + "년 " + now.getMonth() + "월 " + now.getDate() + "일입니다"); // 오늘은 2022년 2월 14일입니다
-                                        // console.log("오늘은 " + today + "로써, " + nowYear + "년 " + nowMonth + "월 " + nowDate + "일입니다"); // 오늘은 2022-03-14로써, 2022년 03월 14일입니다
-                                        $("input[name=endDate]").val(today);
-                                      
-                                        switch($(this).val()) {
-                                            case '1' : // 오늘~오늘 게시글 조회                                                                                
-                                                $("input[name=startDate]").val(today);
-                                                break;
-                                            case '2' : // 3일전~오늘 게시글 조회
-                                                // console.log(now.getDate()); // 14
-                                                startDate.setDate(now.getDate() - 3);
-                                                // console.log(startDate); // now - 3 = 1647241000773 vs 'Fri Mar 11 2022 16:14:55 GMT+0900 (한국 표준시)'
+                                            // 조회 종료일로써 'YYYY-MM-DD' 형식의 오늘 날짜를 입력
+                                            // console.log("오늘은 " + now.getFullYear() + "년 " + now.getMonth() + "월 " + now.getDate() + "일입니다"); // 오늘은 2022년 2월 14일입니다
+                                            // console.log("오늘은 " + today + "로써, " + nowYear + "년 " + nowMonth + "월 " + nowDate + "일입니다"); // 오늘은 2022-03-14로써, 2022년 03월 14일입니다
+                                            $("input[name=endDate]").val(today).attr("readonly", true);
+                                          
+                                            switch($(this).val()) {
+                                                case '1' : // 오늘~오늘 게시글 조회                                                                                
+                                                    $("input[name=startDate]").val(today).attr("readonly", true);
+                                                    break;
+                                                case '2' : // 3일전~오늘 게시글 조회
+                                                    // console.log(now.getDate()); // 14
+                                                    startDate.setDate(now.getDate() - 3);
+                                                    // console.log(startDate); // now - 3 = 1647241000773 vs 'Fri Mar 11 2022 16:14:55 GMT+0900 (한국 표준시)'
 
-                                                // '3일전' 실험 -> 문제 없음
-                                                /*
-                                                let march1 = new Date("2022-03-01");
-                                                startDate.setDate(march1.getDate() - 3);
-                                                console.log(startDate); // Sat Feb 26 2022 16:37:06 GMT+0900 (한국 표준시)
-                                                */                                               
-                                                $("input[name=startDate]").val(dayFormatter(startDate));
-                                                break;
-                                            case '3' : // 7일전~오늘 게시글 조회
-                                                startDate.setDate(now.getDate() - 7);
+                                                    // '3일전' 실험 -> 문제 없음
+                                                    /*
+                                                    let march1 = new Date("2022-03-01");
+                                                    startDate.setDate(march1.getDate() - 3);
+                                                    console.log(startDate); // Sat Feb 26 2022 16:37:06 GMT+0900 (한국 표준시)
+                                                    */                                               
+                                                    $("input[name=startDate]").val(dayFormatter(startDate)).attr("readonly", true);
+                                                    break;
+                                                case '3' : // 7일전~오늘 게시글 조회
+                                                    startDate.setDate(now.getDate() - 7);
 
-                                                // '7일전' 실험 -> 문제 없음
-                                                /*
-                                                let march3 = new Date("2022-03-03");
-                                                startDate.setDate(march3.getDate() - 7);
-                                                console.log(startDate); // Thu Feb 24 2022 16:39:48 GMT+0900 (한국 표준시)
-                                                */                                               
-                                                $("input[name=startDate]").val(dayFormatter(startDate));
-                                                break;
-                                            case '4' : // 1개월전~오늘 게시글 조회
-                                                // console.log(now.getMonth() - 1); // 1
-                                                startDate.setMonth(now.getMonth() - 1);
+                                                    // '7일전' 실험 -> 문제 없음
+                                                    /*
+                                                    let march3 = new Date("2022-03-03");
+                                                    startDate.setDate(march3.getDate() - 7);
+                                                    console.log(startDate); // Thu Feb 24 2022 16:39:48 GMT+0900 (한국 표준시)
+                                                    */                                               
+                                                    $("input[name=startDate]").val(dayFormatter(startDate)).attr("readonly", true);
+                                                    break;
+                                                case '4' : // 1개월전~오늘 게시글 조회
+                                                    // console.log(now.getMonth() - 1); // 1
+                                                    startDate.setMonth(now.getMonth() - 1);
 
-                                                // 문제점 사례1)
-                                                /*
-                                                let august31 = new Date("2021-08-31");
-                                                let exStartDate1 = new Date(august31);
-                                                exStartDate1.setMonth(august31.getMonth() - 2); // 연산 결과 = 2021.6.31 -> 2021.6/31은 현실에서 존재하지 않는 바, 2021.7.1로 찍힘
-                                                console.log(exStartDate1); // Thu Jul 01 2021 09:00:00 GMT+0900 (한국 표준시) vs 의도하는 바는 2021-06-30
-                                                */
+                                                    // 문제점 사례1)
+                                                    /*
+                                                    let august31 = new Date("2021-08-31");
+                                                    let exStartDate1 = new Date(august31);
+                                                    exStartDate1.setMonth(august31.getMonth() - 2); // 연산 결과 = 2021.6.31 -> 2021.6/31은 현실에서 존재하지 않는 바, 2021.7.1로 찍힘
+                                                    console.log(exStartDate1); // Thu Jul 01 2021 09:00:00 GMT+0900 (한국 표준시) vs 의도하는 바는 2021-06-30
+                                                    */
 
-                                                // 문제점 사례2)
-                                                /*
-                                                let march31 = new Date("2022-03-31");
-                                                let exStartDate2 = new Date(march31);
-                                                exStartDate2.setMonth(march31.getMonth() - 1); // 연산 결과 = 2022.2.31 -> 2022.2/29~부터 현실에서는 존재하지 않는 날짜이기 때문에 2022.3.3로 찍힘
-                                                console.log(exStartDate2); // Thu Mar 03 2022 09:00:00 GMT+0900 (한국 표준시) vs 의도하는 바는 2022-02-28
-                                                */
+                                                    // 문제점 사례2)
+                                                    /*
+                                                    let march31 = new Date("2022-03-31");
+                                                    let exStartDate2 = new Date(march31);
+                                                    exStartDate2.setMonth(march31.getMonth() - 1); // 연산 결과 = 2022.2.31 -> 2022.2/29~부터 현실에서는 존재하지 않는 날짜이기 때문에 2022.3.3로 찍힘
+                                                    console.log(exStartDate2); // Thu Mar 03 2022 09:00:00 GMT+0900 (한국 표준시) vs 의도하는 바는 2022-02-28
+                                                    */
 
-                                                // JavaScript에서 개월 수 감소시키는 연산에 따라 x개월 전의 날짜로써 2/4/6/9/11월31일 등의 날짜가 나오는 경우의 문제를 해결하기 위해 dateModifer() 메소드/로직 만듦
-                                                startDate = dateModifier(startDate, now);
+                                                    // JavaScript에서 개월 수 감소시키는 연산에 따라 x개월 전의 날짜로써 2/4/6/9/11월31일 등의 날짜가 나오는 경우의 문제를 해결하기 위해 dateModifer() 메소드/로직 만듦
+                                                    startDate = dateModifier(startDate, now);
 
-                                                $("input[name=startDate]").val(dayFormatter(startDate));
-                                                break;
-                                            case '5' : // 3개월전~오늘 게시글 조회
-                                                startDate.setMonth(now.getMonth() - 3);
-                                                startDate = dateModifier(startDate, now);
-                                                $("input[name=startDate]").val(dayFormatter(startDate));
-                                                break;
-                                            case '6' : // 1년전~오늘 게시글 조회
-                                                // 2022.3.15(화) 15h30 test -> 15h40 test 완료
-                                                /*
-                                                let feb2020 = new Date("2020-02-29");
-                                                let exStartDate3 = new Date(feb2020);
-                                                exStartDate3.setMonth(feb2020.getMonth() - 12); // 나의 의도 = 2020.2.29로부터 1년 전 = 2019.2.28(o) 2019.3.1(x) -> 나의 의도대로 동작함
-                                                exStartDate3 = dateModifier(exStartDate3, feb2020);
+                                                    $("input[name=startDate]").val(dayFormatter(startDate)).attr("readonly", true);
+                                                    break;
+                                                case '5' : // 3개월전~오늘 게시글 조회
+                                                    startDate.setMonth(now.getMonth() - 3);
+                                                    startDate = dateModifier(startDate, now);
+                                                    $("input[name=startDate]").val(dayFormatter(startDate)).attr("readonly", true);
+                                                    break;
+                                                case '6' : // 1년전~오늘 게시글 조회
+                                                    // 2022.3.15(화) 15h30 test -> 15h40 test 완료
+                                                    /*
+                                                    let feb2020 = new Date("2020-02-29");
+                                                    let exStartDate3 = new Date(feb2020);
+                                                    exStartDate3.setMonth(feb2020.getMonth() - 12); // 나의 의도 = 2020.2.29로부터 1년 전 = 2019.2.28(o) 2019.3.1(x) -> 나의 의도대로 동작함
+                                                    exStartDate3 = dateModifier(exStartDate3, feb2020);
 
-                                                $("input[name=endDate]").val(dayFormatter(feb2020));
-                                                $("input[name=startDate]").val(dayFormatter(exStartDate3));
-                                                */
+                                                    $("input[name=endDate]").val(dayFormatter(feb2020));
+                                                    $("input[name=startDate]").val(dayFormatter(exStartDate3));
+                                                    */
 
-                                                startDate.setMonth(now.getMonth() - 12);
-                                                startDate = dateModifier(startDate, now);
-                                                $("input[name=startDate]").val(dayFormatter(startDate));
+                                                    startDate.setMonth(now.getMonth() - 12);
+                                                    startDate = dateModifier(startDate, now);
+                                                    $("input[name=startDate]").val(dayFormatter(startDate)).attr("readonly", true);
 
-                                                break;      
-                                        } // switch문 영역 끝
+                                                    break;
+                                            } // switch문 영역 끝
+                                        } else {
+                                        	$("input[name=startDate]").val("").attr("readonly", false);
+                                        	$("input[name=endDate]").val("").attr("readonly", false);
+                                        }
+                                        
                                     })
                                 })
 
