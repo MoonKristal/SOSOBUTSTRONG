@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Seller;
 import com.sbs.wemasal.order.model.vo.Order;
 import com.sbs.wemasal.question.model.dao.QuestionDao;
 import com.sbs.wemasal.question.model.vo.Question;
@@ -36,6 +37,12 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public int countOrderNo(Question q) {
 		return questionDao.countOrderNo(sqlSession, q);
+	}
+
+	// 2022.3.23(수) 3h40
+	@Override
+	public ArrayList<Seller> searchSeller(String sellerKeyword) {
+		return questionDao.searchSeller(sqlSession, sellerKeyword);
 	}
 
 }

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Seller;
 import com.sbs.wemasal.order.model.vo.Order;
 import com.sbs.wemasal.question.model.vo.Question;
 
@@ -31,6 +32,11 @@ public class QuestionDao {
 	// 2022.3.23(수) 1h55
 	public int countOrderNo(SqlSessionTemplate sqlSession, Question q) {
 		return sqlSession.selectOne("questionMapper.countOrderNo", q);
+	}
+
+	// 2022.3.23(수) 3h45
+	public ArrayList<Seller> searchSeller(SqlSessionTemplate sqlSession, String sellerKeyword) {
+		return (ArrayList)sqlSession.selectList("questionMapper.searchSeller", sellerKeyword);
 	}
 
 }

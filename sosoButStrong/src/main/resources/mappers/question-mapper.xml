@@ -21,6 +21,17 @@
 		<result column="SELLER_IMAGE" property="sellerImage"/>
 		<result column="SELLER_COUNT" property="sellerCount"/>		
 	</resultMap>
+	
+	<resultMap type="seller" id="sellerResultset">
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_BRN" property="sellerBRN"/>
+		<result column="SELLER_PHONE" property="sellerPhone"/>
+		<result column="SELLER_LOCATION" property="sellerLocation"/>
+		<result column="SELLER_INTRO" property="sellerIntro"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>
+		<result column="SELLER_IMAGEPATH" property="sellerImagePath"/>
+		<result column="STATUS" property="sellerStatus"/>
+	</resultMap>
 
 	<!--2022.3.22(화) 16h10-->
 	<select id="selectBuyerOrderListCount" parameterType="_int" resultType="_int">
@@ -42,15 +53,19 @@
 	<select id="countOrderNo" parameterType="Question" resultType="_int">
 		SELECT COUNT(*)
 		FROM QUESTION
-		WHERE QUESTION_WRITER = ${questionWriter}
-			AND QUESTION_SELLER = ${questionSeller}
-			AND ORDER_NO = ${orderNo}
+		WHERE QUESTION_WRITER = #{questionWriter}
+			AND QUESTION_SELLER = #{questionSeller}
+			AND ORDER_NO = #{orderNo}
 			AND STATUS = 'Y'
 	</select>
 	
-	
-	
-
-
+	<!--2022.3.23(수) 3h45-->
+	<select id="searchSeller" parameterType="string" resultMap="sellerResultset">
+		SELECT SELLER_NAME
+		FROM SELLER
+		WHERE SELLER_NAME LIKE '%' || #{sellerKeyword} || '%'
+			AND STATUS = 'Y'
+		ORDER BY SELLER_NAME
+	</select>
 
 </mapper>

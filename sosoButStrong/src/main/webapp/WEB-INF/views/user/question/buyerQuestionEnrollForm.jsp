@@ -39,7 +39,10 @@
 					</tr>
 					<tr>
 						<th class="label">판매자*</th>
-						<td><input type="text" name="questionSeller" required></td>
+						<td>
+							<input type="text" name="questionSeller" required>
+							<div id="autoComplete"></div>
+						</td>
 					</tr>
 					<tr>
 						<th class="label">제목*</th>
@@ -103,82 +106,6 @@
 			</form>
 
 		</div> <!--div class="content" 영역 끝-->
-		
-		<script>
-			$("#buyerOrderList").click(function() {
-				$.ajax({
-					url : "buyerOrderList.qu",
-					data : {
-						// userNo : ${ loginUser.userNo }
-						userNo : 2
-					},
-					success : function(result) {
-						// console.log(result);
-						
-						// 2022.3.22(화) 23h5
-						let list = result.list;
-						// console.log(list);
-						
-						let tbody = "";
-						
-						if (!result.list.length) { // 주문 내역이 없는 경우
-							tbody = "<tr><td colspan=8>주문 내역이 없습니다.</td></tr>"
-						} else { // 주문 내역이 있는 경우
-							// 주문 내역 목록 띄우기
-							$.each(list, function(index, order) {
-								tbody += "<tr>"
-										+ "<td>" + order.orderNo + "</td>" 
-										+ "<td>" + order.orderDate + "</td>" 
-										+ "<td>" + order.seller + "</td>" 
-										+ "<td>" + order.sellerName + "</td>" 
-										+ "<td>" + order.orderItem.substr(0, 30) + "...</td>" 
-										+ "<td>" + order.quantity + "</td>" 
-										+ "<td>" + order.orderPrice + "</td>" 
-										+ "<td><input type='radio' name='selectOrderNo'></td>"
-										+ "</tr>";
-										// 라디오버튼 1개가 checked되면, Ajax 요청 보내서 이 구매자가 이 주문번호로 문의한 내역이 QUESTION 테이블에 있는지 확인
-										// -> 해당 사항 있으면 confirm 창 띄우고,
-										// -> 구매자가 true 선택 시 modal창 닫으며(근데 이걸 어떻게 하지?) checked 라디오버튼 행의 주문번호와 판매자명을 입력 양식 칸에 각각 입력함-
-							})
-							
-							$("#order-list").html(tbody);
-							
-							// 주문 내역 페이징 처리
-							let pi = result.pi;
-							// console.log(pi);
-							// console.log(pi.currentPage);
-							
-							var pagingArea = ""; // 여기 페이징바가 떠야 하는데..
-							
-							if (pi.currentPage != 1) {
-								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + ">&gt;</a></li>";
-								// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + "''>&lt;</button>";
-							}
-							
-							for (let i = pi.startPage; i <= pi.endPage; i++) {
-								if (i != pi.currentPage) {
-									pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + i + ">" + i + "</a></li>";
-									// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + i + "''>" + i + "</button>";
-								} else {
-									pagingArea += "<li class='page-item'><a class='page-link' href='#'>" + i + "</a></li>";
-								}
-							}
-							
-							if (pi.currentPage != pi.maxPage && pi.maxPage != 0) {
-								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage + 1) + ">&gt;</a></li>";
-							}
-							
-							$("#paging-area>ul").html(pagingArea);
-						} // else문 영역 끝
-						
-					},
-					error : function() {
-						console.log("주문 목록 조회 실패")
-					}
-				})
-			})
-		
-		</script>
 
 		<!-- The Modal -->
 		<div class="modal fade" id="selectOrder">
@@ -236,7 +163,7 @@
 					
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="" data-dismiss="modal">취소</button>
+						<button type="button" class="" data-dismiss="modal" onclick="cancelOrderNo();">취소</button>
 						<button type="button" class="greenBtn" data-dismiss="modal" onclick="confirmOrderNo();">선택</button> <!--이 '선택' 버튼 클릭하면, checked 라디오버튼 행의 주문번호와 판매자명을 입력 양식 칸에 각각 입력함-->
 					</div>
 					
@@ -257,7 +184,25 @@
 
 		// 	})
 		// })
-
+		
+		// 2022.3.23(수) 4h20 '주문 조회' 모달 창에서 '취소' 버튼 클릭 시
+		function cancelOrderNo() {
+			$("input[name=orderNo]").val("").attr("readonly", false);
+			$("input[name=questionSeller]").val("").attr("readonly", false);
+			
+			/*
+			let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
+			let $sellerName = $("#order-list input[type=radio]:checked").parent().siblings().eq(3).text();
+			
+			if ($("input[type=radio]:checked")) {
+				$("input[name=orderNo]").val($orderNo).attr("readonly", true);
+				$("input[name=questionSeller]").val($sellerName).attr("readonly", true);
+			} else {
+				
+			}
+			*/
+		}
+		
 		// 선택된 주문번호 관련하여 기존 문의 내역이 있는지 확인하는 함수
 		function confirmOrderNo() {
 			let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
@@ -296,8 +241,9 @@
 						} else { // 사용자가 해당 주문번호로 새로운 문의 글 작성을 희망하지 않는 경우, 모달 창 띄워두고 싶은데, 모달 창 닫힘 -> 어떻게 코드 써야 할지 잘 모르겠음
 							console.log("해당 주문번호로 기존 1:1 문의 내역 있는데, 새로운 문의 글 작성을 희망하지 않음");
 						}
-					} else { // 해당 주문번호로 기존 1:1 문의 내역 없는 경우, 특별히 처리할 일 없음
+					} else { // 해당 주문번호로 기존 1:1 문의 내역 없는 경우, 별도 확인 필요 없이, 문의 글 쓰도록 넘어가면 됨
 						console.log("해당 주문번호로 기존 1:1 문의 내역 없음");
+						addOrderNo($orderNo);
 					}
 				},
 				error : function() {
@@ -316,9 +262,125 @@
 		}
 		
 		$(function() {
-			// 판매자 입력
+			$("#buyerOrderList").click(function() {
+				$.ajax({
+					url : "buyerOrderList.qu",
+					data : {
+						// userNo : ${ loginUser.userNo }
+						userNo : 2
+					},
+					success : function(result) {
+						// console.log(result);
+						
+						// 2022.3.22(화) 23h5
+						let list = result.list;
+						// console.log(list);
+						
+						let tbody = "";
+						
+						if (!result.list.length) { // 주문 내역이 없는 경우
+							tbody = "<tr><td colspan=8>주문 내역이 없습니다.</td></tr>"
+						} else { // 주문 내역이 있는 경우
+							// 주문 내역 목록 띄우기
+							$.each(list, function(index, order) {
+								tbody += "<tr>"
+										+ "<td>" + order.orderNo + "</td>" 
+										+ "<td>" + order.orderDate + "</td>" 
+										+ "<td>" + order.seller + "</td>" 
+										+ "<td>" + order.sellerName + "</td>" 
+										+ "<td>" + order.orderItem.substr(0, 30) + "...</td>" 
+										+ "<td>" + order.quantity + "</td>" 
+										+ "<td>" + order.orderPrice + "</td>";
+										
+								// 라디오버튼 1개가 checked되면, Ajax 요청 보내서 이 구매자가 이 주문번호로 문의한 내역이 QUESTION 테이블에 있는지 확인
+								// -> 해당 사항 있으면 confirm 창 띄우고,
+								// -> 구매자가 true 선택 시 modal창 닫으며(근데 이걸 어떻게 하지?) checked 라디오버튼 행의 주문번호와 판매자명을 입력 양식 칸에 각각 입력함
+								if ($("input[name=orderNo]").val() == order.orderNo) { //  && $("input[name=sellerName]").val() == order.sellerName
+									tbody += "<td><input type='radio' name='selectOrderNo' checked></td>";
+								} else {
+									tbody += "<td><input type='radio' name='selectOrderNo'></td>";
+								}
+								
+								tbody += "</tr>";
+							})
+							
+							$("#order-list").html(tbody);
+							
+							// 주문 내역 페이징 처리
+							let pi = result.pi;
+							// console.log(pi);
+							// console.log(pi.currentPage);
+							
+							var pagingArea = ""; // 여기 페이징바가 떠야 하는데..
+							
+							if (pi.currentPage != 1) {
+								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + ">&gt;</a></li>";
+								// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + (pi.currentPage - 1) + "''>&lt;</button>";
+							}
+							
+							for (let i = pi.startPage; i <= pi.endPage; i++) {
+								if (i != pi.currentPage) {
+									pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + i + ">" + i + "</a></li>";
+									// pagingArea += "<button onclick='location.href='buyerOrderList.qu?cpage=" + i + "''>" + i + "</button>";
+								} else {
+									pagingArea += "<li class='page-item'><a class='page-link' href='#'>" + i + "</a></li>";
+								}
+							}
+							
+							if (pi.currentPage != pi.maxPage && pi.maxPage != 0) {
+								pagingArea += "<li class='page-item'><a class='page-link' href='buyerOrderList.qu?cpage=" + (pi.currentPage + 1) + ">&gt;</a></li>";
+							}
+							
+							$("#paging-area>ul").html(pagingArea);
+						} // else문 영역 끝
+						
+					},
+					error : function() {
+						console.log("주문 목록 조회 실패")
+					}
+				})
+			})
+			
+			// 2022.3.23(수) 3h20 판매자 이름 자동완성 검색해서 입력
+			// 참고 = https://lts0606.tistory.com/469
 			$("input[name=questionSeller]").keyup(function() {
-				
+				let $searchSeller = $(this).val();
+
+				$.ajax({
+					url : "searchSeller.qu",
+					data : {
+						sellerKeyword : $searchSeller
+					},
+					success : function(result) {
+						console.log(result);
+						
+						if ($searchSeller != '') { // 판매자 이름 칸에 어떤 글자가 입력되면
+							$("#autoComplete").children().remove();
+
+							result.forEach(function(seller) { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
+								if (seller.sellerName.indexOf($searchSeller) > -1) { // 만약 입력된 데이터가 가져온 데이터에 비슷한 경우면,
+									$("#autoComplete").append($("<div>").text(seller.sellerName));
+								}
+							})
+							
+							$("#autoComplete").children().each(function() { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
+								$(this).click(function() {
+									$("input[name=questionSeller]").val($(this).text());
+									$("#autoComplete").children().remove();
+									// isComplete = true; // 참고 사이트의 '전체 코드' 부분에는 이 코드가 적혀있는데, 무슨 의미인지 모르겠음 -> 4h10 아래 부분 읽다 보니, 내 화면에는 필요 없는 부분임
+								})
+							})
+						} else {
+							$("#autoComplete").children().remove();
+						}
+						
+					},
+					error : function() {
+						console.log("판매자 이름 검색 실패");
+					}
+
+				})
+
 			})
 			
 			// 휴대전화 번호 형식 검사 정규표현식 -> 2022.3.17(목) 18h20 테스트 시 문제점 = 정규표현식에 부합하는 전화번호 입력한 다음, 그 번호 수정해서 다시 이상한 형식이 되었을 때 오류 메시지가 안 뜸

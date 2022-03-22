@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
 import com.sbs.wemasal.order.model.vo.Order;
@@ -93,6 +94,13 @@ public class QuestionController {
 													.build());
 		
 		return result > 0? "Y" : "N"; // 기존 문의 내역이 있으면 Y vs 없으면 N 반환 
+	}
+	
+	// 2022.3.23(수) 3h35
+	@ResponseBody
+	@RequestMapping(value="searchSeller.qu", produces="application/json; charset=utf-8")
+	public String ajaxSearchSeller(String sellerKeyword) {
+		return new Gson().toJson(questionService.searchSeller(sellerKeyword));
 	}
 	
 	// 2022.3.17(목) 18h25
