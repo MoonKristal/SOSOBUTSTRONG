@@ -10,6 +10,7 @@ import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.community.model.vo.Reply;
 
 @Repository
 public class CommunityDao {
@@ -39,6 +40,14 @@ public class CommunityDao {
 
 	public CoAttachment selectCommunity(SqlSessionTemplate sqlSession, int cno) {
 		return sqlSession.selectOne("communityMapper.selectCommunity", cno);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply re) {
+		return sqlSession.insert("communityMapper.insertReply", re);
+	}
+
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int refComNo) {
+		return (ArrayList)sqlSession.selectList("communityMapper.selectReplyList", refComNo);
 	}
 
 

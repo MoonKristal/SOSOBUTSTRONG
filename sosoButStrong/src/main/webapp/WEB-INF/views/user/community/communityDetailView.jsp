@@ -34,8 +34,9 @@
                         </c:choose>
                     </div>
                     <div class="likes">
-                        <a href="#">
-                            <img src="resources/images/하트.png" class="like" alt="좋아요">
+                        <a onclick="saladLike()" id="saladLike">
+                            <img src="resources/images/하트.png" class="like" id="fullHeart" alt="좋아요">
+                            <img src="resources/images/빈하트.png" class="like" id="emptyHeart" alt="좋아요">
                         </a>
                         1356
                     </div>
@@ -68,52 +69,212 @@
             </div>
             <hr>
             <div class="btnArea">
-                <button type="submit" class="btn btn-outline-secondary">신고하기</button>
+                <button type="submit" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">신고하기</button>
                 <a class="btn btn-outline-warning" href="communityList.co">목록가기</a>
             </div>
         </div>
 
         <div class="content2">
-            <form action="" method="post">
-                <div class="content2_1">
-                    <input type="text" placeholder="댓글을 입력해주세요.">
-                    <button type="submit" class="btn btn-warning">댓글등록</button>
-                </div>
-            </form>
+            <div class="content2_1">
+                <c:choose>
+                    <c:when test="${ empty loginUser }">
+                        <!-- 로그인 전-->
+                        <input type="text" name="replyContent" id="replyContent" placeholder="로그인 후 이용해주세요." readonly>
+                        <button class="btn btn-warning disabled" onclick="addReply();">댓글등록</button>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- 로그인 후 -->
+                        <input type="text" name="replyContent" id="replyContent" placeholder="댓글을 입력해주세요.">
+                        <button class="btn btn-warning" onclick="addReply();">댓글등록</button>
+                    </c:otherwise>
+                </c:choose>
+            </div>
             <div class="content2_2">
-                <table align="center">
-                    <tr style="height: 50px;">
-                        <th style="width: 120px;">few*** 님</th>
-                        <td style="width: 300px;">엥 이조합이 맛있다구요?</td>
-                        <td style="width: 150px;">2022-02-02 16:06</td>
-                        <td style="width: 100px;"><button type="submit" class="btn btn-outline-secondary">신고</button></td>
-                    </tr>
-                    <tr style="height: 50px;">
-                        <th style="width: 120px;">few*** 님</th>
-                        <td style="width: 300px;">엥 이조합이 맛있다구요?</td>
-                        <td style="width: 150px;">2022-02-02 16:06</td>
-                        <td style="width: 100px;"><button type="submit" class="btn btn-outline-secondary">신고</button></td>
-                    </tr>
-                    <tr style="height: 50px;">
-                        <th style="width: 120px;">few*** 님</th>
-                        <td style="width: 300px;">엥 이조합이 맛있다구요?</td>
-                        <td style="width: 150px;">2022-02-02 16:06</td>
-                        <td style="width: 100px;"><button type="submit" class="btn btn-outline-secondary">신고</button></td>
-                    </tr>
-                    <tr style="height: 50px;">
-                        <th style="width: 120px;">few*** 님</th>
-                        <td style="width: 300px;">엥 이조합이 맛있다구요?</td>
-                        <td style="width: 150px;">2022-02-02 16:06</td>
-                        <td style="width: 100px;"><button type="submit" class="btn btn-outline-secondary">신고</button></td>
-                    </tr>
+                <table class="replyArea" align="center">
+                    <tbody>
+                        
+                    </tbody>
                 </table>
             </div>
         </div>
         <div style="height: 200px;"></div>
     </div>
 
-
     <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>
+    
+    <!-- 게시글 신고 모달창 -->
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <b>게시글 신고하기</b>
+                </h4>
+                <hr>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <form action="reportCommunity.re" method="post">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    글제목 |  ${ coA.comTitle }<br>
+                    작성자 |  ${ coA.userId } <br>
+                    <hr>
+                    <h5>사유선택</h5>
+                    <input type="radio" name="reason" id="reason1" value="duplicate writing"><label for="reason1"> 스팸홍보 / 도배글입니다.</label><br>
+                    <input type="radio" name="reason" id="reason2" value="illegality"><label for="reason2"> 불법정보를 포함하고 있습니다.</label><br>
+                    <input type="radio" name="reason" id="reason3" value="harmful"><label for="reason3"> 청소년에게 유해한 내용입니다.</label><br>
+                    <input type="radio" name="reason" id="reason4" value="badWord"><label for="reason4"> 욕설 / 생명경시 / 혐오 / 차별적 표현입니다.</label><br>
+                    <input type="radio" name="reason" id="reason5" value="personal infomation"><label for="reason5"> 개인정보 노출 개시물입니다.</label><br>
+                    <input type="radio" name="reason" id="reason6" value="unpleasant expression"><label for="reason6"> 불쾌한 표현이 있습니다.</label><br>
+                    <br>
+                    <input type="hidden" name="userNo" value="${coA.userNo}">
+                    <input type="hidden" name="reortCom" value="${coA.comNo}">
+                </div>
+            
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+                    <button type="submit" class="btn btn-danger">신고하기</button>
+                </div>
+            </form>
+	    </div>
+	  </div>
+	</div>
+
+    <!-- 댓글 신고 모달창 -->
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title">
+                      <b>댓글 신고하기</b>
+                  </h4>
+                  <hr>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              
+              <form action="reportReply.re" method="post">
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <h5>사유선택</h5>
+                      <input type="radio" name="reason" id="replyReason1" value="duplicate writing"><label for="replyReason1"> 스팸홍보 / 도배글입니다.</label><br>
+                      <input type="radio" name="reason" id="replyReason2" value="illegality"><label for="replyReason2"> 불법정보를 포함하고 있습니다.</label><br>
+                      <input type="radio" name="reason" id="replyReason3" value="harmful"><label for="replyReason3"> 청소년에게 유해한 내용입니다.</label><br>
+                      <input type="radio" name="reason" id="replyReason4" value="badWord"><label for="replyReason4"> 욕설 / 생명경시 / 혐오 / 차별적 표현입니다.</label><br>
+                      <input type="radio" name="reason" id="replyReason5" value="personal infomation"><label for="replyReason5"> 개인정보 노출 개시물입니다.</label><br>
+                      <input type="radio" name="reason" id="replyReason6" value="unpleasant expression"><label for="replyReason6"> 불쾌한 표현이 있습니다.</label><br>
+                      <br>
+                      <input type="hidden" name="reportCom" value="${coA.comNo}">
+                      <input type="hidden" name="userNo" value="${coA.userNo}">
+                      <input type="hidden" name="reportRep">
+                  </div>
+              
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+                      <button type="submit" class="btn btn-danger">신고하기</button>
+                  </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    
+    
+    <script>
+    	$(function(){
+    		selectReplyList();
+    		
+    	})
+    	
+    	function addReply(){
+    		if($("#replyContent").val().trim() != 0){
+    			$.ajax({
+    				url : "replyInsert.co",
+    				data : {
+    					refComNo : '${ coA.comNo }',
+    					replyContent : $("#replyContent").val(),
+			    		userNo : '${ loginUser.userNo}'
+    				}, success : function(status){
+    					console.log(status);
+    					if(status == "success"){
+    						selectReplyList();
+    						$("#replyContent").val("");
+    					}
+   					}, error : function(){
+   						console.log("댓글 작성 실패");
+    				}
+    			})
+    		} 
+    		else{
+    			alert("댓글을 작성해주세요.");
+    		}
+    	}
+    	
+    	function selectReplyList(){
+    		$.ajax({
+    			url : "replyList.co",
+    			data : {
+    				refComNo : '${ coA.comNo }'
+    			},
+    			success : function(list){
+                    let value = "";
+                    for(let i in list){
+                        value += "<tr style='height: 50px'>"
+                                    + "<td style='width: 120px'>" + list[i].userId + "</td>"
+                                    + "<td style='width: 300px'>" + list[i].replyContent + "</td>"
+                                    + "<td style='width: 200px'>" + list[i].createDate + "</td>"
+                                    + "<td style='width: 100px'>" + "<button type='submit' class='rebutton btn btn-outline-secondary' data-comNo='" + list[i].refComNo + "' data-login='${loginUser.userNo}' data-toggle='modal' data-target='#myModal2'>신고</button>" + "</td>"
+                                + "</tr>";
+                    }
+                    $(".replyArea tbody").html(value);
+                    var rebuttonVal = $('.rebutton').attr('data-comNo');
+                    $('input[name=reportRep]').val(rebuttonVal);
+
+    			}, error : function(){
+    				console.log("댓글 조회 실패");
+    			}
+    		})
+    	}
+	
+    	function saladLike(){
+    		if($("#saladLike").children().eq(0).attr('id') == "fullHeart"){
+    			isLike = "Y";
+    		} else {
+                isLike = "N"; 
+            }
+    		
+            if(loginUser != null){
+                $.ajax({
+                    url : 'like.he',
+                    data : {
+                        'isLike' : isLike
+                        
+                    }
+
+                })
+            }
+    		
+    		
+    		
+    	}
+    	
+
+       
+        
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
 
 </body>
 </html>

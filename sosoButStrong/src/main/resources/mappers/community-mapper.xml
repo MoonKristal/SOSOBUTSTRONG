@@ -37,6 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="REF_CNO" property="refCno" />
 	</resultMap>
 	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_ID" property="userId" />
+		<result column="REF_COM_NO" property="refComNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPORT" property="report" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	
 	<select id="selectCommunityCount" resultType="_int">
 		SELECT COUNT(*)
 		  FROM COMMUNITY
@@ -131,6 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectCommunity" resultMap="coAttachmentResultSet">
 		SELECT
 				COM_NO
+			  , C.USER_NO
 			  , USER_ID
 			  , COM_TITLE
 			  , SALAD_NAME
@@ -155,7 +168,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  		COM_NO = #{cno}
 	</select>
 
+	<insert id="insertReply">
+		INSERT INTO REPLY(
+						   REPLY_NO
+						 , USER_NO
+						 , REF_COM_NO
+						 , REPLY_CONTENT
+						 )
+						 VALUES
+						 (
+						 SEQ_RPNO.NEXTVAL
+						 , #{userNo}
+						 , #{refComNo}
+						 , #{replyContent}
+						 )
+	</insert>
 
+	<select id="selectReplyList" resultMap="replyResultSet">
+		SELECT 
+				REPLY_NO
+			  , USER_ID
+			  , REF_COM_NO
+			  , REPLY_CONTENT
+			  , REPORT
+			  , CREATE_DATE
+		  FROM
+		  		REPLY R
+		 LEFT JOIN MEMBER M ON(R.USER_NO = M.USER_NO) 
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REF_COM_NO = #{refComNo}
+		 ORDER
+		 		BY
+		 			CREATE_DATE DESC
+	</select>
 
 
 

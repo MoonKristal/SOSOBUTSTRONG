@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reportMapper">
+	
+	<select id="selectReportCommunity" parameterType="report" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE USER_NO = #{userNo}
+		  AND REPORT_COM = #{reportCom}
+	</select>
+	
+	<insert id="insertReportCommunity">
+		INSERT INTO REPORT(
+						   USER_NO
+						 , REPORT_COM
+						 , REASON
+						 )
+						 VALUES
+						 (
+						   #{userNo}
+						 , #{reportCom}
+						 , #{reason}
+						 )
+	</insert>
+	
+	<select id="selectReportReply" parameterType="report" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE USER_NO = #{userNo}
+		  AND REPORT_COM = #{reportCom}
+		  AND REPORT_REP = #{reportRep}
+	</select>
+	
+	<insert id="insertReportReply">
+		INSERT INTO REPORT(
+						   USER_NO
+						 , REPORT_COM
+						 , REPORT_REP
+						 , REASON
+						 )
+						 VALUES
+						 (
+						   #{userNo}
+						 , #{reportCom}
+						 , #{reportRep}
+						 , #{reason}
+						 )
+	</insert>
+
+
+</mapper>

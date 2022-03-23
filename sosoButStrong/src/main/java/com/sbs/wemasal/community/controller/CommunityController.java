@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
@@ -24,6 +26,7 @@ import com.sbs.wemasal.common.template.SaveFile;
 import com.sbs.wemasal.community.model.service.CommunityService;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.community.model.vo.SmarteditorVO;
 
 @Controller
@@ -41,8 +44,6 @@ public class CommunityController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 9);
 
 		ArrayList<Community> list = communityService.communityList(pi);
-		
-		
 		
 		mv.addObject("list", list).addObject("pi", pi).setViewName("user/community/communityListView");
 		
@@ -145,6 +146,22 @@ public class CommunityController {
 		result = "redirect:" + callback + "?callback_func=" + URLEncoder.encode(callback_func,"UTF-8") + file_result;
 		
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("replyInsert.co")
+	public String ajaxInsertReply(Reply re) {
+		
+		System.out.println(re.getRefComNo());
+		
+		return communityService.insertReply(re) > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "replyList.co", produces="application/json; charset=utf-8")
+	public String ajaxReplyList(int refComNo) {
+		
+		return new Gson().toJson(communityService.selectReplyList(refComNo));
 	}
 	
 	

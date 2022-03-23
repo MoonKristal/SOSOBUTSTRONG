@@ -11,6 +11,7 @@ import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.community.model.dao.CommunityDao;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.community.model.vo.Reply;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -45,6 +46,16 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public CoAttachment selectCommunity(int cno) {
 		return communityDao.selectCommunity(sqlSession, cno);
+	}
+
+	@Override
+	public int insertReply(Reply re) {
+		return communityDao.insertReply(sqlSession, re);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int refComNo) {
+		return communityDao.selectReplyList(sqlSession, refComNo);
 	}
 
 

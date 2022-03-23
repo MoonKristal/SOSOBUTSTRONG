@@ -30,7 +30,7 @@
                             샐러드 소개<br>
                         </div>
                         <div class="content_input">
-                            <input type="hidden" name="userNo" value="2"><br>
+                            <input type="hidden" name="userNo" value="${ loginUser.userNo }"><br>
                             <input type="text" name="comTitle" class="input_tag" required><br>
                             <input type="text" name="saladName" class="input_tag" maxlength="15" placeholder="15자 이내로 작성해주세요." required><br>
                             <input type="text" name="saladMaterial" class="input_tag" placeholder="( , )로 구분하여 작성해주세요." required><br>

@@ -6,6 +6,7 @@ import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.community.model.vo.Reply;
 
 public interface CommunityService {
 	
@@ -21,6 +22,12 @@ public interface CommunityService {
 
 	// 게시글 정보 조회
 	CoAttachment selectCommunity(int cno);
+
+	// 댓글작성
+	int insertReply(Reply re);
+
+	// 댓글조회
+	ArrayList<Reply> selectReplyList(int refComNo);
 
 
 
