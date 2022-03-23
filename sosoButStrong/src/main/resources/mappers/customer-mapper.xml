@@ -19,6 +19,7 @@
 		<result column="SELLER_LOCATION" property="sellerLocation" />
 		<result column="SELLER_INTRO" property="sellerIntro" />
 		<result column="SELLER_IMAGEPATH" property="sellerImagePath" />
+		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
 	</resultMap>
 
@@ -48,7 +49,7 @@
                 PRODUCT_NO DESC
 	</select>
 
-	<select id="selectSaladDetailView" parameterType="int" resultMap="customerResultSet">
+	<select id="selectSaladDetailView" parameterType="_int" resultMap="customerResultSet">
 		SELECT
 				PRODUCT_NO,
 				UPLOADER,
@@ -66,6 +67,7 @@
                 SELLER_LOCATION,
                 SELLER_INTRO,
                 SELLER_IMAGEPATH,
+                ORIGIN_NAME,
                 CHANGE_NAME
 		  FROM
 				PRODUCT

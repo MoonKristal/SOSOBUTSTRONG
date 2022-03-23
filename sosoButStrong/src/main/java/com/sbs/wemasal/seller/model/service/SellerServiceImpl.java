@@ -42,6 +42,19 @@ public class SellerServiceImpl implements SellerService{
 		return sellerDao.uploadAttachment(sqlSession, at);
 	}
 
+	@Override
+	public int deleteProduct(int pno) {
+		return sellerDao.deleteProduct(sqlSession, pno);
+	}
 
+	@Override
+	public int updateProduct(Product p) {
+		return sellerDao.updateProduct(sqlSession, p);
+	}
+
+	@Override
+	public int updateAttachment(Attachment at) {
+		return sellerDao.updateAttachment(sqlSession, at);
+	}
 
 }

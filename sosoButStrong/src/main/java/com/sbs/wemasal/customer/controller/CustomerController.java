@@ -17,8 +17,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	/**
-	 * 판매중인 상품(샐러드)리스트 보기, 페이징처리 X
-	 * @param currentPage
+	 * 판매중인 상품(샐러드)리스트 보기 / 페이징처리 X / 상품 가로로 4개 씩 아래로 순차적 나열 형태
 	 * @param mv
 	 * @return
 	 */
@@ -32,8 +31,8 @@ public class CustomerController {
 		return mv;
 	}
 	/**
-	 * 상품(샐러드) 상세,디테일뷰 보기
-	 * @param pno
+	 * 상품(샐러드)상세(디테일뷰)보기
+	 * @param pno : 상세보기 할 상품번호(식별 값)
 	 * @param mv
 	 * @return
 	 */

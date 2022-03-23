@@ -126,7 +126,8 @@
           </div>
           
           <hr class="divider">
-
+            <img src="resources/uploadFiles/delivery_Info.jpg" alt="배송정보_이미지"><!-- 배송정보 이미지-->
+            <br>
             <div id="detail-img-text-box">
                 <pre cols="120" rows="25">${ c.description }</pre> <!-- 상품 상세페이지 영역-->
             </div>

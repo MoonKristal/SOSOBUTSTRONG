@@ -14,6 +14,7 @@
     <div class="outer">
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품조회/수정</h2>
+        <br>
         <table align="center" class="list-area">
             <thead>
                 <tr style="background-color: lightgray;">
@@ -30,8 +31,8 @@
             <tbody>
                 <c:forEach var="p" items="${ list }">
 	                	<tr>
-		                    <td><button>수정</button></td>
-		                    <td><button>삭제</button></td>
+		                    <td><a href="updateProductForm.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-warning" onclick="return confirm('상품을 수정 하시겠습니까?')">수정</a></td>
+		                    <td><a href="deleteProduct.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-danger" onclick="return confirm('상품을 삭제 하시겠습니까?')">삭제</a></td>
 		                    <td>${ p.productNo }</td>
 		                    <td>${ p.productName }</td>
 		                    <td>${ p.sellStatus }</td>
@@ -43,6 +44,7 @@
             </tbody>
         </table>
     </div>
+
         <!-- 페이징 영역-->
         <div id="pagingArea">
             <ul class="pagination">
