@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.wemasal.customer.model.dao.CustomerDao;
 import com.sbs.wemasal.customer.model.vo.Customer;
+import com.sbs.wemasal.customer.model.vo.Review;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -24,8 +25,13 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer selectSaladDetailView(int pno) {
-		return customerDao.selectSaladDetailView(sqlSession, pno);
+	public Customer selectSaladDetailView(int productNo) {
+		return customerDao.selectSaladDetailView(sqlSession, productNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectProductReviewList(int productNo) {
+		return customerDao.selectProductReviewList(sqlSession, productNo);
 	}
 	
 }

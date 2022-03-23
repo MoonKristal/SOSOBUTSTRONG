@@ -22,6 +22,18 @@
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
 	</resultMap>
+	
+	<resultMap id="reviewResultSet" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REF_PNO" property="refPno" />
+		<result column="REVIEW_WRITER" property="reviewWriter" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="SCORE" property="score" />
+		<result column="USER_ID" property="userId" />
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
 
 	<select id="selectSaladList" resultMap="customerResultSet">
 		SELECT
@@ -74,7 +86,28 @@
           JOIN SELLER ON (UPLOADER = USER_NO)
           LEFT JOIN ATTACHMENT USING (PRODUCT_NO)
 		 WHERE
-				PRODUCT_NO = #{pno}
+				PRODUCT_NO = #{productNo}
 	</select>
+	
+	<select id="selectProductReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REF_PNO = #{productNo}
+		  ORDER
+		  		BY REVIEW_NO ASC
+	</select>
+	
  
 </mapper>

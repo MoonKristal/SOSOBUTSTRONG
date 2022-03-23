@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.sbs.wemasal.customer.model.service.CustomerService;
 import com.sbs.wemasal.customer.model.vo.Customer;
 
@@ -46,5 +48,15 @@ public class CustomerController {
 		
 		return mv;
 	}
-
+	/**
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="reviewList.cmm", produces="application/json; charset=UTF-8")
+	public String ajaxSelectProductReviewList(int pno) {
+		
+		System.out.println("야랄났다~!!" + customerService.selectProductReviewList(pno));
+		
+		return new Gson().toJson(customerService.selectProductReviewList(pno));
+	}
 }

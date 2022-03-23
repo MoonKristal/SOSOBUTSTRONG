@@ -20,7 +20,7 @@ public class Customer { // 상품리스트, 상세 보기 가공 용도 VO
 	private String sellerLocation; //	SELLER_LOCATION	VARCHAR2(200 BYTE) 업체 소재지
 	private String sellerIntro; //	SELLER_INTRO	VARCHAR2(1000 BYTE) 업체 소개글
 	private String sellerImagePath; //	SELLER_IMAGE	VARCHAR2(200 BYTE) 업체 대표이미지
-	private String originName; // 상품등록 시 첨부한 썸네일 저장경로
+	private String originName; // 상품등록 시 첨부한 썸네일 원본명
 	private String changeName; // 상품등록 시 첨부한 썸네일 저장경로
 
 	

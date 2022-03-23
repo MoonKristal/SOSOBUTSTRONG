@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>샐러드 상세보기</title>
+<title>샐러드 상세보기-리뷰상세</title>
 <link rel="stylesheet" href="resources/css/user/customer/saladDetailView.css">
 </head>
 <body>
@@ -130,35 +130,7 @@
           </div>
           
           <hr class="divider"> <!-- 구분선 / 위는 상품 리뷰영역 아래는 상품상세 및 상품정보고시 영역-->
-          
-            <img src="resources/uploadFiles/delivery_Info.jpg" alt="배송정보_이미지"><!-- 배송정보 이미지-->
-            <br>
-            <div id="detail-img-text-box">
-                <pre cols="120" rows="25">${ c.description }</pre> <!-- 상품 상세페이지 영역-->
-            </div>
 
-            <table class="pInfo" align="center"> <!-- 상품정보고시 영역-->
-                <tr class="pInfoTitle">
-                    <th>필수표기정보</th>
-                    <th>&nbsp;허위사실 기재 및 정보 오류로 인한 문제 발생시 관련법에 의거 처벌 받을 수 있습니다.&nbsp;</th>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">제품명</td>
-                    <td>&nbsp;&nbsp;${ c.productName }</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">생산자 및 소재지</td>
-                    <td>&nbsp;&nbsp;${ c.sellerName } / ${ c.sellerLocation }</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">&nbsp;제조일자 / 유통기한&nbsp;</td>
-                    <td>&nbsp;&nbsp;상세페이지 참조</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">원재료명 및 함량</td>
-                    <td>&nbsp;&nbsp;상세페이지 참조</td>
-                </tr>
-            </table>
 	</div>
 
     <script>
@@ -220,5 +192,3 @@
     <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 </body>
 </html>
-
-
