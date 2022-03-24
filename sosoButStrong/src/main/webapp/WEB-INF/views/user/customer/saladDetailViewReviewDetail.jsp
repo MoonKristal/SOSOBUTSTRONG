@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>샐러드 상세보기-리뷰상세</title>
 <link rel="stylesheet" href="resources/css/user/customer/saladDetailView.css">
+<link rel="stylesheet" href="resources/css/user/customer/saladDetailViewReviewDetail.css">
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -119,7 +120,7 @@
           <div class="review">
             <table align="center">
                 <thead>
-                    <tr><th colspan="2">구매자 리뷰(<span id="rcount"></span>)</th><th colspan="3" style="text-align: right;"><a href="#">MORE</a></th></tr>
+                    <tr><th colspan="2">구매자 리뷰 전체보기 (<span id="rcount"></span>)</th><th colspan="3" style="text-align: right;"><a href="javascript:history.back();">상품상세 페이지로</a></th></tr>
                     <tr><th>&nbsp;</th></tr>
     
                 </thead>
@@ -128,18 +129,45 @@
                 </tbody>
               </table>
           </div>
-          
-          <hr class="divider"> <!-- 구분선 / 위는 상품 리뷰영역 아래는 상품상세 및 상품정보고시 영역-->
+
+            <!-- 상품리뷰 이미지 원본크기로 보기, 모달 영역 -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" alt="상품리뷰사진" id="rImage">
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+
+            <script>
+                $(document).on("click", ".img", function(){ // 상품리뷰에 첨부된 이미지를 클릭하면
+        
+                    $("#rImage").attr('src', this.src); // 클릭한 이미지의 src 속성을 모달창 속 이미지 태그의 src 속성의 밸류값으로 변경
+        
+                    $("#myModal").modal('show'); // 모달 창 띄우기
+                })
+            </script>
+
+
+          <hr class="divider"> <!-- 구분선 -->
 
 	</div>
 
     <script>
+
         $(function(){ // 문서가 로드되면
 
             selectProductReviewList(); // 상품리뷰 조회해오는 메소드를 실행
 
         })
-        function selectProductReviewList(){ // 상품 리뷰 조회 AJAX
+        
+            function selectProductReviewList(){ // 상품 리뷰 조회 AJAX
 				
 				$.ajax({
 					url : "reviewList.cmm", // 요청 URL
@@ -152,7 +180,7 @@
 
                         if(list.length != 0){ // 해당 상품에 등록된 리뷰가 있는 경우
 
-                            for(var i = 0; i < 3; i++){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동시 열람가능
+                            for(let i in list){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동시 열람가능
 
                                 switch(list[i].score){ // 별점 화면상 숫자문양으로 변환하기 위한 조건문
                                     case 0 : starRate = '☆☆☆☆☆'; break;
@@ -164,11 +192,11 @@
                                 }
                                 // 문자열 누적
                                 result += "<tr>"
-                                result += "<td style='text-align: center; width:60px;'>" + list[i].userId + "</td>"
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 200px; height: 150px' class='img' ></td>"    
+                                result += "<td style='text-align: center; width:90px;'>" + list[i].userId + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
-                                result += "<td style='text-align: center; width: 70px;'><img style='width: 100px;' src='" + list[i].changeName + "'></td>"
                                 result += "</tr>"
                             }
                             
@@ -176,7 +204,7 @@
                             $("#rcount").text(list.length); // 리뷰 개수 노출영역에 삽입
 
                         }
-                        else{ // 해당 상품에 등록된 리뷰가 없는 경우
+                        else { // 해당 상품에 등록된 리뷰가 없는 경우
                             result += "<tr><td colspan='9' style='pointer-events: none; width:600px; text-align: center;'>등록된 상품 리뷰가 없습니다.</td></tr>"
                             $(".review thead").append(result);
                             $("#rcount").text(list.length);

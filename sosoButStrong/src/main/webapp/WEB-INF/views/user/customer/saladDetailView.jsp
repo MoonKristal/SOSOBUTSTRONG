@@ -119,7 +119,7 @@
           <div class="review">
             <table align="center">
                 <thead>
-                    <tr><th colspan="2">구매자 리뷰(<span id="rcount"></span>)</th><th colspan="3" style="text-align: right;"><a href="#">MORE</a></th></tr>
+                    <tr><th colspan="2">구매자 리뷰(<span id="rcount"></span>)</th><th colspan="3" style="text-align: right;"><a class="moreReview" href="reviewDetailView.cmm?pno=${c.productNo}">MORE</a></th></tr>
                     <tr><th>&nbsp;</th></tr>
     
                 </thead>
@@ -162,12 +162,13 @@
 	</div>
 
     <script>
+
         $(function(){ // 문서가 로드되면
 
-            selectProductReviewList(); // 상품리뷰 조회해오는 메소드를 실행
-
+            selectProductReviewList(); // 상품리뷰 조회해오는 메소드
         })
-        function selectProductReviewList(){ // 상품 리뷰 조회 AJAX
+
+            function selectProductReviewList(){ // 상품 리뷰 조회 AJAX
 				
 				$.ajax({
 					url : "reviewList.cmm", // 요청 URL
@@ -204,10 +205,11 @@
                             $("#rcount").text(list.length); // 리뷰 개수 노출영역에 삽입
 
                         }
-                        else{ // 해당 상품에 등록된 리뷰가 없는 경우
+                        else { // 해당 상품에 등록된 리뷰가 없는 경우
                             result += "<tr><td colspan='9' style='pointer-events: none; width:600px; text-align: center;'>등록된 상품 리뷰가 없습니다.</td></tr>"
-                            $(".review thead").append(result);
+                            $(".review thead").append(result); // 리뷰 영역에 윗줄 내용(리뷰없음) 삽입
                             $("#rcount").text(list.length);
+                            $(".moreReview").attr('style', "display:none;"); // 리뷰 더보기 버튼 안보이도록 설정
                         }
 	                },
 	                error : function(){

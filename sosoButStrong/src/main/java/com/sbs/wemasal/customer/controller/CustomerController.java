@@ -42,21 +42,34 @@ public class CustomerController {
 	public ModelAndView selectSaladDetailView(int pno, ModelAndView mv) {
 		
 		Customer c = customerService.selectSaladDetailView(pno);
-		System.out.println(pno);
 		
 		mv.addObject("c",c).setViewName("user/customer/saladDetailView");
 		
 		return mv;
 	}
 	/**
-	 * 
+	 * 상품리뷰 조회 (AJAX)
+	 * @param pno
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="reviewList.cmm", produces="application/json; charset=UTF-8")
 	public String ajaxSelectProductReviewList(int pno) {
 		
-		System.out.println("야랄났다~!!" + customerService.selectProductReviewList(pno));
-		
 		return new Gson().toJson(customerService.selectProductReviewList(pno));
+	}
+	/**
+	 * 리뷰 더보기 페이지로 이동 (AJAX)
+	 * @param pno
+	 * @return
+	 */
+	@RequestMapping("reviewDetailView.cmm")
+	public ModelAndView reviewDetailView(int pno, ModelAndView mv) {
+		
+		Customer c = customerService.selectSaladDetailView(pno);
+		
+		mv.addObject("c",c).setViewName("user/customer/saladDetailViewReviewDetail");
+		
+		return mv;
 	}
 }
