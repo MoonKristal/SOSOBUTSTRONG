@@ -98,9 +98,7 @@ public class MemberController {
 		}
 		
 	}
-	
 
-	
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId) {
@@ -112,8 +110,6 @@ public class MemberController {
 	public void updateMember() {
 		
 	}
-	
-	
 	// --------------------------------------------
 		@RequestMapping("sellerInsert.se")
 		public String insertSeller(Member m, Seller s, Model model, HttpSession session, MultipartFile upfile) {
@@ -137,7 +133,6 @@ public class MemberController {
 				session.setAttribute("alertMsg", "실패하였습니다.");
 				return "redirect:/";
 			}
-			
 		}
 		// 상호 중복체크
 		@ResponseBody
@@ -150,10 +145,68 @@ public class MemberController {
 		// -----------------------------------------------------------------
 	
 	
+		// 구매자 회원정보수정 비밀번호 확인페이지로
+		@RequestMapping("buyerInformationPwdCheck.me") 
+		public String buyerInformationPwdCheck() {
+			return "user/member/buyerInformationPwdCheck";
+		}
 	
+		// 비밀번호 확인 후 구매자 회원정보수정 페이지로
+		@RequestMapping("PWDCheck.me") 
+		public String buyerInformation(String userId, String userPwd, HttpSession session, Model model) {
+			
+			String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+			if(bcryptPasswordEncoder.matches(userPwd, encPwd)) { // 비밀번호가 맞을 경우 => 구매자회원정보수정페이지로
+				return "user/member/buyerInformation";
+			} else { // 비밀번호가 틀릴 경우
+				session.setAttribute("alertMsg", "비밀번호가 틀렸습니다.");
+				return "user/member/buyerInformationPwdCheck";
+			}
+		}
+		
 	
-	
-	
-	
+		// 일반회원 정보 수정 처리
+		@RequestMapping("buyerInformationUpdate.me") 
+		public String updateMember(Member m, Model model, HttpSession session) {
+			
+			int result = memberService.updateMember(m);
+			
+			if(result > 0) { // 수정성공
+				
+				Member updateMem = memberService.loginMember(m);
+				session.setAttribute("loginUser", updateMem);
+				
+				session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
+				return "user/member/buyerInformationPwdCheck";
+				
+			} else { // 수정실패 
+				session.setAttribute("alertMsg", "수정실패했습니다.");
+				return "user/member/buyerInformationPwdCheck";
+			}
+			
+		}
+		
+		@RequestMapping("buyerInformationDelete.me")
+		public String deleteMember(String userId, HttpSession session, Model model) {
+		
+			int result = memberService.deleteMember(userId);
+			if(result > 0) {
+				// 탈퇴처리 성공 => session에서 loginUser 지움, alert문구 담기 => 메인페이지 url요청
+				session.removeAttribute("loginUser");
+				session.setAttribute("alertMsg", "탈퇴되었습니다.");
+				return "redirect:/";
+			} else {
+				// 탈퇴처리 실패
+				session.setAttribute("alertMsg", "회원탈퇴 실패하였습니다.");
+				return "redirect:/";
+			}
+		}
+		
+		// 아이디/비밀번호 찾기 페이지로
+		@RequestMapping("findIDPW.me") 
+		public String findIDPW() {
+			return "user/member/findIDPW";
+		}
+		
 	
 }

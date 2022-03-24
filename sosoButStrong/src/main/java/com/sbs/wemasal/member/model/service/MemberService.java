@@ -13,14 +13,13 @@ public interface MemberService {
 	int insertMember(Member m);
 
 	int idCheck(String checkId);
-
-	
-	
-	
-	
 	
 	int insertSeller(Member m, Seller s);
-
+	
 	int sellerNameCheck(String checkName);
+
+	int updateMember(Member m);
+
+	int deleteMember(String userId);
 
 }

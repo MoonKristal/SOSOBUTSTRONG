@@ -1,10 +1,30 @@
-
+div{
+		    /* border: 1px solid green; */
+		    box-sizing: border-box;
+		}
+		
+		/* 헤더 아래 영역 전체 */
+		.outer{
+		    width: 1200px;
+		    margin: auto;
+		    /* height: auto; */
+		}
+		
+		/* 중간~우측 내용 영역 */
+		div.bodyLR{
+		    width: 1200px;
+		    height: 100%;
+			float: left;
+		    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
+		}
+		
+		/* footer에 float 적용되지 않도록 해제 */
+		.footer{
+		    clear: both;
+		}
+		/*---------------------------------------------------*/
 		/*레이아웃 나누기*/
-        div.bodyLR {
-	        width: 1200px;
-			margin: auto;
-	    }
-	    
+
 	    div.left {
 	        width: 50%;
 	        float: left;

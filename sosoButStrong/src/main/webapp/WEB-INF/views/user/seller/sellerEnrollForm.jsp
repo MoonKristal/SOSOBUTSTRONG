@@ -19,7 +19,7 @@
     <div id="header1"><h4>판매자 회원가입</h4></div>
  	
  	<!-- enrollForm -->
- 	<div id="enrollForm">
+ 	<div id="outer">
 		<form id="enroll-form" action="sellerInsert.se" method="post" enctype="multipart/form-data">
 		    <div class="bodyLR">
 		        <!-- left -->

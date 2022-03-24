@@ -5,42 +5,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
-
-<style>
-    div {
-        width: 100%;
-        height: 300px;
-        
-        border: 1px solid #000;
-    }
-    div.left {
-        width: 50%;
-        float: left;
-        box-sizing: border-box;
-    }
-    div.right {
-        width: 50%;
-        float: right;
-        box-sizing: border-box;
-    }
-    </style>
-
-
-
+<title>회원가입 선택</title>
+<link rel="stylesheet" href="resources/css/user/member/memberEnroll.css">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<div>
-        <div class="left">
-        	<a href="memberEnroll.me">일반회원</a>
-        </div>
-        <div class="right">
-        	<a href="sellerEnroll.me">판매자</a>
-        </div>
+	<div class="outer"> <!--header 아래 모든 부분 감싸는 div-->
+        <div class="content">
+		<!-- 여기는 content div입니다 -->
+			<div id="header"><h3>회원가입</h3></div>
+		    <div class="left">
+		    	<div id="content1">
+				        <!-- 일반회원 -->
+				        <div>
+				           <img src="/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/resources/images/일반회원.png" alt="일반회원">
+				        </div>
+				        <!-- BTN -->
+				        <div class="btn_area" align="center"> 
+				           <button type="button" onclick="location.href='memberEnroll.me'" id="buyerBtn" >일반회원</button>
+				    	</div>
+				</div>
+		    </div>
+		    <div class="right">
+		    	<div id="content2">
+				        <!-- 판매자 -->
+				        <div>
+				           <img src="/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/resources/images/판매자.png" alt="판매자">
+				        </div>
+				        <!--  -->
+				        <!-- BTN -->
+				        <div class="btn_area" align="center"> 
+				           <button type="button" onclick="location.href='sellerEnroll.me'" id="sellerBtn">판매자</button>
+				    	</div>
+				</div>
+		    </div>
+		</div> 
+		<!--div class="content" 영역 끝-->
     </div>
-	<br><br><br><br><br>
 	<jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 </body>
 </html>
