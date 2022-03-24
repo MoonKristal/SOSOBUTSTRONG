@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<typeAlias type="com.sbs.wemasal.report.model.vo.Report" alias="report" />
 	
+		<typeAlias type="com.sbs.wemasal.like.model.vo.Like" alias="like" />
 	</typeAliases>
 	
 	<!--  
@@ -59,6 +60,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="/mappers/customer-mapper.xml" />	
 		
 		<mapper resource="/mappers/report-mapper.xml" />
+		
+		<mapper resource="/mappers/like-mapper.xml" />
 
 
 	</mappers>

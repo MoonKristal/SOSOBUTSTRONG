@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="likeMapper">
+	
+	<delete id="deleteLike">
+		DELETE FROM "LIKE" WHERE COM_NO = #{comNo} AND USER_NO = #{userNo}
+	</delete>
+	
+	<insert id="insertLike">
+		INSERT INTO "LIKE" (LIKE_NO, USER_NO, COM_NO)
+		VALUES(SEQ_LKNO.NEXTVAL, #{userNo}, #{comNo})
+	</insert>
+	
+	
+	
+	
+	
+</mapper>

@@ -35,10 +35,16 @@
                     </div>
                     <div class="likes">
                         <a onclick="saladLike()" id="saladLike">
-                            <img src="resources/images/하트.png" class="like" id="fullHeart" alt="좋아요">
-                            <img src="resources/images/빈하트.png" class="like" id="emptyHeart" alt="좋아요">
+                            <c:choose>
+                                <c:when test="${like.myLike eq 'Y'}">
+                                    <img src="resources/images/하트.png" class="like fullHeart" id="fullHeart" alt="좋아요">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="resources/images/빈하트.png" class="like emptyHeart" id="emptyHeart" alt="좋아요">
+                                </c:otherwise>
+                            </c:choose>
                         </a>
-                        1356
+                        <b>${ like.likeCount }</b>
                     </div>
                 </div>
             </div>
@@ -69,10 +75,25 @@
             </div>
             <hr>
             <div class="btnArea">
-                <button type="submit" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">신고하기</button>
-                <a class="btn btn-outline-warning" href="communityList.co">목록가기</a>
+                <div class="btnAreaDiv">
+                    <c:choose>
+                        <c:when test="${ loginUser.userId eq coA.userId }">
+                            <a type="submit" class="btn btn-outline-secondary" onclick="postFormSubmit(1);">수정하기</a>
+                            <button type="submit" class="btn btn-outline-danger" onclick="postFormSubmit(2);">삭제하기</button>
+                        </c:when>
+                        <c:when test="${ not empty loginUser }">
+                            <button type="submit" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">신고하기</button>
+                        </c:when>
+                    </c:choose>
+                    <a class="btn btn-outline-warning" href="communityList.co">목록가기</a>
+                </div>
             </div>
         </div>
+
+        <form action="post" action="" id="postForm">
+            <input type="hidden" name="cno" value="${coA.comNo}">
+            <input type="hidden" name="filePath" value="${coA.changeName}">
+        </form>
 
         <div class="content2">
             <div class="content2_1">
@@ -130,8 +151,8 @@
                     <input type="radio" name="reason" id="reason5" value="personal infomation"><label for="reason5"> 개인정보 노출 개시물입니다.</label><br>
                     <input type="radio" name="reason" id="reason6" value="unpleasant expression"><label for="reason6"> 불쾌한 표현이 있습니다.</label><br>
                     <br>
-                    <input type="hidden" name="userNo" value="${coA.userNo}">
-                    <input type="hidden" name="reortCom" value="${coA.comNo}">
+                    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                    <input type="hidden" name="reportCom" value="${coA.comNo}">
                 </div>
             
                 <!-- Modal footer -->
@@ -188,7 +209,7 @@
     <script>
     	$(function(){
     		selectReplyList();
-    		
+            
     	})
     	
     	function addReply(){
@@ -228,11 +249,11 @@
                                     + "<td style='width: 120px'>" + list[i].userId + "</td>"
                                     + "<td style='width: 300px'>" + list[i].replyContent + "</td>"
                                     + "<td style='width: 200px'>" + list[i].createDate + "</td>"
-                                    + "<td style='width: 100px'>" + "<button type='submit' class='rebutton btn btn-outline-secondary' data-comNo='" + list[i].refComNo + "' data-login='${loginUser.userNo}' data-toggle='modal' data-target='#myModal2'>신고</button>" + "</td>"
+                                    + "<td style='width: 100px'>" + "<button type='submit' class='rebutton btn btn-outline-secondary' data-replyNo='" + list[i].replyNo + "' data-login='${loginUser.userNo}' data-toggle='modal' data-target='#myModal2'>신고</button>" + "</td>"
                                 + "</tr>";
                     }
                     $(".replyArea tbody").html(value);
-                    var rebuttonVal = $('.rebutton').attr('data-comNo');
+                    var rebuttonVal = $('.rebutton').attr('data-replyNo');
                     $('input[name=reportRep]').val(rebuttonVal);
 
     			}, error : function(){
@@ -242,26 +263,48 @@
     	}
 	
     	function saladLike(){
-    		if($("#saladLike").children().eq(0).attr('id') == "fullHeart"){
+            var status = $("#saladLike").children().eq(0).attr('id');
+
+    		if(status == "fullHeart"){
     			isLike = "Y";
     		} else {
                 isLike = "N"; 
             }
     		
-            if(loginUser != null){
+            if(${loginUser != null}){
                 $.ajax({
                     url : 'like.he',
                     data : {
-                        'isLike' : isLike
-                        
+                        'isLike' : isLike,
+                        'comNo' : '${ coA.comNo}'
+                    }, success : function(result){
+                    	console.log(result);
+                        if(result > 0){
+                            if(isLike == 'Y'){
+                                $("#saladLike").children().eq(0).replaceWith($('img.emptyHeart'));
+                                $("#saladLike>b").text(Number($('#saladLike>b').text())-1);
+                                location.reload();
+                            } else{
+                                $("#saladLike").children().eq(0).replaceWith($('img.fullHeart'));
+                                $("#saladLike>b").text(Number($('#saladLike>b').text())+1);
+                                location.reload();
+                            }
+                        }
                     }
 
                 })
             }
-    		
-    		
-    		
     	}
+
+        function postFormSubmit(num){
+            if(num == 1){
+                $("#postForm").attr("action", "recipeUpdateForm.co").submit();
+            } else {
+                $("#postForm").attr("action", "recipeDelete.co").submit();
+
+            }
+
+        }
     	
 
        

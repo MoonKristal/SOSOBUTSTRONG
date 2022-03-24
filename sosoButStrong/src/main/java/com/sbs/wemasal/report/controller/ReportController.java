@@ -61,6 +61,8 @@ public class ReportController {
 		
 		int reportResult = reportService.selectReportReply(re);
 		
+		System.out.println(re.toString());
+		
 		if(reportResult > 0) {
 			
 			session.setAttribute("alertMsg", "이미 신고하신 댓글입니다.");
@@ -82,6 +84,24 @@ public class ReportController {
 			return "redirect:" + referer;
 		}
 	}
+	
+	@RequestMapping("communityReportList.re")
+	public String communityReportList() {
+		
+		return "admin/report/communityReportListView";
+	}
+	
+	@RequestMapping("replyReportList.re")
+	public String replyReportList() {
+		
+		return "admin/report/replyReportListView";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }

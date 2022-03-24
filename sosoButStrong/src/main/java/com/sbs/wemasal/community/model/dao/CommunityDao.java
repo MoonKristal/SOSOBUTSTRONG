@@ -11,6 +11,7 @@ import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
 import com.sbs.wemasal.community.model.vo.Reply;
+import com.sbs.wemasal.like.model.vo.Like;
 
 @Repository
 public class CommunityDao {
@@ -48,6 +49,45 @@ public class CommunityDao {
 
 	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int refComNo) {
 		return (ArrayList)sqlSession.selectList("communityMapper.selectReplyList", refComNo);
+	}
+
+	public String selectIsLike(SqlSessionTemplate sqlSession, Like l) {
+		return sqlSession.selectOne("communityMapper.selectIsLike", l);
+	}
+
+	public int selectLikeCount(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.selectOne("communityMapper.selectLikeCount", cno);
+	}
+
+	public Like selectLike(SqlSessionTemplate sqlSession, Like l) {
+		return sqlSession.selectOne("communityMapper.selectLike", l);
+	}
+
+	public ArrayList<Community> selectMyList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("communityMapper.selectMyList", userNo, rowBounds);
+	}
+
+	public int deleteAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.delete("communityMapper.deleteAttachment", at);
+	}
+
+	public int updateCommunity(SqlSessionTemplate sqlSession, Community co) {
+		return sqlSession.update("communityMapper.updateCommunity", co);
+	}
+
+	public int insertAttachment(SqlSessionTemplate sqlSession, CoAttachment coA) {
+		return sqlSession.insert("communityMapper.insertAttachment", coA);
+	}
+
+	public int deleteCommunity(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.delete("communityMapper.deleteCommunity", cno);
 	}
 
 
