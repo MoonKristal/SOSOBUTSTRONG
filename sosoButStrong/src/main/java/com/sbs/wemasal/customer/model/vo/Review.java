@@ -11,15 +11,18 @@ public class Review { // 상품리뷰 관련 가공 용도 VO
 	private int score; //	SCORE	NUMBER
 	private String status; //	STATUS	VARCHAR2(1 BYTE)
 	
+	private String userNo; // 리뷰 작성한 회원번호
 	private String userId; // 리뷰 작성한 회원아이디
 	private String changeName; // 상품등록 시 첨부한 썸네일 저장경로
+	private String originName; // 상품등록 시 첨부한 썸네일 원본명
 	
 	public Review() {
 		super();
 	}
 
 	public Review(int reviewNo, int refPno, int reviewWriter, String reviewContent, String createDate,
-			String modifyDate, int score, String status, String userId, String changeName) {
+			String modifyDate, int score, String status, String userNo, String userId, String changeName,
+			String originName) {
 		super();
 		this.reviewNo = reviewNo;
 		this.refPno = refPno;
@@ -29,8 +32,10 @@ public class Review { // 상품리뷰 관련 가공 용도 VO
 		this.modifyDate = modifyDate;
 		this.score = score;
 		this.status = status;
+		this.userNo = userNo;
 		this.userId = userId;
 		this.changeName = changeName;
+		this.originName = originName;
 	}
 
 	public int getReviewNo() {
@@ -97,6 +102,14 @@ public class Review { // 상품리뷰 관련 가공 용도 VO
 		this.status = status;
 	}
 
+	public String getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -113,10 +126,19 @@ public class Review { // 상품리뷰 관련 가공 용도 VO
 		this.changeName = changeName;
 	}
 
+	public String getOriginName() {
+		return originName;
+	}
+
+	public void setOriginName(String originName) {
+		this.originName = originName;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", refPno=" + refPno + ", reviewWriter=" + reviewWriter
 				+ ", reviewContent=" + reviewContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate
-				+ ", score=" + score + ", status=" + status + ", userId=" + userId + ", changeName=" + changeName + "]";
+				+ ", score=" + score + ", status=" + status + ", userNo=" + userNo + ", userId=" + userId
+				+ ", changeName=" + changeName + ", originName=" + originName + "]";
 	}
 }

@@ -10,7 +10,7 @@
 		<result column="PRICE" property="price"/>
 		<result column="QUANTITY" property="quantity"/>
 		<result column="SELLER_NAME" property="sellerName"/>
-		<result column="SELLER_IMAGE" property="sellerImage"/>	
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>	
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -29,8 +29,11 @@
 		<result column="SELLER_NAME" property="sellerName"/>
 		<result column="ORDER_NO" property="orderNo"/>	
 		<result column="DELIVERY_NO" property="deliveryNo"/>
-		<result column="SELLER_IMAGE" property="sellerImage"/>
-		<result column="SELLER_COUNT" property="sellerCount"/>		
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
+		<result column="SELLER_COUNT" property="sellerCount"/>	
+		<result column="ORDERER" property="orderer"/>   
+      	<result column="PRODUCT_NAME" property="productName"/>
+		<result column="PRODUCT_NO" property="productNo"/>
 	</resultMap>
 
 	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
@@ -40,7 +43,7 @@
 				C.PRICE, 
 				C.QUANTITY, 
 				S.SELLER_NAME, 
-				S.SELLER_IMAGE, 
+				S.SELLER_IMAGEPATH,
 				S.USER_NO
 		FROM CART C
 		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
@@ -78,7 +81,9 @@
 						QUANTITY,
 						ORDERER,
 						SELLER,
-						SELLER_NAME
+						SELLER_NAME,
+						PRODUCT_NAME,
+						PRODUCT_NO
 						)
 		VALUES
 		
@@ -95,8 +100,10 @@
 						#{quantity},
 						#{orderer},
 						#{seller},
-						#{sellerName}
-			)			
+						#{sellerName},
+						#{productName}
+						#{productNo}
+			)
 		
 	</insert>
 	

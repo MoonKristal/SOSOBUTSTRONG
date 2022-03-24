@@ -32,7 +32,9 @@
 		<result column="MODIFY_DATE" property="modifyDate" />
 		<result column="SCORE" property="score" />
 		<result column="USER_ID" property="userId" />
+		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
+		<result column="USER_NO" property="userNo" />
 	</resultMap>
 
 	<select id="selectSaladList" resultMap="customerResultSet">
@@ -106,8 +108,77 @@
 		   AND
 		   		REF_PNO = #{productNo}
 		  ORDER
-		  		BY REVIEW_NO ASC
+		  		BY REVIEW_NO DESC
 	</select>
 	
+	<select id="selectMyReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REVIEW_WRITER = #{userNo}
+		  ORDER
+		  		BY REVIEW_NO DESC
+	</select>
+	
+	<update id="deleteReview">
+		UPDATE
+				REVIEW
+		   SET
+		   		STATUS = 'N'
+		 WHERE
+		 		REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<select id="selectReviewForUpdate" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+				,ORIGIN_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REVIEW_NO = #{reviewNo}
+	</select>
  
+	<update id="updateReview" parameterType="review">
+		UPDATE 
+		        REVIEW 
+		   SET
+			    REVIEW_CONTENT = #{reviewContent}
+		       ,MODIFY_DATE = SYSDATE
+               ,SCORE = #{score}
+		 WHERE
+		        REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<update id="updateAttachment" parameterType="attachment">
+		UPDATE 
+		        ATTACHMENT 
+		   SET
+		        ORIGIN_NAME = #{originName}
+			   ,CHANGE_NAME = #{changeName}
+		       ,UPLOAD_DATE = SYSDATE
+		 WHERE
+		        REF_RNO = #{refRno}
+	</update>
+
 </mapper>

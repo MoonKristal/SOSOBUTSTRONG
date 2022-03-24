@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.dao.CustomerDao;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
@@ -33,5 +34,30 @@ public class CustomerServiceImpl implements CustomerService{
 	public ArrayList<Review> selectProductReviewList(int productNo) {
 		return customerDao.selectProductReviewList(sqlSession, productNo);
 	}
-	
+
+	@Override
+	public ArrayList<Review> selectMyReviewList(int userNo) {
+		return customerDao.selectMyReviewList(sqlSession, userNo);
+	}
+
+	@Override
+	public int deleteReview(int ReviewNo) {
+		return customerDao.deleteReview(sqlSession, ReviewNo);
+	}
+
+	@Override
+	public Review selectReviewForUpdate(int ReviewNo) {
+		return customerDao.selectReviewForUpdate(sqlSession, ReviewNo);
+	}
+
+	@Override
+	public int updateAttachment(Attachment at) {
+		return customerDao.updateAttachment(sqlSession, at);
+	}
+
+	@Override
+	public int updateReview(Review r) {
+		return customerDao.updateReview(sqlSession, r);
+	}
+
 }

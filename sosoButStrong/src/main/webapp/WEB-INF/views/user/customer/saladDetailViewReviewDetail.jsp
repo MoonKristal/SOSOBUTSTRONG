@@ -122,11 +122,9 @@
                 <thead>
                     <tr><th colspan="2">구매자 리뷰 전체보기 (<span id="rcount"></span>)</th><th colspan="3" style="text-align: right;"><a href="javascript:history.back();">상품상세 페이지로</a></th></tr>
                     <tr><th>&nbsp;</th></tr>
+                    <tr><th>&nbsp;</th></tr>
     
                 </thead>
-                <tbody>
-    
-                </tbody>
               </table>
           </div>
 
@@ -192,7 +190,7 @@
                                 }
                                 // 문자열 누적
                                 result += "<tr>"
-                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 200px; height: 150px' class='img' ></td>"    
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 130px; height: 100px' class='img' ></td>"    
                                 result += "<td style='text-align: center; width:90px;'>" + list[i].userId + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"

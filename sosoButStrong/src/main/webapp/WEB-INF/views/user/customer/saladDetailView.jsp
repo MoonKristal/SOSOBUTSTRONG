@@ -197,7 +197,7 @@
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
-                                result += "<td style='text-align: center; width: 70px;'><img style='width: 100px;' src='" + list[i].changeName + "'></td>"
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 100px; height:60px;' ></td>"
                                 result += "</tr>"
                             }
                             

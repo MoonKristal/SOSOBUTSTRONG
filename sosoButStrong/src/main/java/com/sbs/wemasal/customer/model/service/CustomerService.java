@@ -2,8 +2,10 @@ package com.sbs.wemasal.customer.model.service;
 
 import java.util.ArrayList;
 
+import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
+import com.sbs.wemasal.seller.model.vo.Product;
 
 public interface CustomerService {
 	
@@ -16,4 +18,18 @@ public interface CustomerService {
 	// 상품(샐러드)리뷰 리스트 조회
 	ArrayList<Review> selectProductReviewList(int productNo);
 	
+	// 나의 상품(샐러드)리뷰 리스트 조회
+	ArrayList<Review> selectMyReviewList(int userNo);
+	
+	// 리뷰 삭제
+	int deleteReview(int ReviewNo);
+	
+	// 리뷰 수정용 조회
+	Review selectReviewForUpdate(int ReviewNo);
+	
+	// 리뷰 첨부파일 수정
+	int updateAttachment(Attachment at);
+	
+	// 리뷰 수정
+	int updateReview(Review r);
 }

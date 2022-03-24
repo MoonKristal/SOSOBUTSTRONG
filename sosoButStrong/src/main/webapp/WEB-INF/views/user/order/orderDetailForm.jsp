@@ -37,7 +37,7 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
-                            <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
+                            <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" data-toggle="modal" data-target="#myModal" ></a> <br>
                         </c:if>
                     </td>                                   
                 </tr>
@@ -149,6 +149,33 @@
         </form>
     </div>
 
+
+
+    <!-- 리뷰작성 폼 (모달) -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+            Modal body..
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    
     
     <script>    
        // 배송조회시 실행될 작은 사이즈의 창
