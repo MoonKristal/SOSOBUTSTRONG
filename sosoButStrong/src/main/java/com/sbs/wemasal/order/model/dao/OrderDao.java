@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.vo.Order;
 
 @Repository
@@ -53,8 +54,8 @@ public class OrderDao {
 		return sqlSession.selectOne("orderMapper.selectOrderListCount", userNo);
 	}
 
-	public Order selectOrderCancel(SqlSessionTemplate sqlSession, String orderNo) {
-		return sqlSession.selectOne("orderMapper.selectOrderCancel", orderNo);
+	public Order selectOrderCancel(SqlSessionTemplate sqlSession, Order order) {
+		return sqlSession.selectOne("orderMapper.selectOrderCancel", order);
 	}
 
 	public int orderCancel(SqlSessionTemplate sqlSession, Order order) {
@@ -106,6 +107,18 @@ public class OrderDao {
 
 	public int updateStatus(SqlSessionTemplate sqlSession, Order order) {
 		return sqlSession.update("orderMapper.updateStatus", order);
+	}
+
+	public Order selectOrderManageDtail(SqlSessionTemplate sqlSession, Order order) {
+		return sqlSession.selectOne("orderMapper.selectOrderManageDtail", order);
+	}
+
+	public int updatePoint(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("orderMapper.updatePoint", m);
+	}
+
+	public int cancelUserPoint(SqlSessionTemplate sqlSession, Order order) {
+		return sqlSession.update("orderMapper.cancelUserPoint", order);
 	}
 	
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.vo.Order;
 
 public interface OrderService {	
@@ -32,7 +33,7 @@ public interface OrderService {
 	int selectOrderListCount(int userNo);
 
 	// 취소한 주문목록 조회하기
-	Order selectOrderCancel(String orderNo);
+	Order selectOrderCancel(Order order);
 
 	// 주문 결제 취소하기
 	int orderCancel(Order order);
@@ -56,6 +57,15 @@ public interface OrderService {
 	int searchOrderManageCount(HashMap<String, String> map);
 
 	// 판매자 마이페이지에서 주문확인하고 상태 변경
-	int updateStatus(Order order);	
+	int updateStatus(Order order);
+
+	// 판매자 주문상세페이지
+	Order selectOrderManageDtail(Order order);
+
+	// 구매자 주문시 포인트 업데이트
+	int updatePoint(Member m);
+
+	// 구매자 결제 취소시 환불 포인트
+	int cancelUserPoint(Order order);	
 
 }

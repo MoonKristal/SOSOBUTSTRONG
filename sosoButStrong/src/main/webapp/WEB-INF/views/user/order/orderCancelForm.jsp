@@ -37,7 +37,7 @@
 				</tr>
 				<tr>
 					<td>
-						<b>${order.sellerName} 외 ${order.sellerCount}개 </b><br>
+						<b>${order.sellerName} 외 ${order.sellerCount - 1}개 </b><br>
 						<label style="font-size: 13px;">${order.quantity}개 / <fmt:formatNumber value="${order.orderPrice}"/> 원</label> 
 					</td>				
 				</tr>			

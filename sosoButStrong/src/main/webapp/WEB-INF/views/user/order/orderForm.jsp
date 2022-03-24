@@ -80,15 +80,15 @@
 				<table id="dv">
 					<tr>
 						<th>이름</th>
-						<td id="dvName" height="42"></td>
+						<td id="dvName" height="42">${loginUser.userName}</td>
 					</tr>
 					<tr>
 						<th>배송주소</th>
-						<td id="dvAddress" height="42"></td>
+						<td id="dvAddress" height="42">${loginUser.address}</td>
 					</tr>
 					<tr>
 						<th>연락처</th>
-						<td id="dvPhone" height="42"></td>
+						<td id="dvPhone" height="42">${loginUser.phone}</td>
 					</tr>
 				</table>
 			</div>
@@ -123,12 +123,12 @@
 				<table id="pointTd">
 					<tr>
 						<th>보유</th>
-						<td height="42"><input type="text" class="form-control form-control-sm" style="width: 200px; display: inline;" readonly value="5000" id="userPoint"></td>
+						<td height="42"><input type="text" class="form-control form-control-sm" style="width: 200px; display: inline;" readonly value="${loginUser.point}" id="userPoint"></td>
 					</tr>
 					<tr>
 						<th>사용</th>
 						<td height="42">
-							<input type="number" step="500" min="0" max="5000" placeholder="0" id="usePoint" style="color: rgb(255, 163, 63); width: 200px; display: inline;" class="form-control form-control-sm"> &nbsp; 
+							<input type="number" step="500" min="0" max="${loginUser.point}" placeholder="0" id="usePoint" style="color: rgb(255, 163, 63); width: 200px; display: inline;" class="form-control form-control-sm"> &nbsp; 
 							<button type="button" class="btn btn-sm point" style="background:rgb(182, 238, 86); color: white;" ><b>전액사용</b></button> &nbsp;&nbsp; <label style="font-size: 13px;">500이상부터 사용 가능</label>
 						</td>
 					</tr>								
@@ -259,7 +259,7 @@
 						order.quantity = "${item.quantity}";
 						order.sellerName = "${item.sellerName}";
 						order.productName = "${item.productName}"
-						order.orderer = 2;	
+						order.orderer = "${loginUser.userNo}";	
 						order.orderNo = $orderNo;
 
 						arr.push(order);

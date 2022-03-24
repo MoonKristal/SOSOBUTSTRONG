@@ -64,7 +64,7 @@
 							<th>운송장번호</th>
 						</tr>
 						<tr>
-							<td colspan="8" height="300" align="center" style="font-size: 17px; font-weight: bold;">주문 내역이 없습니다.</td>
+							<td colspan="8" height="230" align="center" style="font-size: 17px; font-weight: bold;">주문 내역이 없습니다.</td>
 						</tr>
 					</table>				
 				</c:when>
@@ -72,7 +72,7 @@
 					<table id="odManage" border="1">
 						<thead>
 							<tr>
-								<input id="pSeller" type="hidden" value="5"><!--${loginUser.userNo}-->
+								<input id="pSeller" type="hidden" value="${loginUser.userNo}"><!--${loginUser.userNo}-->
 								<th>주문번호</th>
 								<th>주문날짜</th>
 								<th>주문자</th>
@@ -87,13 +87,13 @@
 						<tbody>
 						<c:forEach var="o" items="${list}">													
 							<tr>
-								<td>${o.orderNo}</td>
+								<td class="oNo">${o.orderNo}</td>
 								<td>${o.orderDate}</td>
 								<td>${o.orderer}</td>
 								<td>${o.productName}</td>
 								<td>${o.quantity}</td>
 								<td><fmt:formatNumber value="${o.orderPrice * o.quantity}"/>원</td>
-								<td>
+								<td class="noClick">
 									<c:choose>
 										<c:when test="${o.status eq '결제취소'}">
 											<span style="color: red;">${o.status}</span>
@@ -110,7 +110,7 @@
 									</c:choose>
 									
 								</td>
-								<td>
+								<td class="noClick">
 									<c:choose>
 										<c:when test="${empty o.deliveryNo && o.status eq '상품준비중'}">
 											<input type="button" class="btn_insertNo" value="송장번호 등록" data-orderNo="${o.orderNo}" style="background:rgb(182, 238, 86);">
@@ -324,9 +324,8 @@
 			})
 
 			// 주문상세보기 상세페이지
-			$('#odManage>tbody>tr').on('click', function(){
-				window.open('orderDetailManage.se', '주문상세보기', 'width=650,height=850,location=no,status=no,scrollbars=yes')
-
+			$('#odManage>tbody td').not('.noClick').on('click', function(){							
+				window.open('orderDetailManage.se?orderNo=' + $(this).siblings('.oNo').text(), '주문상세보기', 'width=620,height=790,location=no,status=no,scrollbars=yes');			
 			})
 
 			// 주문상태 카테고리 검색필터

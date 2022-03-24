@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.dao.OrderDao;
 import com.sbs.wemasal.order.model.vo.Order;
 
@@ -42,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.deleteCart(sqlSession, userNo);
 	}
 
+	// 특정주문 번호 조회
 	@Override
 	public String selectOrderNo(int userNo) {
 		return orderDao.selectOrderNo(sqlSession, userNo);
@@ -67,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
 
 	// 결제취소하는 주문서 불러들여오기
 	@Override
-	public Order selectOrderCancel(String orderNo) {
-		return orderDao.selectOrderCancel(sqlSession, orderNo);
+	public Order selectOrderCancel(Order order) {
+		return orderDao.selectOrderCancel(sqlSession, order);
 	}
 
 	// 주문 취소하기
@@ -118,6 +120,25 @@ public class OrderServiceImpl implements OrderService {
 	public int updateStatus(Order order) {		
 		return orderDao.updateStatus(sqlSession, order);
 	}
+
+	// 판매자 주문상세페이지
+	@Override
+	public Order selectOrderManageDtail(Order order) {
+		return orderDao.selectOrderManageDtail(sqlSession, order);
+	}
+
+	// 구매자 주문시 포인트 차감
+	@Override
+	public int updatePoint(Member m) {
+		return orderDao.updatePoint(sqlSession, m);
+	}
+
+	// 구매자 결제취소시 포인트 다시 반환
+	@Override
+	public int cancelUserPoint(Order order) {
+		return orderDao.cancelUserPoint(sqlSession, order);
+	}
+
 
 
 	

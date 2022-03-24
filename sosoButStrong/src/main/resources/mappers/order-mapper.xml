@@ -33,6 +33,7 @@
 		<result column="SELLER_COUNT" property="sellerCount"/>
 		<result column="ORDERER" property="orderer"/>	
 		<result column="PRODUCT_NAME" property="productName"/>	
+		<result column="PRODUCT_NO" property="productNo"/>
 	</resultMap>
 
 	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
@@ -117,11 +118,13 @@
 	</select>
 	
 	<select id="selectOrderDetail" resultMap="orderResultSet">
-		SELECT A.*, SELLER_IMAGEPATH
+		SELECT A.*, SELLER_IMAGEPATH, PRODUCT_NO
 		FROM (SELECT *
 		        FROM "ORDER"
-		        WHERE ORDER_NO = #{orderNo}) A	
-		JOIN SELLER ON(SELLER = USER_No)
+		        WHERE ORDER_NO = #{orderNo}
+		       ) A	
+		JOIN SELLER ON(SELLER = USER_NO)
+		JOIN PRODUCT ON(SELLER = UPLOADER)
 	</select>
 	
 	<select id="selectOrderList" parameterType="_int" resultMap="orderResultSet">
@@ -154,24 +157,24 @@
 		    )
 	</select>
 	
-	<select id="selectOrderCancel" parameterType="string" resultMap="orderResultSet">
+	<select id="selectOrderCancel" parameterType="order" resultMap="orderResultSet">
 		SELECT B.*, V.ORDER_PRICE, V.SELLER_NAME SELLER_COUNT, V.QUANTITY
 		FROM (      
 		        SELECT *
 		        FROM (
 		               SELECT A.*, ROW_NUMBER() OVER (PARTITION BY ORDER_NO ORDER BY STATUS DESC) RNUM
 		                FROM (
-		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGEPATH
+		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, O.USE_POINT, S.SELLER_IMAGEPATH
 		                        FROM "ORDER" O
 		                        JOIN SELLER S ON (O.SELLER = S.USER_NO)
-		                        WHERE ORDERER = 2
+		                        WHERE ORDERER = #{orderer}
 		                        ORDER BY DECODE(O.STATUS, '상품준비중', 1, '배송중', 2, '배송완료', 3, '결제완료', 4, '결제취소', 5)
 		                      ) A
 		                )
 		        WHERE RNUM = 1 
 		            AND ORDER_NO = #{orderNo}
 		    )B
-		JOIN VW_ORDER_LIST V ON (V.ORDER_NO = B.ORDER_NO)	
+		JOIN VW_ORDER_LIST V ON (V.ORDER_NO = B.ORDER_NO)			
 	</select>
 	
 	<update id="orderCancel" parameterType="order">
@@ -293,12 +296,34 @@
 	<update id="updateStatus" parameterType="order">
 		UPDATE "ORDER"
 		SET STATUS = #{status}
-		<if test="deliveryNo != null">
+		<if test="deliveryNo != null and deliveryNo != ''">
 			, DELIVERY_NO = #{deliveryNo}
 		</if>		
 		WHERE SELLER = #{seller}
 			AND ORDER_NO = #{orderNo}			
 	</update>	
+	
+	<select id="selectOrderManageDtail" parameterType="order" resultMap="orderResultSet">
+		SELECT A.*, SELLER_IMAGEPATH
+		FROM (SELECT *
+		        FROM "ORDER"
+		        WHERE ORDER_NO = #{orderNo}
+                    AND SELLER = #{seller}    
+            	) A	
+		JOIN SELLER ON(SELLER = USER_NO)
+	</select>
+	
+	<update id="updatePoint" parameterType="_int">
+		UPDATE "MEMBER"
+		SET POINT = POINT - #{point}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="cancelUserPoint" parameterType="order">
+		UPDATE "MEMBER"
+		SET POINT = POINT + #{usePoint}
+		WHERE USER_NO = #{orderer}
+	</update>
  
  
 </mapper>

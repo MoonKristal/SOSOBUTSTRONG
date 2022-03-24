@@ -7,6 +7,7 @@ div{
 }
 .content{
     width: 915px;
+    height: 640px;
     margin-left: 285px;
     padding: 20px;
 }
@@ -53,11 +54,15 @@ input[type=button]{
     font-size: 12px;
     border-radius: 3px;
 }
-tbody>tr:hover{
+#odManage tbody>tr:hover{
     cursor: pointer;
-    background: rgb(253, 214, 173);
+    background: rgba(250, 201, 148, 0.801);
 }
+
 select option[disabled] {
 	display: none;
     color: #ccc;
+}
+.noClick:hover{
+    cursor: default;
 }

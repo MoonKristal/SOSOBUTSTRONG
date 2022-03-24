@@ -11,10 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
+import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.service.OrderService;
 import com.sbs.wemasal.order.model.vo.Order;
 
@@ -31,15 +31,13 @@ public class SellerOrderManageController {
 										String alertMsg,
 										Model model,	
 										HttpSession session) {
-		//int userNo = ((Memeber)session.getAttribute("loginUser")).getUserNo(); 판매자 식별번호 추출하기
+		int userNo = ((Member)session.getAttribute("loginUser")).getUserNo(); //판매자 식별번호 추출하기
 		
-		int listCount = orderService.orderManageListCount(5); //회원 고유 번호로 회원이 주문한 주문서별 갯수 구하기	
+		int listCount = orderService.orderManageListCount(userNo); //회원 고유 번호로 회원이 주문한 주문서별 갯수 구하기	
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 15); //페이징바:3, 보드리밋:15  
 		
-		ArrayList<Order> list = orderService.selectOrderManageList(pi, 5);//회원번호와 페이징처리 넘기기		
-		
-		System.out.println(list);
+		ArrayList<Order> list = orderService.selectOrderManageList(pi, userNo);//회원번호와 페이징처리 넘기기				
 		
 		session.setAttribute("alertMsg", alertMsg);
 		model.addAttribute("pi", pi); //페이징바
@@ -60,7 +58,7 @@ public class SellerOrderManageController {
 									HttpSession session) {		
 		
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("userNo", "5"); //String.valueOf(((Member)session.getAttribute("loginUser")).getUserNo());
+		map.put("userNo", String.valueOf(((Member)session.getAttribute("loginUser")).getUserNo())); 
 		map.put("keyword", keyword);
 		map.put("year", year);
 		map.put("month", month);
@@ -105,7 +103,7 @@ public class SellerOrderManageController {
 	// 판매자 주문상품 상태 변경하기 || 운송장번호 등록하기
 	@ResponseBody
 	@RequestMapping(value="updateStatus.od", produces="text/html; charset=utf-8")
-	public String  updateStatus(Order order) {
+	public String  updateStatus(Order order) {	
 							
 		int result = orderService.updateStatus(order);		
 		
@@ -113,8 +111,25 @@ public class SellerOrderManageController {
 			return "success";			
 		}
 		return "fail";			
-		
 	}	
+	
+	
+	//판매자 마이페이지에서 주문상세보기
+	@RequestMapping("orderDetailManage.se")
+	public String orderDetailManageForm(String orderNo, Model model, HttpSession session) {
+		
+		int seller = ((Member)session.getAttribute("loginUser")).getUserNo();
+		
+		Order order = new Order();
+		order.setOrderNo(orderNo); // 주문번호
+		order.setSeller(seller); // 판매자 식별번호	
+		
+		Order detailOrder = orderService.selectOrderManageDtail(order);
+		
+		model.addAttribute("order", detailOrder);
+		
+		return "user/seller/orderDetailManageForm";
+	}
 	
 	
 	

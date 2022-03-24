@@ -37,12 +37,13 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
+                            <input type="hidden" class="productName" value="${c.productNo}">
                             <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
                         </c:if>
                     </td>                                   
                 </tr>
                 <tr>
-                    <td colspan="2" style="font-weight: bold; border-left: solid; border-right-style: solid; border-right-color:#ccc; font-size: 20px;">${c.status}</td>       
+                    <td colspan="2" style="font-weight: bold; padding-left: 30px; border-left: solid; border-right-style: solid; border-right-color:#ccc; font-size: 20px;"><span style="color: rgb(255, 163, 63); ">${c.status}</span></td>       
                                    
                 </tr>
                 <tr>
@@ -86,7 +87,7 @@
 
             <c:set var="sum" value="0"/>				
 				<c:forEach var="test" items="${list}">				
-				 	<c:set var="sum" value="${sum + test.orderPrice}"/>					
+				 	<c:set var="sum" value="${sum + test.orderPrice * test.quantity}"/>					
 				</c:forEach>
 
 
@@ -120,7 +121,7 @@
                     <tr>
 						<td style="border-bottom-style: solid; border-bottom-color: #ccc;"></td>
 						<td height="25" style="font-weight: bold; background: #ccc;">총 결제금액</td>
-                        <td  align="right" style="background: #ccc;font-weight: bold; color: red; border-bottom-style: solid; border-bottom-color: #ccc;">14,500 원</td>
+                        <td  align="right" style="background: #ccc;font-weight: bold; color: red; border-bottom-style: solid; border-bottom-color: #ccc;"><fmt:formatNumber value="${sum - list[0].usePoint}"/> 원</td>
 					</tr>
 				</table>
 			</div>
