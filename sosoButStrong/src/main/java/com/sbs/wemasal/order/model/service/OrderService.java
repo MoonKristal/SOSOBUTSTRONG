@@ -43,6 +43,19 @@ public interface OrderService {
 	// 주문목록에서 주문필터로 검색하기
 	ArrayList<Order> selectSearchList(HashMap<String, String> map, PageInfo pi);
 
-	
+	// 판매자로부터 들어온 주문 목록 갯수
+	int orderManageListCount(int userNo);
+
+	// 판매자마이페이지에 불러올 판매자별 주문 리스트
+	ArrayList<Order> selectOrderManageList(PageInfo pi, int userNo);
+
+	// 판매자 마이페이지에서 검색필터 목록 조회해오기
+	ArrayList<Order> searchOrderManageList(PageInfo pi, HashMap<String, String> map);
+
+	// 판매자 마이페이지에서 검색필터 목록 갯수
+	int searchOrderManageCount(HashMap<String, String> map);
+
+	// 판매자 마이페이지에서 주문확인하고 상태 변경
+	int updateStatus(Order order);	
 
 }

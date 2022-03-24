@@ -76,7 +76,37 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectSearchList", map, rowBounds);
 	}
 
+	public int orderManageListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("orderMapper.orderManageListCount", userNo);
+	}
 
+	public ArrayList<Order> orderManageList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.orderManageList", userNo, rowBounds);
+	}
+
+	public int searchOrderManageCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {		
+		return sqlSession.selectOne("orderMapper.searchOrderManageCount", map);
+	}
+	
+	public ArrayList<Order> searchOrderManageList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit; 
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.searchOrderManageList", map, rowBounds);
+	}
+
+	public int updateStatus(SqlSessionTemplate sqlSession, Order order) {
+		return sqlSession.update("orderMapper.updateStatus", order);
+	}
 	
 
 }

@@ -34,7 +34,7 @@
 					<td class="firstTd"><img src="${c.sellerImage}"></td>
 					<td style="text-align: left; padding: 10px;">
 						[<b>${c.sellerName}</b>] <label style="font-size: 15px; margin-bottom: 0;">${c.productName}</label>						
-						<label style="font-size: 14px; margin-bottom: 0;" id="topping">${c.option }</label>
+						<label style="font-size: 13px; margin-bottom: 0;" id="topping">${c.option }</label>
 					</td>
 					<td width="70">${c.quantity}</td>
 					<td width="70">${c.price }</td>
@@ -258,6 +258,7 @@
 						order.orderPrice = "${item.price}";
 						order.quantity = "${item.quantity}";
 						order.sellerName = "${item.sellerName}";
+						order.productName = "${item.productName}"
 						order.orderer = 2;	
 						order.orderNo = $orderNo;
 

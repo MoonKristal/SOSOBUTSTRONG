@@ -89,8 +89,35 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectSearchList(sqlSession, map, pi);
 	}
 
+	// 판매자로부터 들어온 주문목록 갯수 조회
+	@Override
+	public int orderManageListCount(int userNo) {		
+		return orderDao.orderManageListCount(sqlSession, userNo);
+	}
 
+	// 판매자관리 페이지로 들어온 주문 목록 리스트
+	@Override
+	public ArrayList<Order> selectOrderManageList(PageInfo pi, int userNo) {		
+		return orderDao.orderManageList(sqlSession, pi, userNo);
+	}
+	
+	// 판매자 마이페이지서 주문 검색필터 목록 갯수
+	@Override
+	public int searchOrderManageCount(HashMap<String, String> map) {		
+		return orderDao.searchOrderManageCount(sqlSession, map);
+	}
 
+	// 판매자 마이페이지에서 주문 검색필터 목록 조회해오기
+	@Override
+	public ArrayList<Order> searchOrderManageList(PageInfo pi, HashMap<String, String> map) {
+		return orderDao.searchOrderManageList(sqlSession, pi, map);
+	}
+
+	// 판매자 마이페이지에서 상태변경 || 운송장번호 등록
+	@Override
+	public int updateStatus(Order order) {		
+		return orderDao.updateStatus(sqlSession, order);
+	}
 
 
 	

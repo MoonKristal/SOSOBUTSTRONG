@@ -1,5 +1,4 @@
-div{
-    border: 1px solid tomato;
+div{   
     box-sizing: border-box;
 }
 .list_outer{
@@ -7,7 +6,58 @@ div{
     margin: auto;      
 }
 .content{
-    width: 1000px;
-    margin-left: 200px;
-    padding: 25px;
+    width: 915px;
+    margin-left: 285px;
+    padding: 20px;
+}
+.current{
+    color: rgb(182, 238, 86);
+}
+#odManage{
+    width: 100%;
+    text-align: center;
+    border-spacing: 20px;
+}
+#odManage th{
+    background: #ccc;
+    font-weight: bold;
+}
+#odManage td{
+    font-size: 13px;    
+}
+#btn_insertNo{
+    font-size: 11px;
+    font-weight: bold;
+    border-style: none;
+}
+th, td{
+    padding: 4px;
+}
+.nothing{
+    width: 100%;
+    text-align: center;
+    border-spacing: 20px;
+}
+.nothing th{
+    background: #ccc;
+    font-weight: bold;
+}
+.pagination a{
+    color: rgb(255, 163, 63);
+}
+.pagination a:hover{
+    color: rgb(255, 163, 63);
+}
+input[type=button]{
+    border-style: none;
+    font-size: 12px;
+    border-radius: 3px;
+}
+tbody>tr:hover{
+    cursor: pointer;
+    background: rgb(253, 214, 173);
+}
+select option[disabled] {
+	display: none;
+    color: #ccc;
 }

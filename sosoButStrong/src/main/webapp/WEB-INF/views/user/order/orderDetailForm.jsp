@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td align="center"  width="18%" style="padding-top:0px; border-left-style: solid; border-bottom-style: solid;"><img style="width: 130px; height: 110px;" src="${c.sellerImage}"></td>
-                    <td style="border-right-style: solid; border-right-color:#ccc; border-bottom-style: solid;"><b>[${c.sellerName}]</b><br><br>
+                    <td style="border-right-style: solid; border-right-color:#ccc; border-bottom-style: solid;"><b>[${c.sellerName}]</b>&nbsp; ${c.productName}<br><br>
                         ${c.orderItem}<br><br>
                         <label>${c.quantity}개 / ${c.orderPrice}원</label>                    
                     </td>                                      

@@ -59,7 +59,7 @@
 }
 .menu .current{
     color: rgb(182, 238, 86);
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bolder;
     pointer-events: none;
 }

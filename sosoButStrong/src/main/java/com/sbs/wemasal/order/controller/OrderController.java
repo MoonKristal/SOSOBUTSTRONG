@@ -36,6 +36,7 @@ public class OrderController {
 		
 		ArrayList<Cart> list = orderService.selectCart(2); //회원 고유식별번호
 				
+		System.out.println(list);
 		model.addAttribute("list", list);
 		
 		return "user/order/orderForm";
@@ -201,5 +202,9 @@ public class OrderController {
 		
 		return "user/order/orderListForm";
 	}
+	
+	
+	
+	
 	
 }

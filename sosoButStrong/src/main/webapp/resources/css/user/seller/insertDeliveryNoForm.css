@@ -1,0 +1,41 @@
+div{        
+    box-sizing: border-box;
+}
+.insert_outer{
+    width:500px;
+    height:330px;
+    padding:10px;	
+    border: 2px solid rgb(255, 163, 63);	
+    border-radius: 10px;      
+    margin: auto;
+}
+.deliveryNo{    
+    border: 3px solid rgb(255, 163, 63);
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+}
+#btn_insert{  
+    background-color: rgb(182, 238, 86);
+    border-style: none;
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;  
+}
+#btn_insert:hover{
+    cursor: pointer;
+}
+#inner{
+    width: 100%;
+    height: 70%;
+    text-align: center;
+    padding-top: 50px;
+}
+
+
+

@@ -16,7 +16,7 @@
 		<ul>
 			<li><a href="sellerProductList.se">상품조회/수정</a></li>
 			<li><a href="productEnrollForm.se">상품등록</a></li>
-			<li><a href="#">주문/배송관리</a></li>
+			<li><a id="orderManage" href="orderManage.se">주문/배송관리</a></li>
 			<li><a href="#">정산관리</a></li>
 			<li><a href="#">1:1 문의관리</a></li>
 			<li><a href="#">회원정보수정</a></li>
