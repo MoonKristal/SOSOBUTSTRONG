@@ -2,6 +2,7 @@ package com.sbs.wemasal.customer.model.service;
 
 import java.util.ArrayList;
 
+import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
@@ -32,4 +33,13 @@ public interface CustomerService {
 	
 	// 리뷰 수정
 	int updateReview(Review r);
+	
+	// 리뷰 등록
+	int uploadReview(Review r);
+	
+	// 리뷰 첨부파일 등록
+	int uploadAttachment(Attachment at);
+	
+	// 내 장바구니 조회
+	ArrayList<Cart> selectMyCart(int userNo);
 }

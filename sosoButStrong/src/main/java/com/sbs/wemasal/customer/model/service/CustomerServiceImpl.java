@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.dao.CustomerDao;
 import com.sbs.wemasal.customer.model.vo.Customer;
@@ -58,6 +59,21 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public int updateReview(Review r) {
 		return customerDao.updateReview(sqlSession, r);
+	}
+
+	@Override
+	public int uploadReview(Review r) {
+		return customerDao.uploadReview(sqlSession, r);
+	}
+
+	@Override
+	public int uploadAttachment(Attachment at) {
+		return customerDao.uploadAttachment(sqlSession, at);
+	}
+
+	@Override
+	public ArrayList<Cart> selectMyCart(int userNo) {
+		return customerDao.selectMyCart(sqlSession, userNo);
 	}
 
 }

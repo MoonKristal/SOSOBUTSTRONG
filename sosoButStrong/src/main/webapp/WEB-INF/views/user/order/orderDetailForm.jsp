@@ -151,31 +151,48 @@
 
 
 
-    <!-- 리뷰작성 폼 (모달) -->
+    <!-- 리뷰 수정용 모달 -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
         <div class="modal-content">
         
-            <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
+            <h4 class="modal-title">리뷰 작성</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             
-            <!-- Modal body -->
             <div class="modal-body">
-            Modal body..
+                <form id="" action="uploadReview.cs" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="refPno" value="1"><!-- 리뷰작성할 상품번호 -->
+                    <input type="hidden" name="reviewWriter" value="${loginUser.userNo}"> <!-- 리뷰작성하는 회원번호 -->
+                    <table align="center">
+                        <tr>
+                            <td><!-- 별점 -->
+                                <input type="number" name="score" id="rStar" min="0" max="5" class="form-control" placeholder="별점을 숫자로 입력하세요 (0~5)"> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><!-- 리뷰내용 -->
+                                <textarea name="reviewContent" id="rCon" cols="40" rows="6" style="resize: none;" class="form-control"></textarea> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="file" name="thumbnail" class="form-control-file border"> <!-- 리뷰이미지 -->
+                            </td>
+                        </tr>
+                    </table>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">등록</button> <!-- 리뷰등록 버튼 -->
+                        </div>
+                </form>
             </div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
+
+
             
         </div>
         </div>
     </div>
-    
     
     <script>    
        // 배송조회시 실행될 작은 사이즈의 창

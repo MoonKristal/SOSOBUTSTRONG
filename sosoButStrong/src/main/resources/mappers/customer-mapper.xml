@@ -36,6 +36,20 @@
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="USER_NO" property="userNo" />
 	</resultMap>
+	
+	<resultMap id="cartResultSet" type="cart">
+		<result column="CART_NO" property="cartNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="OPTION" property="option" />
+		<result column="PRICE" property="price" />
+		<result column="QUANTITY" property="quantity" />
+		<result column="SELLER" property="seller"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
 
 	<select id="selectSaladList" resultMap="customerResultSet">
 		SELECT
@@ -180,5 +194,58 @@
 		 WHERE
 		        REF_RNO = #{refRno}
 	</update>
+	
+	<insert id="uploadReview" parameterType="review">
+		INSERT INTO REVIEW(
+						REVIEW_NO,
+						REF_PNO,
+						REVIEW_WRITER,
+						REVIEW_CONTENT,
+						SCORE
+						)
+		VALUES
+			(			
+						SEQ_RVNO.NEXTVAL,
+						#{refPno},
+						#{reviewWriter},
+						#{reviewContent},
+						#{score}
+			)			
+	</insert>
+ 
+ 	<insert id="uploadAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+						FILE_NO,
+						ORIGIN_NAME,
+						CHANGE_NAME,
+						REF_RNO
+						)
+		VALUES
+			(			
+						SEQ_ATNO.NEXTVAL,
+						#{originName},
+						#{changeName},
+						SEQ_RVNO.CURRVAL
+			)			
+	</insert>
+	
+	<select id="selectMyCart" parameterType="_int" resultMap="cartResultSet">
+		SELECT 
+				C.CART_NO,
+				C.PRODUCT_NO,
+				C.PRODUCT_NAME,
+				C."OPTION",
+				C.PRICE,
+				C.QUANTITY,
+				S.SELLER_NAME,
+				S.SELLER_IMAGEPATH,
+				S.USER_NO,
+                A.CHANGE_NAME
+		FROM CART C
+		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
+        JOIN ATTACHMENT A ON (C.PRODUCT_NO = A.PRODUCT_NO)
+		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)
+		WHERE C.USER_NO = #{userNo}
+	</select>
 
 </mapper>

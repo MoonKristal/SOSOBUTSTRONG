@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
@@ -42,6 +43,18 @@ public class CustomerDao {
 
 	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("customerMapper.updateReview", r);
+	}
+
+	public int uploadReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("customerMapper.uploadReview", r);
+	}
+
+	public int uploadAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("customerMapper.uploadAttachment", at);
+	}
+
+	public ArrayList<Cart> selectMyCart(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("customerMapper.selectMyCart", userNo);
 	}
 	
 

@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰 관리</title>
+<style>
+    .reBtn{
+        color: black;
+        font-weight: bolder;
+    }
+    .reBtn:hover{color: rgb(255, 163, 63);}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -15,7 +22,7 @@
     <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;리뷰 관리</h2>
     <br>
     <h6 style="font-weight: bolder; margin-left: 340px;" >&nbsp;&nbsp;내가 작성한 리뷰(<span id="rcount"></span>)</h6>
-	<div class="outer" align="center">
+	<div class="outer" align="center" style="height: 1000px;">
 
           <hr class="divider"> <!-- 구분선 / 위는 상품 요약, 옵션선택 주문 영역 아래는 상품 리뷰영역-->
 
@@ -69,7 +76,6 @@
                         </tr>
                     </table>
                         <div class="modal-footer">
-                        <button type="button" class="btn" data-dismiss="modal">닫기</button>
                         <button type="submit" class="btn btn-primary">수정</button> <!-- 리뷰수정 버튼 -->
                         </div>
                 </form>
@@ -117,8 +123,8 @@
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
-                                result += "<td style='width:60px'><a onclick='updateReviewForm(" + list[i].reviewNo + ");' data-toggle='modal' data-target='#myModal' style='font-weight:bolder;'>수정</a></td>" 
-                                result += "<td style='width:60px'><a onclick='deleteReview(" + list[i].reviewNo + ");' style='font-weight:bolder;'>삭제</a></td>"
+                                result += "<td style='width:60px'><a onclick='updateReviewForm(" + list[i].reviewNo + ");' data-toggle='modal' data-target='#myModal' class='reBtn' style='text-decoration: none;'>수정 &nbsp; |</a></td>" 
+                                result += "<td style='width:60px'><a onclick='deleteReview(" + list[i].reviewNo + ");' class='reBtn' style='text-decoration: none;'>삭제</a></td>"
                                 result += "</tr>"
                             }
                             
