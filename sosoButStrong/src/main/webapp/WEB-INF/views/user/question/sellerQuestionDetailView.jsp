@@ -141,8 +141,8 @@
 		                    <th class="label">구매자 답변 만족도</th>
 		                    <td>
 	                            <c:choose>
-	                                <c:when test="${ q.score ne 999 }">
-	                                    ${ q.score }점
+	                                <c:when test="${ a.score ne 999 }">
+	                                    ${ a.score }점
 	                                </c:when>
 	                                <c:otherwise>
 	                                    -
@@ -153,7 +153,7 @@
 		            </table> <!--답변 영역 끝-->
 
                     <div align="center" style="float: right;">
-                        <button type="button" onclick="location.href='buyerList.qu'">문의 목록으로 돌아가기</button> <!--나의 질문 = 최근에 보고 있던 currentPage로 어떻게 돌아가지?-->        
+                        <button type="button" onclick="location.href='sellerList.qu'">문의 목록으로 돌아가기</button> <!--나의 질문 = 최근에 보고 있던 currentPage로 어떻게 돌아가지?-->        
                     </div>
             	</c:when>
             	<c:otherwise>
@@ -177,7 +177,7 @@
                         </table> <!--답변 양식 표 끝-->
 
                         <div align="center" style="float: right;">
-                            <button type="button" onclick="location.href='buyerList.qu'">취소(문의 목록으로 돌아가기)</button>
+                            <button type="button" onclick="location.href='sellerList.qu'">취소(문의 목록으로 돌아가기)</button>
                             <button type="reset" class="grayBtn">초기화</button>
                             <button type="submit" class="orangeBtn">답변 등록</button>					
                         </div>

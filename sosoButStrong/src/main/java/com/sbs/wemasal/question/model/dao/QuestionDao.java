@@ -70,7 +70,7 @@ public class QuestionDao {
 		return sqlSession.selectOne("questionMapper.selectBuyerQuestion", qno);
 	}
 
-	// 2022.3.25(금) 1h35
+	// 2022.3.25(금) 1h35 -> 13h40 기능 구현
 	public Answer selectAnswer(SqlSessionTemplate sqlSession, int qno) {
 		return sqlSession.selectOne("questionMapper.selectAnswer", qno);
 	}

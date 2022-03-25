@@ -201,11 +201,10 @@ public class QuestionController {
 		Question q = questionService.selectBuyerQuestion(qno);
 		
 		Answer a = null;
-		/*
+		
 		if (q.getAnswer().equals("Y")) {
 			a = questionService.selectAnswer(qno);
 		}
-		*/
 		
 		mv.addObject("q", q).addObject("a", a).setViewName("user/question/buyerQuestionDetailView");
 		
@@ -319,11 +318,10 @@ public class QuestionController {
 		Question q = questionService.selectSellerQuestion(qno);
 		
 		Answer a = null;
-		/*
+		
 		if (q.getAnswer().equals("Y")) {
 			a = questionService.selectAnswer(qno);
 		}
-		*/
 		
 		mv.addObject("q", q).addObject("a", a).setViewName("user/question/sellerQuestionDetailView");
 		

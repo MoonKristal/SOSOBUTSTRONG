@@ -78,7 +78,7 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionDao.selectBuyerQuestion(sqlSession, qno);
 	}
 
-	// 2022.3.25(금) 1h35
+	// 2022.3.25(금) 1h35 -> 13h40 기능 구현
 	@Override
 	public Answer selectAnswer(int qno) {
 		return questionDao.selectAnswer(sqlSession, qno);

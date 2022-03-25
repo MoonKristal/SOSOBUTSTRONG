@@ -44,7 +44,7 @@ public interface QuestionService {
 	// 2022.3.25(금) 1h
 	Question selectBuyerQuestion(int qno);
 	
-	// 2022.3.25(금) 1h35
+	// 2022.3.25(금) 1h35 -> 13h40 기능 구현
 	Answer selectAnswer(int qno);
 
 	// 2022.3.25(금) 3h40

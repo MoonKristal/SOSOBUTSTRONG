@@ -172,7 +172,8 @@
                                     <option value="6">★★★</option>
                                     <option value="4">★★</option>
                                     <option value="2">★</option>
-                                    <option value="0">0점 또는 미평가</option>
+                                    <option value="0">0점</option>
+                                    <option value="999">미평가</option>
                                 </select>
                             </td>
                         </tr>

@@ -309,9 +309,13 @@
 		WHERE QUESTION_NO = #{qno}
 	</update>
 	
-	<!--2022.3.25(금) 1h35-->
+	<!--2022.3.25(금) 1h35 -> 13h40 구현-->
 	<select id="selectAnswer" parameterType="_int" resultMap="answerResultSet">
-	
+		SELECT ANSWER_NO, QUESTION_NO, ANSWER_WRITER, ANSWER_CONTENT, TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", NVL(SCORE, '999') "SCORE", ORIGIN_NAME, CHANGE_NAME, ANSWER_MODE
+		FROM ANSWER A
+		LEFT JOIN QUESTION USING (QUESTION_NO)
+		LEFT JOIN ATTACHMENT ON (ANSWER_NO = REF_ANO)
+		WHERE QUESTION_NO = #{qno}
 	</select>
 
 </mapper>
