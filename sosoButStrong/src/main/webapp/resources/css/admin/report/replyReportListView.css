@@ -25,26 +25,7 @@ div{
     font-weight: bolder;
     padding-left: 5%;
 }
-.btn_area{
-    width: 20%;
-    margin-top: 40px;
-}
-.btn_area>.btn-outline-primary{
-    /* background-color: rgb(255, 163, 63); */
-    color: rgb(255, 163, 63);
-    border: 2px solid rgb(255, 163, 63);
-    font-weight: bolder;
-}
-.btn_area>.btn-outline-primary:hover{
-    background-color: rgb(255, 163, 63);
-    color: white;
-    border: 2px solid rgb(255, 163, 63);
-    font-weight: bolder;
-}
-.btn_area>.btn-outline-danger{
-    font-weight: bolder;
-    border: 2px solid;
-}
+
 .table {
     text-align: center;
 }
@@ -55,21 +36,6 @@ div{
     width: fit-content;
     margin: auto;
 }
-
-
-.pagingArea ul{
-    margin: auto;
-}
-
-img {
-	width: 30px;
-	height: 30px;
-}
-img:hover{
-	transition: transform 550ms ease-in-out;
-	transform: scale(5);
-}
-
 
 
 

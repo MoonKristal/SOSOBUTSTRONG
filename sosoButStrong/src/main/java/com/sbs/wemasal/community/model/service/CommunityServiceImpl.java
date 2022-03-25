@@ -13,6 +13,7 @@ import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
 import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.like.model.vo.Like;
+import com.sbs.wemasal.report.model.vo.Report;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -103,6 +104,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public int deleteCommunity(int cno) {
 		return communityDao.deleteCommunity(sqlSession, cno);
 	}
+
 
 
 

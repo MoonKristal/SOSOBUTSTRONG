@@ -12,6 +12,7 @@ import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
 import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.like.model.vo.Like;
+import com.sbs.wemasal.report.model.vo.Report;
 
 @Repository
 public class CommunityDao {
@@ -89,6 +90,8 @@ public class CommunityDao {
 	public int deleteCommunity(SqlSessionTemplate sqlSession, int cno) {
 		return sqlSession.delete("communityMapper.deleteCommunity", cno);
 	}
+
+	
 
 
 

@@ -8,6 +8,7 @@ import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
 import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.like.model.vo.Like;
+import com.sbs.wemasal.report.model.vo.Report;
 
 public interface CommunityService {
 	
@@ -55,6 +56,8 @@ public interface CommunityService {
 
 	// 레시피 게시글 삭제
 	int deleteCommunity(int cno);
+
+	
 
 
 

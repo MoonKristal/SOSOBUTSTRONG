@@ -1,12 +1,19 @@
 package com.sbs.wemasal.report.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.common.template.Pagination;
+import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.report.model.service.ReportService;
 import com.sbs.wemasal.report.model.vo.Report;
 
@@ -61,8 +68,6 @@ public class ReportController {
 		
 		int reportResult = reportService.selectReportReply(re);
 		
-		System.out.println(re.toString());
-		
 		if(reportResult > 0) {
 			
 			session.setAttribute("alertMsg", "이미 신고하신 댓글입니다.");
@@ -86,22 +91,114 @@ public class ReportController {
 	}
 	
 	@RequestMapping("communityReportList.re")
-	public String communityReportList() {
+	public ModelAndView communityReportList(@RequestParam(value="rpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		return "admin/report/communityReportListView";
+		int listCount = reportService.communityReportListCount();
+		
+		// pageLimit = 10, boardLimit = 9
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Report> list = reportService.communityReportList(pi);
+		
+		mv.addObject("list", list).addObject("pi", pi).setViewName("admin/report/communityReportListView");;
+		
+		return mv;
 	}
 	
 	@RequestMapping("replyReportList.re")
-	public String replyReportList() {
+	public ModelAndView replyReportList(@RequestParam(value="rpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		return "admin/report/replyReportListView";
+		int listCount = reportService.replyReportListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Report> list = reportService.replyReportList(pi);
+		
+		mv.addObject("list", list).addObject("pi", pi).setViewName("admin/report/replyReportListView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("communityReportDetail.re")
+	public ModelAndView communityReportDetail(Report re, ModelAndView mv) {
+		
+		CoAttachment coA = reportService.communityReportDetail(re);
+		
+		mv.addObject("coA", coA).setViewName("admin/report/communityReportDetailView");
+		
+		return mv;
 	}
 	
 	
+	@RequestMapping("replyReportDetail.re")
+	public ModelAndView replyReportDetail(Report re, ModelAndView mv) {
+		
+		CoAttachment coA = reportService.replyCommunityReportDetail(re);
+		
+		Report reR = reportService.replyReportDetail(re);
+		
+		mv.addObject("coA", coA).addObject("reR", reR).setViewName("admin/report/replyReportDetailView");
+		
+		return mv;
+	}
 	
+	@RequestMapping("deleteCommunityReport.re")
+	public String deleteCommunityReport(Report re, HttpSession session) {
+		
+		int result = reportService.deleteCommunityReport(re);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "신고되었습니다.");
+			return "redirect:communityReportList.re";
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			return "redirect:communityReportList.re";
+		}
+	}
 	
+	@RequestMapping("rejectCommunityReport.re")
+	public String rejectCommunityReport(Report re, HttpSession session) {
+		
+		System.out.println("반려");
+		System.out.println(re);
+		
+		int result = reportService.rejectCommunityReport(re);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "반려되었습니다.");
+			return "redirect:communityReportList.re";
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			return "redirect:communityReportList.re";
+		}
+	}
 	
+	@RequestMapping("deleteReplyReport.re")
+	public String deleteReplyReport(Report re, HttpSession session) {
+		
+		int result = reportService.deleteReplyReport(re);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "신고되었습니다.");
+			return "redirect:communityReportList.re";
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			return "redirect:communityReportList.re";
+		}
+	}
 	
-	
+	@RequestMapping("rejectReplyReport.re")
+	public String rejectReplyReport(Report re, HttpSession session) {
+		
+		int result = reportService.rejectReplyReport(re);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "신고되었습니다.");
+			return "redirect:replyReportList.re";
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			return "redirect:replyReportList.re";
+		}
+	}
 	
 }

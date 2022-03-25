@@ -16,5 +16,10 @@ public class Report {
 	private String status;
 	private String createDate;
 	private String completion;
+	private String comTitle;
+	private String replyContent;
+	private String userId;
+	
+	private String reportUserNo;
 	
 }

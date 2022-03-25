@@ -30,6 +30,7 @@ import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.community.model.vo.SmarteditorVO;
 import com.sbs.wemasal.like.model.vo.Like;
 import com.sbs.wemasal.member.model.vo.Member;
+import com.sbs.wemasal.report.model.vo.Report;
 
 @Controller
 public class CommunityController {
@@ -289,8 +290,6 @@ public class CommunityController {
 			return "redirect:/communityList.co";
 			
 		}
-		
-		
 	}
 	
 	

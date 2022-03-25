@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="coAttachmentResultSet" type="coAttachment">
 		<result column="COM_NO" property="comNo" />
 		<result column="USER_NO" property="userNo" />
+		<result column="REPORT_USER_NO" property="reportUserNo" />
 		<result column="USER_ID" property="userId" />
 		<result column="COM_TITLE" property="comTitle" />
 		<result column="SALAD_NAME" property="saladName" />
@@ -307,6 +308,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET STATUS = 'N'
 		WHERE COM_NO = #{cno}
 	</delete>
+	
+	<select id="communityReportDetail" resultMap="coAttachmentResultSet">
+		SELECT
+                C.COM_NO
+			  , C.USER_NO
+              , R.USER_NO "REPORT_USER_NO"
+			  , SUBSTR(M.USER_ID, 1, 3) || LPAD('*',LENGTH(M.USER_ID)-3, '*') USER_ID
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , "REPORT"
+			  , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+        LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+        LEFT JOIN "REPORT" R ON(C.COM_NO = R.REPORT_COM)
+		WHERE
+		  		COM_NO = #{reportCom}
+          AND
+                REPORT_REP = 0
+          AND 
+               R.USER_NO = #{reportUserNo}
+	</select>
+	
+	<select id="replyCommunityReportDetail" resultMap="coAttachmentResultSet">
+		SELECT
+                C.COM_NO
+			  , C.USER_NO
+              , R.USER_NO "REPORT_USER_NO"
+			  , SUBSTR(M.USER_ID, 1, 3) || LPAD('*',LENGTH(M.USER_ID)-3, '*') USER_ID
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , "REPORT"
+			  , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+        LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+        LEFT JOIN "REPORT" R ON(C.COM_NO = R.REPORT_COM)
+		WHERE
+		  		COM_NO = #{reportCom}
+		  AND
+		  		REPORT_REP != 0
+          AND 
+               R.USER_NO = #{reportUserNo}
+	</select>
+	
 
 
 
