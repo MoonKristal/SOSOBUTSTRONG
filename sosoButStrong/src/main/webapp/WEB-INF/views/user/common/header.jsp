@@ -53,7 +53,7 @@
 		                <div class="service_area">
 		                    <a href="logout.me">로그아웃</a>
 		                    <a href="myPage.cmm">마이페이지</a>
-		                    <a href="#">장바구니</a>
+		                    <a href="myCart.cs">장바구니</a>
 	                	</div>
 	                </c:otherwise>
 	            </c:choose>

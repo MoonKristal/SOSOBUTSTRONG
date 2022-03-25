@@ -1,0 +1,64 @@
+div{
+    box-sizing: border-box;
+}
+.orderDetail_outer{
+    width: 1200px;
+    margin: auto;  
+}
+.content{
+    width: 1000px;
+    margin-left: 200px;
+    padding: 25px;
+}
+.order-btn{
+    margin: 10px;
+    width: 210px;
+    height: 43px;
+    border-radius: 10px;
+    font-weight: bold;  
+    font-size: 19px;  
+    color: white;
+    border-style: none;
+}
+.list{
+    margin-left: 730px;
+    margin-bottom: 15px;
+}
+.orderList table{
+    margin-top: 20px;
+    width: 100%;   
+}
+td{
+    padding: 6px;
+}
+.question{
+    background: rgb(182, 238, 86);
+}
+label{
+    margin-left: 350px;
+}
+.line{
+    border: 0;
+    height: 2px;
+    background: #ccc;
+    margin-top: 10px !important;
+}
+h4{
+    margin-left:20px;
+    font-weight: bold !important;
+}
+#dv{
+    margin: auto;
+    width: 100%;		
+}
+th{
+    padding: 6px;
+    width: 17%;
+}
+.detailList td{
+    padding: 10px;
+}
+.content>img{
+    width: 100%;
+    border: 2px solid #ccc;
+}

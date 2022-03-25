@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="resources/css/user/seller/sellerMyMenu.css">
 </head>
 <body>
-	<div id="sellerMyMenu-area">
+	<div id="sellerMyMenu-area" style="height: 1000px;">
 	
 		<h2>판매자 My Menu</h2>
 

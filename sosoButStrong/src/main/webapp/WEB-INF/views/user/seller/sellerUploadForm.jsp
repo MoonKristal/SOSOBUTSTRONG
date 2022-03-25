@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
 
-    <div class="outer">
+    <div class="outer" style="height: 1200px;">
 
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품등록</h2>
@@ -59,7 +59,7 @@
             
             <br>
 
-            <div align="center">
+            <div align="center" style="margin-right: 220px;">
                 <button type="reset" class="btn btn-secondary">취소</button>
                 <button type="button" class="btn btn-dark submitBtn">상품등록</button>
                 <button type="submit" style="display:none;" id="realBtn">숨겨진 찐 제출버튼</button>

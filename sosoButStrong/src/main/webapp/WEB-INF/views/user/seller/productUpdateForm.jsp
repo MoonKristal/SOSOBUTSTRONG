@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
 
-    <div class="outer">
+    <div class="outer" style="height: 1100px;">
 
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품수정</h2>
