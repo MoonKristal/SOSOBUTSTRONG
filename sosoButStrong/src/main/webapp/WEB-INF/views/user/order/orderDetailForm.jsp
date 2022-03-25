@@ -151,7 +151,7 @@
 
 
 
-    <!-- 리뷰 수정용 모달 -->
+    <!-- 리뷰 작성용 모달 -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -178,7 +178,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="file" name="thumbnail" class="form-control-file border"> <!-- 리뷰이미지 -->
+                                <input type="file" name="thumbnail" class="form-control-file border" required> <!-- 리뷰이미지 -->
                             </td>
                         </tr>
                     </table>

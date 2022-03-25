@@ -42,4 +42,10 @@ public interface CustomerService {
 	
 	// 내 장바구니 조회
 	ArrayList<Cart> selectMyCart(int userNo);
+	
+	// 장바구니에 상품 담기
+	int addToCart(Cart c);
+	
+	// 장바구니 상품 삭제
+	int deleteCart(int cartNo);
 }

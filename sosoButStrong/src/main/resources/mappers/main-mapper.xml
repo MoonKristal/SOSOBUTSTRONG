@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMainCount" resultType="_int">
 		SELECT COUNT(*)
 		  FROM ATTACHMENT
-		 WHERE REF_MPNO IS NOT NULL
+		 WHERE MAIN_FILE_NO IS NOT NULL
 	</select>
 
 	<select id="selectMain" resultMap="attachmentResultSet">
@@ -31,11 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, ORIGIN_NAME
 				, CHANGE_NAME
 				, TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') AS "UPLOAD_DATE"
-				, REF_MPNO
+				, MAIN_FILE_NO
 		 FROM
 				ATTACHMENT
 		WHERE
-				REF_MPNO IS NOT NULL	
+				MAIN_FILE_NO IS NOT NULL	
 		ORDER
 			 BY
 			 	FILE_NO DESC
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								, ORIGIN_NAME
 								, CHANGE_NAME
 								, UPLOAD_DATE
-								, REF_MPNO
+								, MAIN_FILE_NO
 								)
 								VALUES
 								(

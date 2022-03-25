@@ -13,6 +13,7 @@
     }
     .reBtn:hover{color: rgb(255, 163, 63);}
 </style>
+<link rel="stylesheet" href="resources/css/user/customer/myReviewList.css">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -86,6 +87,14 @@
     </div>
 
     <script>
+        $(document).on("click", ".img", function(){ // 리뷰 이미지를 클릭하면 해당 상품상세 페이지로 이동
+
+            location.href = 'saladDetailView.cmm?pno='+ this.alt;
+
+        })
+    </script>
+
+    <script>
 
         $(function(){ // 문서가 로드되면
 
@@ -118,7 +127,7 @@
                                 }
                                 // 문자열 누적
                                 result += "<tr>"
-                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 130px; height: 100px' class='img' ></td>"    
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 130px; height: 100px' class='img' alt=" + list[i].refPno + "></td>"    
                                 result += "<td style='text-align: center; width:90px;'>" + list[i].userId + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
@@ -133,7 +142,7 @@
 
                         }
                         else { // 해당 상품에 등록된 리뷰가 없는 경우
-                            result += "<tr><td colspan='9' style='pointer-events: none; width:600px; text-align: center;'>등록된 상품 리뷰가 없습니다.</td></tr>"
+                            result += "<tr><td colspan='9' style='pointer-events: none; width:600px; text-align: center;'>작성한 상품 리뷰가 없습니다.</td></tr>"
                             $(".review thead").html(result);
                             $("#rcount").text(list.length);
                         }

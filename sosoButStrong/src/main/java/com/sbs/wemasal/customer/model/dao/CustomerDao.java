@@ -56,6 +56,14 @@ public class CustomerDao {
 	public ArrayList<Cart> selectMyCart(SqlSessionTemplate sqlSession, int userNo) {
 		return (ArrayList)sqlSession.selectList("customerMapper.selectMyCart", userNo);
 	}
+
+	public int addToCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("customerMapper.addToCart", c);
+	}
+
+	public int deleteCart(SqlSessionTemplate sqlSession, int cartNo) {
+		return sqlSession.delete("customerMapper.deleteCart", cartNo);
+	}
 	
 
 }

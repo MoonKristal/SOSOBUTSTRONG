@@ -128,6 +128,7 @@
 	<select id="selectMyReviewList" parameterType="_int" resultMap="reviewResultSet">
 		SELECT
 				 REVIEW_NO
+				,REF_PNO
                 ,USER_ID
 				,REVIEW_CONTENT
                 ,SCORE
@@ -246,6 +247,39 @@
         JOIN ATTACHMENT A ON (C.PRODUCT_NO = A.PRODUCT_NO)
 		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)
 		WHERE C.USER_NO = #{userNo}
+		ORDER BY CART_NO DESC
 	</select>
 
+	<insert id="addToCart" parameterType="cart">
+		INSERT INTO CART
+						(
+						CART_NO,
+						PRODUCT_NO,
+						USER_NO,
+						PRODUCT_NAME,
+						"OPTION",
+                        PRICE,
+                        QUANTITY
+						)
+		VALUES
+						(			
+						SEQ_CTNO.NEXTVAL, 
+						#{productNo},
+						#{userNo},
+						#{productName},
+						#{option},
+                        #{price},
+                        #{quantity}
+						)	
+	</insert>
+	
+	<delete id="deleteCart" parameterType="_int">
+		DELETE
+		
+		  FROM 
+		  		CART
+		 WHERE 
+		 		CART_NO = #{cartNo}
+	</delete>
+	
 </mapper>

@@ -10,7 +10,7 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	
+
     <br><br><br><br>
 	<div class="outer" align="center">
         <div class="container marketing">
@@ -21,10 +21,15 @@
               </div>
               <div class="col-sm-5">
                
-               <form action="" method="post"> <!-- 주문/장바구니 영역 -->
+               <form method="post" onsubmit="return checkLogin();"> <!-- 주문/장바구니 영역 -->
                     <table class="table table-borderless">
                         <tr>
-                            <th style="font-size:x-large;">${ c.productName } &nbsp; ${ c.price } 원</th>
+                            <th style="font-size:x-large;">${ c.productName } &nbsp; <span style="color: green;">${ c.price } 원</span></th>
+                            <input type="hidden" name="productNo" value="${ c.productNo }"> <!-- 상품번호 -->
+                            <input type="hidden" name="userNo" value="${ loginUser.userNo }"> <!-- 구매자(유저번호) -->
+                            <input type="hidden" name="productName" value="${ c.productName }"> <!-- 상품번호 -->
+                            <input type="hidden" name="price" value="${ c.price }"> <!-- 상품가격 -->
+                            <input type="hidden" name="quantity" value="1"> <!-- 수량 -->
                         </tr>
                         <tr>
                             <td><img src="${ c.sellerImagePath }" width="70" height="70" alt="판매자대표이미지">&nbsp;&nbsp;<b>${ c.sellerName }</b></td>
@@ -41,77 +46,77 @@
                         <tr class="sellerInfo">
                             <td>TEL. ${ c.sellerPhone }</td>
                         </tr>
+
                         <!-- 상품 구매 옵션 영역, 6가지 -->
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 1. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 1. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 2. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 2. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 3. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 3. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 4. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 4. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 5. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 5. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <select class="form-control" name="options">
-                                    <option selected disabled>샐러드 재료를 골라주세요 6. (중복선택 가능) </option>
+                                <select class="form-control" name="option" required>
+                                    <option value="" selected disabled>샐러드 재료를 골라주세요 6. (중복선택 가능) </option>
                                     <c:forEach var="opts" items="${ c.option }">
-                                        <option value="opts">${opts}</option>
+                                        <option value="${opts}">${opts}</option>
                                     </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <!-- 주문하기 누르면, 위 6가지 옵션 값 가지고 주문화면으로 넘어갈 것, 옵션 6개 전부 선택해야 주문정보 화면으로 넘어가게 제약을 걸어야 함 -->
-                                <button style="font-weight: bolder;" class="btn btn-outline-success" type="button">주문하기</button> &nbsp;&nbsp;
-                                <button style="font-weight: bolder;" class="btn btn-outline-info" type="submit">장바구니</button>
-                                <!-- 장바구니 누르면 AJAX(비동기식)으로 , 위 옵션값 장바구니에 저장시키기 중복저장 가능, 단 옵션6개 전부 선택해야함 -->
+                                <button type="submit" formaction="orderNow.cs" style="font-weight: bolder;" class="btn btn-outline-success">바로주문</button> &nbsp;&nbsp;
+                                <button type="submit" formaction="addCart.cs" style="font-weight: bolder;" class="btn btn-outline-info">장바구니</button>
                             </td>
                         </tr>
                     </table>
                 </form>
+
               </div>
           </div>      
           
@@ -161,9 +166,22 @@
                     <td>&nbsp;&nbsp;상세페이지 참조</td>
                 </tr>
             </table>
+            <a href="loginPage.me" id="pleaseLogin" style="display: none;"></a>
 	</div>
 
     <script>
+
+        function checkLogin(){ // 비로그인 상태에서 주문 & 장바구니 사용 시 로그인 요청 알림 후 로그인 화면으로 보내기
+
+            var loginUser = '${loginUser}';
+
+            if(loginUser == ""){
+                alert('로그인 후 이용하시기 바랍니다.');
+                location.href = 'loginPage.me';
+                return false;
+            }
+            return true;
+        }
 
         $(function(){ // 문서가 로드되면
 
@@ -183,7 +201,7 @@
 
                         if(list.length != 0){ // 해당 상품에 등록된 리뷰가 있는 경우
 
-                            for(var i = 0; i < 3; i++){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동시 열람가능
+                            for(var i = 0; i < 3; i++){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동 시 열람가능
 
                                 switch(list[i].score){ // 별점 화면상 숫자문양으로 변환하기 위한 조건문
                                     case 0 : starRate = '☆☆☆☆☆'; break;

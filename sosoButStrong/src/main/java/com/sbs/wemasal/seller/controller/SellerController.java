@@ -49,9 +49,9 @@ public class SellerController {
 	 * @return
 	 */
 	@RequestMapping("sellerProductList.se")
-	public ModelAndView selectList(@RequestParam(value="pPage", defaultValue="1")int currentPage, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView selectList(@RequestParam(value="pPage", defaultValue="1")int currentPage, ModelAndView mv, HttpSession session) {
 		
-		int uploader = ((Member)request.getSession().getAttribute("loginUser")).getUserNo(); // 로그인된 회원의 회원번호(식별자) 가져와서 변수에 담기
+		int uploader = ((Member)session.getAttribute("loginUser")).getUserNo(); // 로그인된 회원의 회원번호(식별자) 가져와서 변수에 담기
 		
 		int listCount = sellerService.selectProductCount(uploader); // 등록되어있는 상품 총 개수 조회
 		

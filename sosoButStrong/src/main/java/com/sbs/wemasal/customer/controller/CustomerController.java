@@ -3,7 +3,6 @@ package com.sbs.wemasal.customer.controller;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import com.sbs.wemasal.customer.model.service.CustomerService;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
 import com.sbs.wemasal.member.model.vo.Member;
-import com.sbs.wemasal.seller.model.vo.Product;
 
 @Controller
 public class CustomerController {
@@ -203,13 +201,13 @@ public class CustomerController {
 	/**
 	 * 내 장바구니로 이동 및 장바구니 조회
 	 * @param mv
-	 * @param request
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping("myCart.cs")
-	public ModelAndView selectMyCart(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView selectMyCart(ModelAndView mv, HttpSession session) {
 		
-		int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo(); // 조회할 장바구니 식별할 유저번호 가져와서 변수에 담기
+		int userNo = ((Member)session.getAttribute("loginUser")).getUserNo(); // 조회할 장바구니 식별할 유저번호 가져와서 변수에 담기
 		
 		ArrayList<Cart> list = customerService.selectMyCart(userNo); // 유저번호로 장바구니 조회
 		
@@ -217,5 +215,58 @@ public class CustomerController {
 		
 		return mv;
 	}
-	
+	/**
+	 * 상품 장바구니 추가
+	 * @param c : 장바구니에 담을 상품정보(상품번호,상품명,유저번호,옵션,가격,수량)
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("addCart.cs")
+	public String addToCart(Cart c, HttpSession session, Model model){
+		
+		if(customerService.addToCart(c) > 0) {
+			
+			session.setAttribute("alertMsg", "상품을 장바구니에 담았습니다 ^^ 장바구니 메뉴에서 확인하실 수 있습니다");
+			
+			return "redirect:saladDetailView.cmm?pno="+c.getProductNo();
+		}
+		model.addAttribute("errorMsg", "장바구니 담기 실패");
+		
+		return "common/errorPage";
+	}
+	/**
+	 * 장바구니 비우기 (삭제)
+	 * @param cno : 삭제할 장바구니를 식별 할 장바구니 번호
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("deleteCart.cs")
+	public String deleteCart(int cno, Model model) {
+		
+		if(customerService.deleteCart(cno) > 0) {
+			
+			return "redirect:myCart.cs";
+		}
+		model.addAttribute("errorMsg", "장바구니 삭제 실패");
+		
+		return "common/errorPage";
+	}
+	/**
+	 * 바로주문 (장바구니에 담기에 성공하면 바로 장바구니 내용 가지고 주문하기 페이지로 이동)
+	 * @param c : 장바구니에 담을 상품정보(상품번호,상품명,유저번호,옵션,가격,수량)
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("orderNow.cs")
+	public String orderNow (Cart c, HttpSession session, Model model) {
+		
+		if(customerService.addToCart(c) > 0) {
+			
+			return "redirect:orderForm.od";
+		}
+		model.addAttribute("errorMsg", "바로주문 실패");
+		
+		return "common/errorPage";
+	}
 }

@@ -62,3 +62,5 @@ th{
     width: 100%;
     border: 2px solid #ccc;
 }
+.cBtn a:hover{color: rgb(255, 163, 63);}
+.cBtn a{color: black;}

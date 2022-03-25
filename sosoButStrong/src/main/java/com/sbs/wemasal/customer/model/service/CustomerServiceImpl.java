@@ -76,4 +76,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerDao.selectMyCart(sqlSession, userNo);
 	}
 
+	@Override
+	public int addToCart(Cart c) {
+		return customerDao.addToCart(sqlSession, c);
+	}
+
+	@Override
+	public int deleteCart(int cartNo) {
+		return customerDao.deleteCart(sqlSession, cartNo);
+	}
+
 }
