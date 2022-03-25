@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.sbs.wemasal.customer.model.vo.Customer" alias="customer"/>
 		
 		<typeAlias type="com.sbs.wemasal.question.model.vo.Question" alias="question" />
+		<typeAlias type="com.sbs.wemasal.question.model.vo.Answer" alias="answer" />
 	
 	</typeAliases>
 	

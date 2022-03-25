@@ -26,7 +26,7 @@
 			<p>* 표시는 필수 입력 사항입니다.</p>
 
 			<form id="enrollForm" action="buyerInsert.qu" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="questionWriter" value="">
+				<input type="hidden" name="questionWriter" value="${ loginUser.userNo }">
 
 				<table class="table table-bordered" align="center">
 					<!--(tr>(th+td))*7-->
@@ -40,7 +40,8 @@
 					<tr>
 						<th class="label">판매자*</th>
 						<td>
-							<input type="text" name="questionSeller" required>
+							<input type="hidden" name="questionSeller">
+							<input type="text" name="questionSellerName" placeholder="판매자 이름(전체 또는 일부)을 입력해 주세요" size="40" required>
 							<div id="autoComplete"></div>
 						</td>
 					</tr>
@@ -48,26 +49,26 @@
 						<th class="label">제목*</th>
 						<td>
 							<select name="category" id="" required>
-								<option value="">선택해 주세요</option>
-								<option value="delivery">배송 지연</option>
-								<option value="order">주문/결제 문의</option>
-								<option value="product">상품 정보 문의</option>
-								<option value="etc">기타 문의</option>
+								<option selected disabled>선택해 주세요</option> <!--해당 항목은 콤보박스 리스트에 보여지지만, 선택은 할 수 없게 됨-->
+								<option>배송 지연</option>
+								<option>주문/결제 문의</option>
+								<option>상품 정보 문의</option>
+								<option>기타 문의</option>
 							</select>
 							<input type="text" name="questionTitle" size="70" required>
 						</td>
 					</tr>
 					<tr>
-						<th class="label">이메일*</th>
+						<th class="label">이메일</th>
 						<td>
-							<input type="email" name="email" required><!--로그인한 구매자의 이메일 주소 띄워두기-->
+							<input type="email" value="${ loginUser.email }" required readonly> <!--로그인한 구매자의 이메일 주소 띄워두기-->
 							<input type="checkbox" name="answerMode" value="email" id="answerEmail"> <label for="answerEmail">답변 수신을 이메일로 받겠습니다.</label>
 						</td>
 					</tr>
 					<tr>
-						<th class="label">휴대폰*</th>
+						<th class="label">휴대폰</th>
 						<td>
-							<input type="text" name="phone" placeholder="하이픈(-)포함" required><!--로그인한 구매자의 휴대폰 번호 띄워두기-->
+							<input type="text" value="${loginUser.phone }" placeholder="하이픈(-)포함" required readonly><!--로그인한 구매자의 휴대폰 번호 띄워두기-->
 							<input type="checkbox" name="answerMode" value="sms" id="answerSms"> <label for="answerSms">답변 수신을 문자 메시지로 받겠습니다.</label>
 							<br>
 							<p class="phoneCheckResult"></p>
@@ -87,12 +88,12 @@
 					<tr>
 						<th class="label">첨부파일</th>
 						<td>
-							<input type="file" name="upfile1">
-							<input type="file" name="upfile2"><br>
+							<input type="file" name="upfile">
+							<!-- <input type="file" name="upfile2"><br>
 							<input type="file" name="upfile3">
 							<input type="file" name="upfile4"><br>
-							<input type="file" name="upfile5"><br><br>
-							<p>- 파일은 최대 5개까지 업로드가 지원됩니다.</p>
+							<input type="file" name="upfile5"><br><br> -->
+							<p>- 파일은 1개 업로드가 가능합니다.</p>
 						</td>
 					</tr>
 				</table> 
@@ -101,7 +102,7 @@
 				<div align="center" style="float: right;">
 					<button type="button" onclick="location.href='buyerList.qu'">취소(문의 목록으로 돌아가기)</button>
 					<button type="reset" class="grayBtn">초기화</button>
-					<button type="submit" class="orangeBtn" onclick="location.href='buyerInsert.qu'">문의 글 등록</button>					
+					<button type="submit" class="orangeBtn">문의 글 등록</button> <!--onclick="location.href='buyerInsert.qu'"-->		
 				</div>
 			</form>
 
@@ -120,7 +121,10 @@
 					
 					<!-- Modal body -->
 					<div class="modal-body">
-						<p>문의하실 주문번호를 선택하세요</p>
+						<p>
+							문의하실 주문번호를 선택하세요.<br>
+							이미 선택된 주문번호를 삭제하시려면 '취소' 버튼을 눌러주세요.
+						</p>
 						<table class="table">
 							<thead class="thead-light">
 								<tr>
@@ -188,7 +192,7 @@
 		// 2022.3.23(수) 4h20 '주문 조회' 모달 창에서 '취소' 버튼 클릭 시
 		function cancelOrderNo() {
 			$("input[name=orderNo]").val("").attr("readonly", false);
-			$("input[name=questionSeller]").val("").attr("readonly", false);
+			$("input[name=questionSellerName]").val("").attr("readonly", false);
 			
 			/*
 			let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
@@ -196,7 +200,7 @@
 			
 			if ($("input[type=radio]:checked")) {
 				$("input[name=orderNo]").val($orderNo).attr("readonly", true);
-				$("input[name=questionSeller]").val($sellerName).attr("readonly", true);
+				$("input[name=questionSellerName]").val($sellerName).attr("readonly", true);
 			} else {
 				
 			}
@@ -207,6 +211,7 @@
 		function confirmOrderNo() {
 			let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
 			let $seller = $("#order-list input[type=radio]:checked").parent().siblings().eq(2).text();
+			let $sellerName = $("#order-list input[type=radio]:checked").parent().siblings().eq(3).text();
 			// console.log($seller);
 
 			// 2022.3.18(금) 11h50 소영님이 알려주신, 주문번호 생성 테스트
@@ -227,8 +232,8 @@
 			$.ajax({
 				url : "confirmOrderNo.qu",
 				data : {
-					// userNo : ${ loginUser.userNo }
-					questionWriter : 2,
+					questionWriter : '${ loginUser.userNo }', // key에 해당하는 값을 ''로 안 묶으면 Uncaught SyntaxError: Unexpected token ',' 브라우저 개발자 도구 오류
+					// questionWriter : 2,
 					questionSeller : $seller,
 					orderNo : $orderNo
 				},
@@ -236,7 +241,7 @@
 					console.log(result);
 					
 					if (result == "Y") { // 해당 주문번호로 기존 1:1 문의 내역이 있는 경우 = result는 1 이상의 정수 = db에서 select count(*) 조회한 결과
-						if (window.confirm("주문번호" + $orderNo + " 관련 기존 문의 내역이 있습니다. 그래도 새로운 문의 글을 작성하시겠습니까?")) {
+						if (window.confirm("주문번호" + $orderNo + " 관련 " + $sellerName + " 앞 기존 문의 내역이 있습니다. 그래도 새로운 문의 글을 작성하시겠습니까?")) {
 							addOrderNo($orderNo);
 						} else { // 사용자가 해당 주문번호로 새로운 문의 글 작성을 희망하지 않는 경우, 모달 창 띄워두고 싶은데, 모달 창 닫힘 -> 어떻게 코드 써야 할지 잘 모르겠음
 							console.log("해당 주문번호로 기존 1:1 문의 내역 있는데, 새로운 문의 글 작성을 희망하지 않음");
@@ -256,18 +261,21 @@
 		function addOrderNo($orderNo) {
 			// let $orderNo = $("#order-list input[type=radio]:checked").parent().siblings().eq(0).text();
 			let $sellerName = $("#order-list input[type=radio]:checked").parent().siblings().eq(3).text();
+			let $seller = $("#order-list input[type=radio]:checked").parent().siblings().eq(2).text();
 
 			$("input[name=orderNo]").val($orderNo).attr("readonly", true);
-			$("input[name=questionSeller]").val($sellerName).attr("readonly", true);
+			$("input[name=questionSellerName]").val($sellerName).attr("readonly", true);
+			$("input[name=questionSeller]").val($seller);
 		}
 		
 		$(function() {
+			// '주문 조회' 버튼 클릭 -> 해당 회원의 주문 list 조회 AJAX 요청
 			$("#buyerOrderList").click(function() {
 				$.ajax({
 					url : "buyerOrderList.qu",
 					data : {
-						// userNo : ${ loginUser.userNo }
-						userNo : 2
+						userNo : '${ loginUser.userNo }' // key에 해당하는 값을 ''로 안 묶으면 Uncaught SyntaxError: Unexpected token ',' 브라우저 개발자 도구 오류
+						// userNo : 2
 					},
 					success : function(result) {
 						// console.log(result);
@@ -343,29 +351,46 @@
 			
 			// 2022.3.23(수) 3h20 판매자 이름 자동완성 검색해서 입력
 			// 참고 = https://lts0606.tistory.com/469
-			$("input[name=questionSeller]").keyup(function() {
-				let $searchSeller = $(this).val();
+			$("input[name=questionSellerName]").keyup(function() {
+				let $searchSellerName = $(this).val();
 
 				$.ajax({
-					url : "searchSeller.qu",
+					url : "searchSellerName.qu",
 					data : {
-						sellerKeyword : $searchSeller
+						sellerNameKeyword : $searchSellerName
 					},
 					success : function(result) {
 						console.log(result);
 						
-						if ($searchSeller != '') { // 판매자 이름 칸에 어떤 글자가 입력되면
+						if ($("input[name=orderNo]").val() == '' && $searchSellerName != '') { // 주문번호는 빈칸이고 + 판매자 이름 칸에 어떤 글자가 입력되면
 							$("#autoComplete").children().remove();
 
+							// let $selectedSeller = "";
+
 							result.forEach(function(seller) { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
-								if (seller.sellerName.indexOf($searchSeller) > -1) { // 만약 입력된 데이터가 가져온 데이터에 비슷한 경우면,
+								if (seller.sellerName.indexOf($searchSellerName) > -1) { // 만약 입력된 데이터가 가져온 데이터에 비슷한 경우면,
+									// 인터넷 검색 + 수정님 댓글 신고 구현 시 논의한 것 참고
+									// $("#autoComplete").append($("<div>").text(seller.sellerName).attr({"data-userNo":seller.userNo}));
+
 									$("#autoComplete").append($("<div>").text(seller.sellerName));
+									$("#autoComplete").append($("<input>").attr("type", "hidden").attr("name", "userNo").val(seller.userNo));
+									// $selectedSeller = $("#autoComplete>input").val();
 								}
 							})
 							
-							$("#autoComplete").children().each(function() { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
+							$("#autoComplete>div").each(function() { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
 								$(this).click(function() {
-									$("input[name=questionSeller]").val($(this).text());
+									let $selectedSellerName = $(this).text();
+									let $selectedSeller = $(this).next().val();
+
+									console.log($selectedSellerName); // King받는샐러드숍
+									console.log($selectedSeller); // 3
+									// console.log($("input[name=questionSeller]").val());
+									
+									$("input[name=questionSellerName]").val($selectedSellerName);
+									$("input[name=questionSeller]").val($selectedSeller);
+																		
+									// 특정 판매자가 선택된 이후에는 검색 결과 안 보이게 함
 									$("#autoComplete").children().remove();
 									// isComplete = true; // 참고 사이트의 '전체 코드' 부분에는 이 코드가 적혀있는데, 무슨 의미인지 모르겠음 -> 4h10 아래 부분 읽다 보니, 내 화면에는 필요 없는 부분임
 								})
@@ -383,10 +408,39 @@
 
 			})
 			
+			// 2022.3.23(수) 11h30 답변 수신 방법에 따라 필수 입력 여부 표시
+			$("input[name=answerMode]").on('change', function() {
+				let $answerMode = $(this).prop('checked');
+				let $label = $(this).parent().siblings().text();
+				
+				if ($answerMode) {
+					$(this).siblings().attr('required', true);
+					
+					// console.log("답변 수신 방법 체크박스 체크 - " + $label); // 답변 수신 방법 체크박스 체크 - 이메일
+					// console.log(typeof($label)); // string
+					$label += "*";
+					// console.log($label); // 이메일*
+					$(this).parent().siblings().text($label);
+				}
+				else {
+					$(this).siblings().attr('required', false);
+					
+					$label = $label.substring(0, 3);
+					$(this).parent().siblings().text($label);
+				}
+			})
+			
+			/*
+			// 2022.3.23(수) 13h 현재 필요 없을 듯..
 			// 휴대전화 번호 형식 검사 정규표현식 -> 2022.3.17(목) 18h20 테스트 시 문제점 = 정규표현식에 부합하는 전화번호 입력한 다음, 그 번호 수정해서 다시 이상한 형식이 되었을 때 오류 메시지가 안 뜸
 			$("input[name=phone]").blur(function() {
+				
+				if ($("#answerSms").prop('checked')) {
+					
+				}
+				
 				let $phone = $(this).val();
-				let regExp = /^010-\d{4}-\d{4}$/;
+				let regExp = /^01[016789]-\d{4}-\d{4}$/;
 
 				if (!regExp.test($phone)) {
 					$(".phoneCheckResult").text("잘못된 전화번호 형식입니다. 확인해 주세요~").css("display", "block");
@@ -395,6 +449,7 @@
 					$(".phoneCheckResult").css("display", "none");
 				}
 			})
+			*/
 		})
 		
 	</script>
