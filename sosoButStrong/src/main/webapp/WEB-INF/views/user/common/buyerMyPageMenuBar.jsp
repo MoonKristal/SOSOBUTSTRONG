@@ -10,7 +10,7 @@
 <body>
 
 	<!--2022.3.8(화) 13h55-->
-	<div class="menu_bar">
+	<div class="menu_bar" style="height: auto;">
             <div class="profile">
                 <div class="profile_photo">
                     <img src="resources/images/defaultUserProfilePhoto.png" alt="로그인 회원 프로필 사진" width="90px" height="90px">
@@ -27,7 +27,7 @@
                     <div class="menu_item"><a href="buyerList.qu" class="link menu">1:1문의 내역</a></div>
                 </div>
             </div>
-        </div>
+    </div>
 
 </body>
 </html>

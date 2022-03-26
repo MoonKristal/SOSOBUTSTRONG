@@ -31,7 +31,7 @@
 			
 			<c:forEach var="c" items="${list}">					
 				<tr>
-					<td class="firstTd"><img src="${c.sellerImage}"></td>
+					<td class="firstTd"><img src="${c.changeName}"></td>
 					<td style="text-align: left; padding: 10px;">
 						[<b>${c.sellerName}</b>] <label style="font-size: 15px; margin-bottom: 0;">${c.productName}</label>						
 						<label style="font-size: 13px; margin-bottom: 0;" id="topping">${c.option }</label>

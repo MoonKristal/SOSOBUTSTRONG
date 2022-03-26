@@ -37,8 +37,8 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
-                            <input type="hidden" class="productName" value="${c.productNo}">
-                            <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
+                            <input type="text" class="productNo" value="${c.productNo}">
+                            <a href=""><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
                         </c:if>
                     </td>                                   
                 </tr>
