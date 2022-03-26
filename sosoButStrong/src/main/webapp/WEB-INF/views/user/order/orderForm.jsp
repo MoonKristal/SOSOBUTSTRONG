@@ -258,13 +258,8 @@
 						order.orderPrice = "${item.price}";
 						order.quantity = "${item.quantity}";
 						order.sellerName = "${item.sellerName}";
-<<<<<<< HEAD
-						order.productName = "${item.productName}"
-						order.orderer = "${loginUser.userNo}";	
-=======
 						order.productName = "${item.productName}";
-						order.orderer = 2;	
->>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
+						order.orderer = "${loginUser.userNo}";	
 						order.orderNo = $orderNo;
 
 						arr.push(order);

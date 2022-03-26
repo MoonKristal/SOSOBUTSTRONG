@@ -37,12 +37,9 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
-<<<<<<< HEAD
                             <input type="text" class="productNo" value="${c.productNo}">
                             <a href=""><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
-=======
-                            <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" data-toggle="modal" data-target="#myModal" ></a> <br>
->>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
+
                         </c:if>
                     </td>                                   
                 </tr>

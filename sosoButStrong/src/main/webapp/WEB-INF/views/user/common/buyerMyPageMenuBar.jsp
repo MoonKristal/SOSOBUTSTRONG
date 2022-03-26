@@ -21,13 +21,8 @@
             <div class="menu">
                 <div class="menu_group">
                 	<!--현재 선택된 menu_item에 current 클래스 속성 주고 싶은데..>.<-->
-<<<<<<< HEAD
-                    <div class="menu_item"><a id="orderList" href="orderList.od" class="link menu">주문목록/배송조회</a></div>
-                    <div class="menu_item"><a href="#" class="link menu">장바구니</a></div>
-=======
                     <div class="menu_item"><a href="orderList.od" class="link menu">주문목록/배송조회</a></div>
                     <div class="menu_item"><a href="myCart.cs" class="link menu">장바구니</a></div>
->>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
                     <div class="menu_item"><a href="#" class="link menu">회원정보수정</a></div>
                     <div class="menu_item"><a href="buyerList.qu" class="link menu">1:1문의 내역</a></div>
                     <div class="menu_item"><a href="reviewList.cs" class="link menu">리뷰관리</a></div>
