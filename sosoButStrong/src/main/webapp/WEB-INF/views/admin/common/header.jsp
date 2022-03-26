@@ -44,10 +44,10 @@
                     <a href="picListAd.main">메인페이지 관리</a>
                 </li>
                 <li>
-                    <a href="#">커뮤니티 관리</a>
+                    <a href="communityReportList.re">커뮤니티 관리</a>
                     <ul>
-                        <li><a href="#">레시피 신고 관리</a></li>
-                        <li><a href="#">댓글 신고 관리</a></li>
+                        <li><a href="communityReportList.re">레시피 신고 관리</a></li>
+                        <li><a href="replyReportList.re">댓글 신고 관리</a></li>
                     </ul>
                 </li>
                 <li>

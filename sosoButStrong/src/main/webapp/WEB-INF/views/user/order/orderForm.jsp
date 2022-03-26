@@ -258,7 +258,7 @@
 						order.orderPrice = "${item.price}";
 						order.quantity = "${item.quantity}";
 						order.sellerName = "${item.sellerName}";
-						order.productName = "${item.productName}"
+						order.productName = "${item.productName}";
 						order.orderer = "${loginUser.userNo}";	
 						order.orderNo = $orderNo;
 

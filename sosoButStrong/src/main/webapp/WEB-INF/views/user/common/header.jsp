@@ -52,7 +52,9 @@
 		                <!-- 로그인 후 -->
 		                <div class="service_area">
 		                    <a href="logout.me">로그아웃</a>
-		                    <a href="#">마이페이지</a>
+		                    <a href="myPage.cmm">마이페이지</a>
+		                    <a href="myCart.cs">장바구니</a>
+		                    <a href="myRecipeListView.co">마이페이지</a>
 		                    <a href="#">장바구니</a>
 	                	</div>
 	                </c:otherwise>
@@ -64,7 +66,7 @@
             <div class="group_navi">
                 <ul class="list_navi">
                     <li class="navi_item"><a href="#" class="link navi">ABOUT</a></li>
-                    <li class="navi_item"><a href="saladListView.se" class="link navi">SALA:D</a></li>
+                    <li class="navi_item"><a href="saladListView.cmm" class="link navi">SALA:D</a></li>
                     <li class="navi_item"><a href="communityList.co" class="link navi">COMMUNITY</a></li>
                     <li class="navi_item"><a href="#" class="link navi">SERVICE</a></li>
                 </ul>

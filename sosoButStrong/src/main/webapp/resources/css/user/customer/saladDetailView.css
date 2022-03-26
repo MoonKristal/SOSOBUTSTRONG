@@ -16,3 +16,10 @@
 .pInfoTitle{
     background-color:lightgrey;
 }
+.sellerInfo{
+    font-size: small;
+    border: 0.5px solid lightgrey;
+}
+select option[value=""][disabled] {
+	display: none;
+}

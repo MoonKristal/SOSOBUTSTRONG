@@ -31,9 +31,9 @@
 		<result column="ORDER_NO" property="orderNo"/>	
 		<result column="DELIVERY_NO" property="deliveryNo"/>
 		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
-		<result column="SELLER_COUNT" property="sellerCount"/>
-		<result column="ORDERER" property="orderer"/>	
-		<result column="PRODUCT_NAME" property="productName"/>	
+		<result column="SELLER_COUNT" property="sellerCount"/>	
+		<result column="ORDERER" property="orderer"/>   
+      	<result column="PRODUCT_NAME" property="productName"/>
 		<result column="PRODUCT_NO" property="productNo"/>
 	</resultMap>
 
@@ -47,6 +47,7 @@
 				S.SELLER_IMAGEPATH, 
 				S.USER_NO,
 				A.CHANGE_NAME				
+
 		FROM CART C
 		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
 		JOIN ATTACHMENT A ON (P.PRODUCT_NO = A.PRODUCT_NO)
@@ -85,7 +86,8 @@
 						ORDERER,
 						SELLER,
 						SELLER_NAME,
-						PRODUCT_NAME
+						PRODUCT_NAME,
+						PRODUCT_NO
 						)
 		VALUES
 		
@@ -104,7 +106,9 @@
 						#{seller},
 						#{sellerName},
 						#{productName}
-			)			
+						#{productNo}
+			)
+
 		
 	</insert>
 	

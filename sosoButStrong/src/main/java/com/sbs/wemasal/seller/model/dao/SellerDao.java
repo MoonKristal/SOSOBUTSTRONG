@@ -35,5 +35,16 @@ public class SellerDao {
 		return sqlSession.insert("sellerMapper.uploadProduct", p);
 	}
 
+	public int deleteProduct(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("sellerMapper.deleteProduct", pno);
+	}
+
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("sellerMapper.updateProduct", p);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("sellerMapper.updateAttachment", at);
+	}
 
 }
