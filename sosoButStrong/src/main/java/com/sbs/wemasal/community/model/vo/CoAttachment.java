@@ -28,5 +28,7 @@ public class CoAttachment {
 	private String changeName; // 수정 파일명
 	private String uploadDate; // 업로드 날짜
 	private int refCno; // 커뮤니티 글 번호
-
+	
+	private String reportUserNo;
+	
 }

@@ -6,8 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbs.wemasal.cart.model.vo.Cart;
+import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.dao.CustomerDao;
 import com.sbs.wemasal.customer.model.vo.Customer;
+import com.sbs.wemasal.customer.model.vo.Review;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -24,8 +27,63 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer selectSaladDetailView(int pno) {
-		return customerDao.selectSaladDetailView(sqlSession, pno);
+	public Customer selectSaladDetailView(int productNo) {
+		return customerDao.selectSaladDetailView(sqlSession, productNo);
 	}
-	
+
+	@Override
+	public ArrayList<Review> selectProductReviewList(int productNo) {
+		return customerDao.selectProductReviewList(sqlSession, productNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectMyReviewList(int userNo) {
+		return customerDao.selectMyReviewList(sqlSession, userNo);
+	}
+
+	@Override
+	public int deleteReview(int ReviewNo) {
+		return customerDao.deleteReview(sqlSession, ReviewNo);
+	}
+
+	@Override
+	public Review selectReviewForUpdate(int ReviewNo) {
+		return customerDao.selectReviewForUpdate(sqlSession, ReviewNo);
+	}
+
+	@Override
+	public int updateAttachment(Attachment at) {
+		return customerDao.updateAttachment(sqlSession, at);
+	}
+
+	@Override
+	public int updateReview(Review r) {
+		return customerDao.updateReview(sqlSession, r);
+	}
+
+	@Override
+	public int uploadReview(Review r) {
+		return customerDao.uploadReview(sqlSession, r);
+	}
+
+	@Override
+	public int uploadAttachment(Attachment at) {
+		return customerDao.uploadAttachment(sqlSession, at);
+	}
+
+	@Override
+	public ArrayList<Cart> selectMyCart(int userNo) {
+		return customerDao.selectMyCart(sqlSession, userNo);
+	}
+
+	@Override
+	public int addToCart(Cart c) {
+		return customerDao.addToCart(sqlSession, c);
+	}
+
+	@Override
+	public int deleteCart(int cartNo) {
+		return customerDao.deleteCart(sqlSession, cartNo);
+	}
+
 }

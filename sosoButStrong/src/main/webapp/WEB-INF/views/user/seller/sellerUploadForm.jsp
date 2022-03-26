@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-
-
-
 <title>판매자 상품등록 화면</title>
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="resources/css/user/seller/sellerUploadForm.css">
@@ -21,13 +14,13 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
 
-    <div class="outer">
+    <div class="outer" style="height: 1200px;">
 
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품등록</h2>
         <form id="enrollForm" action="uploadProduct.se" method="post" enctype="multipart/form-data">
             <table align="center">
-                <input type="hidden" value="10" name="uploader"> <!-- 상품등록 작성자 -->
+                <input type="hidden" value="${loginUser.userNo}" name="uploader"> <!-- 상품등록 작성자 -->
                 <tr>
                     <th><div class="cFrame" style="width: 100px;">대표이미지</div></th>
                     <td><input type="file" style="width: 950px;" class="form-control-file border" name="thumbnail" required></td>
@@ -66,7 +59,7 @@
             
             <br>
 
-            <div align="center">
+            <div align="center" style="margin-right: 220px;">
                 <button type="reset" class="btn btn-secondary">취소</button>
                 <button type="button" class="btn btn-dark submitBtn">상품등록</button>
                 <button type="submit" style="display:none;" id="realBtn">숨겨진 찐 제출버튼</button>

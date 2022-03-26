@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reportMapper">
+
+	<resultMap id="reportResultSet" type="report">
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_ID" property="userId" />
+		<result column="REPORT_COM" property="reportCom" />
+		<result column="REPORT_REP" property="reportRep" />
+		<result column="REASON" property="reason" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="COMPLETION" property="completion" />
+		<result column="COM_TITLE" property="comTitle" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+	</resultMap>
+	
+	<select id="selectReportCommunity" parameterType="report" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE USER_NO = #{userNo}
+		  AND REPORT_COM = #{reportCom}
+	</select>
+	
+	<insert id="insertReportCommunity">
+		INSERT INTO REPORT(
+						   USER_NO
+						 , REPORT_COM
+						 , REASON
+						 )
+						 VALUES
+						 (
+						   #{userNo}
+						 , #{reportCom}
+						 , #{reason}
+						 )
+	</insert>
+	
+	<select id="selectReportReply" parameterType="report" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE USER_NO = #{userNo}
+		  AND REPORT_COM = #{reportCom}
+		  AND REPORT_REP = #{reportRep}
+	</select>
+	
+	<insert id="insertReportReply">
+		INSERT INTO REPORT(
+						   USER_NO
+						 , REPORT_COM
+						 , REPORT_REP
+						 , REASON
+						 )
+						 VALUES
+						 (
+						   #{userNo}
+						 , #{reportCom}
+						 , #{reportRep}
+						 , #{reason}
+						 )
+	</insert>
+	
+	<!-- 게시글 댓글의 디폴드 값이 0이면 신고된 게시글 조회가능 -->
+	<select id="communityReportListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE REPORT_REP = 0
+	</select>
+	
+	<select id="communityReportList" resultMap="reportResultSet">
+		SELECT 
+				R.USER_NO, 
+				REPORT_COM, 
+				REASON, 
+				R.STATUS, 
+				TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE", 
+				COMPLETION, 
+				COM_TITLE
+		FROM REPORT R
+		LEFT JOIN COMMUNITY C ON (COM_NO = REPORT_COM)
+		WHERE REPORT_REP = 0
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<select id="replyReportListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE REPORT_REP != 0
+	</select>
+	
+	<select id="replyReportList" resultMap="reportResultSet">
+		SELECT 
+				R.USER_NO, 
+				REPORT_COM, 
+				REPORT_REP,
+				REASON, 
+				R.STATUS, 
+				TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE", 
+				COMPLETION, 
+				REPLY_CONTENT
+		FROM REPORT R
+		LEFT JOIN REPLY RE ON (REPLY_NO = REPORT_REP)
+		WHERE REPORT_REP != 0
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<select id="replyReportDetail" resultMap="reportResultSet">
+		SELECT 
+				RP.USER_NO,
+				RP.USER_NO "REPORT_USER_NO",
+				SUBSTR(M.USER_ID, 1, 3) || LPAD('*',LENGTH(M.USER_ID)-3, '*') USER_ID, 
+				REPORT_COM, 
+				REPORT_REP,
+				REASON, 
+				RP.STATUS, 
+				TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE", 
+				COMPLETION, 
+				REPLY_CONTENT
+		FROM "REPORT" RP
+		LEFT JOIN REPLY R ON (REPLY_NO = REPORT_REP)
+		LEFT JOIN MEMBER M ON (M.USER_NO = R.USER_NO)
+		WHERE REPORT_COM = #{reportCom}
+        AND REPORT_REP = #{reportRep}
+	</select>
+	
+	<update id="deleteCommunityReport">
+		UPDATE 
+				REPORT
+		   SET
+		   		STATUS = 'D'
+		   	  , COMPLETION = 'Y'
+		 WHERE
+		 		REPORT_REP = 0
+		   AND
+		 		USER_NO = #{reportUserNo}
+		   AND
+		   		REPORT_COM = #{reportCom}
+	</update>
+	
+	<update id="rejectCommunityReport">
+		UPDATE 
+				REPORT
+		   SET
+		   		STATUS = 'R'
+		   	  , COMPLETION = 'Y'
+		 WHERE
+		 		REPORT_REP = 0
+		   AND
+		 		USER_NO = #{reportUserNo}
+		   AND
+		   		REPORT_COM = #{reportCom}
+	</update>
+	
+	<update id="deleteReplyReport">
+		UPDATE 
+				REPORT
+		   SET
+		   		STATUS = 'D'
+		   	  , COMPLETION = 'Y'
+		 WHERE
+		 		REPORT_REP != 0
+		   AND
+		 		USER_NO = #{reportUserNo}
+		   AND
+		   		REPORT_COM = #{reportCom}
+	</update>
+	
+	<update id="rejectReplyReport">
+		UPDATE 
+				REPORT
+		   SET
+		   		STATUS = 'R'
+		   	  , COMPLETION = 'Y'
+		 WHERE
+		 		REPORT_REP != 0
+		   AND
+		 		USER_NO = #{reportUserNo}
+		   AND
+		   		REPORT_COM = #{reportCom}
+	</update>
+	
+	
+	
+
+
+</mapper>

@@ -16,7 +16,6 @@ import com.sbs.wemasal.common.template.SaveFile;
 import com.sbs.wemasal.member.model.service.MemberService;
 import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.member.model.vo.Seller;
-import com.sbs.wemasal.seller.model.service.SellerService;
 
 @Controller
 public class MemberController {
@@ -112,7 +111,6 @@ public class MemberController {
 	public void updateMember() {
 		
 	}
-	
 	
 	// --------------------------------------------
 		@RequestMapping("sellerInsert.se")

@@ -1,0 +1,157 @@
+.wrap{
+    width: 1200px;
+}
+#menubar{
+    float: left;
+}
+div{
+    /* border: 1px solid black; */
+}
+.content{
+    width: 70%;
+    margin-left: 320px;
+    padding-top: 100px;
+}
+.content_1{
+    height: 100px;
+}
+.content_1>div{
+    float: left;
+}
+.title{
+    width: 68%;
+}
+.title>h2{
+    font-weight: bolder;
+    padding-left: 5%;
+}
+.btn_area{
+    width: 32%;
+    margin-top: 40px;
+}
+.btn_area>a{
+    margin-left: 10px;
+}
+.btn_area>.btn-outline-primary{
+    /* background-color: rgb(255, 163, 63); */
+    color: rgb(255, 163, 63);
+    border: 2px solid rgb(255, 163, 63);
+    font-weight: bolder;
+}
+.btn_area>.btn-outline-primary:hover{
+    background-color: rgb(255, 163, 63);
+    color: white;
+    border: 2px solid rgb(255, 163, 63);
+    font-weight: bolder;
+}
+.btn_area>.btn-outline-danger{
+    font-weight: bolder;
+    border: 2px solid;
+}
+.btn_area>.btn-outline-secondary{
+    border: 2px solid;
+}
+
+/* ------------------------------- */
+.content_2{
+    width: 90%;
+    margin: auto;
+    border: 3px solid black;
+    margin-bottom: 10%;
+}
+
+.content2_1{
+    width: 100%;
+    height: 80px;
+    padding-top: 30px;
+}
+.content2_1>div{
+    float: left;
+}
+.contentTitle{
+    font-size: 26px;
+    font-weight: bolder;
+    width: 60%;
+    margin-left: 30px;
+}
+.writer{
+    font-size: 16px;
+    width: 17%;
+    margin-top: 30px;
+    margin-left: 120px;
+    text-align: center;
+}
+.content2_2{
+    width: 100%;
+    height: 370px;
+}
+.imgDiv>div{
+    float: left;
+}
+.salPic{
+    width: 350px;
+    height: 350px;
+    margin-left: 250px;
+}
+.salImg{
+    width: 100%;
+    height: 100%;
+}
+.conten2_3{
+    width: 100%;
+}
+.content2_3>div{
+    float: left;
+}
+.content_header{
+    width: 20%;
+    font-weight: bolder;
+    margin-left: 30px;
+    padding-left: 50px;
+    line-height: 35px;
+}
+.content_input{
+    width: 70%;
+}
+.contents1{
+    line-height: 35px;
+    padding-left: 30px;
+}
+.contents2>p{
+    padding-top: 5px;
+    line-height: 28px;
+    padding-left: 30px;
+}
+.createDate{
+    width: 12%;
+    margin-top: 35px;
+    margin-left: 650px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,9 +11,10 @@
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
-    <div class="outer">
+    <div class="outer" style="height: 1000px;">
         <br><br>
         <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품조회/수정</h2>
+        <br>
         <table align="center" class="list-area">
             <thead>
                 <tr style="background-color: lightgray;">
@@ -28,23 +29,32 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="p" items="${ list }">
-	                	<tr>
-		                    <td><button>수정</button></td>
-		                    <td><button>삭제</button></td>
-		                    <td>${ p.productNo }</td>
-		                    <td>${ p.productName }</td>
-		                    <td>${ p.sellStatus }</td>
-		                    <td>${ p.price }</td>
-		                    <td>${ p.createDate }</td>
-		                    <td>${ p.modifyDate }</td>
-	               	 	</tr>
-                 </c:forEach>
+                <c:choose>
+                    <c:when test="${ !empty list }">
+                        <c:forEach var="p" items="${ list }">
+                                <tr>
+                                    <td><a href="updateProductForm.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-warning" onclick="return confirm('상품을 수정 하시겠습니까?')">수정</a></td>
+                                    <td><a href="deleteProduct.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-danger" onclick="return confirm('상품을 삭제 하시겠습니까?')">삭제</a></td>
+                                    <td>${ p.productNo }</td>
+                                    <td>${ p.productName }</td>
+                                    <td>${ p.sellStatus }</td>
+                                    <td>${ p.price }</td>
+                                    <td>${ p.createDate }</td>
+                                    <td>${ p.modifyDate }</td>
+                                </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td colspan='9' style='pointer-events: none; width:600px; text-align: center;'>등록된 상품이 없습니다.</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </tbody>
         </table>
-    </div>
+
         <!-- 페이징 영역-->
-        <div id="pagingArea">
+        <div id="pagingArea" style="margin-left: 770px;">
             <ul class="pagination">
                 <c:choose>
                 <c:when test="${ pi.currentPage eq 1 }">
@@ -68,6 +78,7 @@
             </ul>
         </div>
 
+    </div>
     <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 </body>
 </html>

@@ -11,7 +11,10 @@
 		<result column="QUANTITY" property="quantity"/>
 		<result column="SELLER_NAME" property="sellerName"/>
 		<result column="SELLER_IMAGEPATH" property="sellerImage"/>	
+<<<<<<< HEAD
 		<result column="CHANGE_NAME" property="changeName"/>
+=======
+>>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -31,9 +34,15 @@
 		<result column="ORDER_NO" property="orderNo"/>	
 		<result column="DELIVERY_NO" property="deliveryNo"/>
 		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
+<<<<<<< HEAD
 		<result column="SELLER_COUNT" property="sellerCount"/>
 		<result column="ORDERER" property="orderer"/>	
 		<result column="PRODUCT_NAME" property="productName"/>	
+=======
+		<result column="SELLER_COUNT" property="sellerCount"/>	
+		<result column="ORDERER" property="orderer"/>   
+      	<result column="PRODUCT_NAME" property="productName"/>
+>>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
 		<result column="PRODUCT_NO" property="productNo"/>
 	</resultMap>
 
@@ -44,9 +53,14 @@
 				C.PRICE, 
 				C.QUANTITY, 
 				S.SELLER_NAME, 
+<<<<<<< HEAD
 				S.SELLER_IMAGEPATH, 
 				S.USER_NO,
 				A.CHANGE_NAME				
+=======
+				S.SELLER_IMAGEPATH,
+				S.USER_NO
+>>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
 		FROM CART C
 		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
 		JOIN ATTACHMENT A ON (P.PRODUCT_NO = A.PRODUCT_NO)
@@ -85,7 +99,12 @@
 						ORDERER,
 						SELLER,
 						SELLER_NAME,
+<<<<<<< HEAD
 						PRODUCT_NAME
+=======
+						PRODUCT_NAME,
+						PRODUCT_NO
+>>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
 						)
 		VALUES
 		
@@ -104,7 +123,12 @@
 						#{seller},
 						#{sellerName},
 						#{productName}
+<<<<<<< HEAD
 			)			
+=======
+						#{productNo}
+			)
+>>>>>>> branch 'master' of https://github.com/MoonKristal/SOSOBUTSTRONG2.git
 		
 	</insert>
 	

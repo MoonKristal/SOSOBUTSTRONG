@@ -18,7 +18,36 @@
 		<result column="SELLER_PHONE" property="sellerPhone" />
 		<result column="SELLER_LOCATION" property="sellerLocation" />
 		<result column="SELLER_INTRO" property="sellerIntro" />
-		<result column="SELLER_IMAGE" property="sellerImage" />
+		<result column="SELLER_IMAGEPATH" property="sellerImagePath" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
+	
+	<resultMap id="reviewResultSet" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REF_PNO" property="refPno" />
+		<result column="REVIEW_WRITER" property="reviewWriter" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="SCORE" property="score" />
+		<result column="USER_ID" property="userId" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="USER_NO" property="userNo" />
+	</resultMap>
+	
+	<resultMap id="cartResultSet" type="cart">
+		<result column="CART_NO" property="cartNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="OPTION" property="option" />
+		<result column="PRICE" property="price" />
+		<result column="QUANTITY" property="quantity" />
+		<result column="SELLER" property="seller"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
 		<result column="CHANGE_NAME" property="changeName" />
 	</resultMap>
 
@@ -48,7 +77,7 @@
                 PRODUCT_NO DESC
 	</select>
 
-	<select id="selectSaladDetailView" parameterType="int" resultMap="customerResultSet">
+	<select id="selectSaladDetailView" parameterType="_int" resultMap="customerResultSet">
 		SELECT
 				PRODUCT_NO,
 				UPLOADER,
@@ -65,14 +94,192 @@
                 SELLER_PHONE,
                 SELLER_LOCATION,
                 SELLER_INTRO,
-                SELLER_IMAGE,
+                SELLER_IMAGEPATH,
+                ORIGIN_NAME,
                 CHANGE_NAME
 		  FROM
 				PRODUCT
           JOIN SELLER ON (UPLOADER = USER_NO)
           LEFT JOIN ATTACHMENT USING (PRODUCT_NO)
 		 WHERE
-				PRODUCT_NO = #{pno}
+				PRODUCT_NO = #{productNo}
+	</select>
+	
+	<select id="selectProductReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REF_PNO = #{productNo}
+		  ORDER
+		  		BY REVIEW_NO DESC
+	</select>
+	
+	<select id="selectMyReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+				,REF_PNO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REVIEW_WRITER = #{userNo}
+		  ORDER
+		  		BY REVIEW_NO DESC
+	</select>
+	
+	<update id="deleteReview">
+		UPDATE
+				REVIEW
+		   SET
+		   		STATUS = 'N'
+		 WHERE
+		 		REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<select id="selectReviewForUpdate" parameterType="_int" resultMap="reviewResultSet">
+		SELECT
+				 REVIEW_NO
+                ,USER_ID
+				,REVIEW_CONTENT
+                ,SCORE
+				,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+				,CHANGE_NAME
+				,ORIGIN_NAME
+		  FROM
+                REVIEW R
+          JOIN MEMBER ON (REVIEW_WRITER = USER_NO)
+          JOIN ATTACHMENT ON (REVIEW_NO = REF_RNO)
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REVIEW_NO = #{reviewNo}
 	</select>
  
+	<update id="updateReview" parameterType="review">
+		UPDATE 
+		        REVIEW 
+		   SET
+			    REVIEW_CONTENT = #{reviewContent}
+		       ,MODIFY_DATE = SYSDATE
+               ,SCORE = #{score}
+		 WHERE
+		        REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<update id="updateAttachment" parameterType="attachment">
+		UPDATE 
+		        ATTACHMENT 
+		   SET
+		        ORIGIN_NAME = #{originName}
+			   ,CHANGE_NAME = #{changeName}
+		       ,UPLOAD_DATE = SYSDATE
+		 WHERE
+		        REF_RNO = #{refRno}
+	</update>
+	
+	<insert id="uploadReview" parameterType="review">
+		INSERT INTO REVIEW(
+						REVIEW_NO,
+						REF_PNO,
+						REVIEW_WRITER,
+						REVIEW_CONTENT,
+						SCORE
+						)
+		VALUES
+			(			
+						SEQ_RVNO.NEXTVAL,
+						#{refPno},
+						#{reviewWriter},
+						#{reviewContent},
+						#{score}
+			)			
+	</insert>
+ 
+ 	<insert id="uploadAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+						FILE_NO,
+						ORIGIN_NAME,
+						CHANGE_NAME,
+						REF_RNO
+						)
+		VALUES
+			(			
+						SEQ_ATNO.NEXTVAL,
+						#{originName},
+						#{changeName},
+						SEQ_RVNO.CURRVAL
+			)			
+	</insert>
+	
+	<select id="selectMyCart" parameterType="_int" resultMap="cartResultSet">
+		SELECT 
+				C.CART_NO,
+				C.PRODUCT_NO,
+				C.PRODUCT_NAME,
+				C."OPTION",
+				C.PRICE,
+				C.QUANTITY,
+				S.SELLER_NAME,
+				S.SELLER_IMAGEPATH,
+				S.USER_NO,
+                A.CHANGE_NAME
+		FROM CART C
+		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
+        JOIN ATTACHMENT A ON (C.PRODUCT_NO = A.PRODUCT_NO)
+		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)
+		WHERE C.USER_NO = #{userNo}
+		ORDER BY CART_NO DESC
+	</select>
+
+	<insert id="addToCart" parameterType="cart">
+		INSERT INTO CART
+						(
+						CART_NO,
+						PRODUCT_NO,
+						USER_NO,
+						PRODUCT_NAME,
+						"OPTION",
+                        PRICE,
+                        QUANTITY
+						)
+		VALUES
+						(			
+						SEQ_CTNO.NEXTVAL, 
+						#{productNo},
+						#{userNo},
+						#{productName},
+						#{option},
+                        #{price},
+                        #{quantity}
+						)	
+	</insert>
+	
+	<delete id="deleteCart" parameterType="_int">
+		DELETE
+		
+		  FROM 
+		  		CART
+		 WHERE 
+		 		CART_NO = #{cartNo}
+	</delete>
+	
 </mapper>

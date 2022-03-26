@@ -22,7 +22,7 @@
             <br>
             
             <table class="table table-bordered" align="center">
-            	<tr>
+            	<tr>제목
             	</tr>
             
             </table>
