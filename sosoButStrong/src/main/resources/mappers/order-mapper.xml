@@ -87,9 +87,7 @@
 						ORDERER,
 						SELLER,
 						SELLER_NAME,
-						PRODUCT_NAME,
-						PRODUCT_NO
-
+						PRODUCT_NAME
 						)
 		VALUES
 		
@@ -107,8 +105,7 @@
 						#{orderer},
 						#{seller},
 						#{sellerName},
-						#{productName},
-						#{productNo}
+						#{productName}
 			)
 
 	</insert>
