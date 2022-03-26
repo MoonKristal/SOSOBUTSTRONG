@@ -131,7 +131,11 @@
                     <b>신규 Recipe</b>
                 </div>
                 <div class="insertBtn">
-                    <a class="btn btn-outline-warning" href="communityInsertForm.co">레시피 등록</a>
+                    <c:choose>
+                        <c:when test="${ not empty loginUser}">
+                            <a class="btn btn-outline-warning" href="communityInsertForm.co">레시피 등록</a>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
             <div class="outer">
@@ -152,9 +156,6 @@
                                 <a href="#">
                                     <img src="resources/images/돋보기.png" alt="더보기">
                                     <input type="hidden" value="${ co.comNo }">
-                                </a>
-                                <a href="#">
-                                    <img src="resources/images/빈하트.png" alt="좋아요">
                                 </a>
                             </div>
                         </div>
@@ -182,13 +183,9 @@
                     $(".content2").mouseleave(function(){
                         $('.content2_1>.icons').hide();
                     })
-                    
                     $(".icons>a>img").click(function(){
                     	location.href='communityDetail.co?cno=' + $(this).parent().children().eq(1).val();
                     })
-                    
-                    
-                    
                 })
             </script>
 
@@ -227,6 +224,43 @@
         
     </div>
     <jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
+    
+    <script>
+	    function saladLike(){
+	        var status = $("#saladLike").children().eq(0).attr('id');
+	
+			if(status == "fullHeart"){
+				isLike = "Y";
+			} else {
+	            isLike = "N"; 
+	        }
+			
+	        if(${loginUser != null}){
+	            $.ajax({
+	                url : 'like.he',
+	                data : {
+	                    'isLike' : isLike,
+	                    'comNo' : '${ coA.comNo}'
+	                }, success : function(result){
+	                	console.log(result);
+	                    if(result > 0){
+	                        if(isLike == 'Y'){
+	                            $("#saladLike").children().eq(0).replaceWith($('img.emptyHeart'));
+	                            $("#saladLike>b").text(Number($('#saladLike>b').text())-1);
+	                            location.reload();
+	                        } else{
+	                            $("#saladLike").children().eq(0).replaceWith($('img.fullHeart'));
+	                            $("#saladLike>b").text(Number($('#saladLike>b').text())+1);
+	                            location.reload();
+	                        }
+	                    }
+	                }
+	
+	            })
+	        }
+		}
+    
+    </script>
 
 
 

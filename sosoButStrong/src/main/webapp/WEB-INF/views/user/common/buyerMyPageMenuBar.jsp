@@ -26,6 +26,7 @@
                     <div class="menu_item"><a href="#" class="link menu">회원정보수정</a></div>
                     <div class="menu_item"><a href="buyerList.qu" class="link menu">1:1문의 내역</a></div>
                     <div class="menu_item"><a href="reviewList.cs" class="link menu">리뷰관리</a></div>
+                    <div class="menu_item"><a href="myRecipeListView.co" class="link menu">나의 레시피</a></div>
                 </div>
             </div>
         </div>

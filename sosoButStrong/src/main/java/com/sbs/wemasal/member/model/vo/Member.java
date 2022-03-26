@@ -23,7 +23,7 @@ public class Member {
 	private String phone; 		 //	PHONE	VARCHAR2(13 BYTE)	No
 	private String address; 	 //	ADDRESS	VARCHAR2(100 BYTE)	Yes
 	private String gender;  	 //	GENDER	VARCHAR2(1 BYTE)	Yes
-	private Date birth;	 	     //	BIRTH	DATE	Yes
+	private String birth;	 	     //	BIRTH	DATE	Yes
 	private int point; 		 	 //	POINT	NUMBER	Yes
 	private String status;	 	 //	STATUS	VARCHAR2(1 BYTE)	No
 

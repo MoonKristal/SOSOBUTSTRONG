@@ -11,6 +11,9 @@ import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.community.model.dao.CommunityDao;
 import com.sbs.wemasal.community.model.vo.CoAttachment;
 import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.community.model.vo.Reply;
+import com.sbs.wemasal.like.model.vo.Like;
+import com.sbs.wemasal.report.model.vo.Report;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -46,6 +49,62 @@ public class CommunityServiceImpl implements CommunityService {
 	public CoAttachment selectCommunity(int cno) {
 		return communityDao.selectCommunity(sqlSession, cno);
 	}
+
+	@Override
+	public int insertReply(Reply re) {
+		return communityDao.insertReply(sqlSession, re);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int refComNo) {
+		return communityDao.selectReplyList(sqlSession, refComNo);
+	}
+
+	@Override
+	public String selectIsLike(Like l) {
+		return communityDao.selectIsLike(sqlSession, l);
+	}
+
+	@Override
+	public int selectLikeCount(int cno) {
+		return communityDao.selectLikeCount(sqlSession, cno);
+	}
+
+	@Override
+	public Like selectLike(Like l) {
+		return communityDao.selectLike(sqlSession, l);
+	}
+
+	@Override
+	public Like selectIsLike2(Like l) {
+		return communityDao.selectLike(sqlSession, l);
+	}
+
+	@Override
+	public ArrayList<Community> selectMyList(PageInfo pi, int userNo) {
+		return communityDao.selectMyList(sqlSession, pi, userNo);
+	}
+
+	@Override
+	public int deleteAttachment(Attachment at) {
+		return communityDao.deleteAttachment(sqlSession, at);
+	}
+
+	@Override
+	public int updateCommunity(Community co) {
+		return communityDao.updateCommunity(sqlSession, co);
+	}
+
+	@Override
+	public int insertAttachment(CoAttachment coA) {
+		return communityDao.insertAttachment(sqlSession, coA);
+	}
+
+	@Override
+	public int deleteCommunity(int cno) {
+		return communityDao.deleteCommunity(sqlSession, cno);
+	}
+
 
 
 

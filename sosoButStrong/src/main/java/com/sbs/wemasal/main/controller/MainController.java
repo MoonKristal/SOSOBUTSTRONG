@@ -30,7 +30,7 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value="picList.main", produces="application/json; charset=utf-8")
 	public String ajaxSelectMain() {
-		
+		 
 		return new Gson().toJson(mainService.ajaxSelectMain());
 	}
 	

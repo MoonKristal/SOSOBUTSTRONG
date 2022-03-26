@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="coAttachmentResultSet" type="coAttachment">
 		<result column="COM_NO" property="comNo" />
 		<result column="USER_NO" property="userNo" />
+		<result column="REPORT_USER_NO" property="reportUserNo" />
 		<result column="USER_ID" property="userId" />
 		<result column="COM_TITLE" property="comTitle" />
 		<result column="SALAD_NAME" property="saladName" />
@@ -35,6 +36,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="UPLOAD_DATE" property="uploadDate" />
 		<result column="REF_CNO" property="refCno" />
+	</resultMap>
+	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_ID" property="userId" />
+		<result column="REF_COM_NO" property="refComNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPORT" property="report" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	
+	<resultMap id="likeResultSet" type="like">
+		<result column="LIKE_NO" property="likeNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="COM_NO" property="comNo" />
+		<result column="MY_LIKE" property="myLike" />
+		<result column="LIKE_COUNT" property="likeCount" />
 	</resultMap>
 	
 	<select id="selectCommunityCount" resultType="_int">
@@ -131,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectCommunity" resultMap="coAttachmentResultSet">
 		SELECT
 				COM_NO
+			  , C.USER_NO
 			  , USER_ID
 			  , COM_TITLE
 			  , SALAD_NAME
@@ -155,10 +177,202 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  		COM_NO = #{cno}
 	</select>
 
+	<insert id="insertReply">
+		INSERT INTO REPLY(
+						   REPLY_NO
+						 , USER_NO
+						 , REF_COM_NO
+						 , REPLY_CONTENT
+						 )
+						 VALUES
+						 (
+						 SEQ_RPNO.NEXTVAL
+						 , #{userNo}
+						 , #{refComNo}
+						 , #{replyContent}
+						 )
+	</insert>
 
+	<select id="selectReplyList" resultMap="replyResultSet">
+		SELECT 
+				REPLY_NO
+			  , USER_ID
+			  , REF_COM_NO
+			  , REPLY_CONTENT
+			  , REPORT
+			  , CREATE_DATE
+		  FROM
+		  		REPLY R
+		 LEFT JOIN MEMBER M ON(R.USER_NO = M.USER_NO) 
+		 WHERE
+		 		R.STATUS = 'Y'
+		   AND
+		   		REF_COM_NO = #{refComNo}
+		 ORDER
+		 		BY
+		 			CREATE_DATE DESC
+	</select>
+	
+	<select id="selectIsLike" resultType="string">
+		SELECT NVL(MY_LIKE, 'N') MY_LIKE
+		  FROM (SELECT LIKE_NO, CASE WHEN USER_NO = #{userNo} AND COM_NO = #{comNo} THEN 'Y'
+						ELSE 'N'
+						END AS MY_LIKE
+    			  FROM "LIKE"
+    			 WHERE USER_NO = #{userNo})
+	</select>
+	
+	<select id="selectLikeCount" resultType="_int">
+		SELECT COUNT(LIKE_NO) LIKE_COUNT
+		  FROM "LIKE"
+		 GROUP BY COM_NO
+		HAVING COM_NO = #{comNo}
+	</select>
+	
+	<select id="selectLike" resultMap="likeResultSet">
+		SELECT DISTINCT L.COM_NO, NVL(MY_LIKE, 'N') MY_LIKE, NVL(LIKE_COUNT, 0)LIKE_COUNT
+		FROM "LIKE" L
+		LEFT JOIN (SELECT LIKE_NO, CASE WHEN USER_NO = #{userNo} AND COM_NO = #{comNo} THEN 'Y'
+						ELSE 'N'
+						END AS MY_LIKE
+		            FROM "LIKE"
+		            WHERE USER_NO = #{userNo}) M ON(COM_NO = COM_NO)
+		LEFT JOIN (SELECT COM_NO, COUNT(LIKE_NO) LIKE_COUNT
+				            FROM "LIKE"
+				            GROUP BY COM_NO) C ON (L.COM_NO = C.COM_NO)
+		WHERE L.COM_NO = #{comNo}
+	</select>
+	
+	<select id="selectMyList" resultMap="communityResultSet">
+		SELECT
+				COM_NO
+			  , C.USER_NO
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , REPORT
+			  , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+		WHERE
+				STATUS = 'Y'
+		  AND
+		  		C.USER_NO = #{userNo}
+		ORDER
+				BY
+					COM_NO DESC
+	</select>
 
+	<delete id="deleteAttachment">
+		DELETE FROM ATTACHMENT WHERE FILE_NO = #{fileNo}
+	</delete>
+	
+	<insert id="insertAttachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , UPLOAD_DATE
+							  , REF_CNO
+							  )
+							  VALUES
+							  (
+							    SEQ_ATNO.NEXTVAL
+							  , #{originName}
+							  , #{changeName}
+							  , SYSDATE
+							  , #{comNo}
+							  )
+	</insert>
+	
+	
+	<update id="updateCommunity">
+		UPDATE 
+				COMMUNITY
+		   SET 
+		   		COM_TITLE = #{comTitle}
+		   	  , SALAD_NAME = #{saladName}
+		   	  , SALAD_MATERIAL = #{saladMaterial}
+		   	  , SALAD_SAUCE = #{saladSauce}
+		   	  , SALAD_COMMENT = #{saladComment}
+		   	  , MODIFY_DATE = SYSDATE
+		WHERE
+				COM_NO = #{comNo}
+	</update>
 
-
+	<delete id="deleteCommunity">
+		UPDATE COMMUNITY
+		   SET STATUS = 'N'
+		WHERE COM_NO = #{cno}
+	</delete>
+	
+	<select id="communityReportDetail" resultMap="coAttachmentResultSet">
+		SELECT
+                C.COM_NO
+			  , C.USER_NO
+              , R.USER_NO "REPORT_USER_NO"
+			  , SUBSTR(M.USER_ID, 1, 3) || LPAD('*',LENGTH(M.USER_ID)-3, '*') USER_ID
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , "REPORT"
+			  , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+        LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+        LEFT JOIN "REPORT" R ON(C.COM_NO = R.REPORT_COM)
+		WHERE
+		  		COM_NO = #{reportCom}
+          AND
+                REPORT_REP = 0
+          AND 
+               R.USER_NO = #{reportUserNo}
+	</select>
+	
+	<select id="replyCommunityReportDetail" resultMap="coAttachmentResultSet">
+		SELECT
+                C.COM_NO
+			  , C.USER_NO
+              , R.USER_NO "REPORT_USER_NO"
+			  , SUBSTR(M.USER_ID, 1, 3) || LPAD('*',LENGTH(M.USER_ID)-3, '*') USER_ID
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , "REPORT"
+			  , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		 FROM
+		 		COMMUNITY C
+        LEFT JOIN ATTACHMENT A ON(A.REF_CNO = C.COM_NO)
+        LEFT JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+        LEFT JOIN "REPORT" R ON(C.COM_NO = R.REPORT_COM)
+		WHERE
+		  		COM_NO = #{reportCom}
+		  AND
+		  		REPORT_REP != 0
+          AND 
+               R.USER_NO = #{reportUserNo}
+	</select>
+	
 
 
 

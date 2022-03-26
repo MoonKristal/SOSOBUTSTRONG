@@ -10,13 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="UPLOAD_DATE" property="uploadDate" />
 		<result column="USER_NO" property="userNo" />
-		<result column="PRODUCT_NO" property="productNo" />
-		<result column="REF_MPNO" property="refMpno" />
-		<result column="REF_CNO" property="refCno" />
-		<result column="REF_RNO" property="refRno" />
-		<result column="REF_NNO" property="refNno" />
-		<result column="REF_QNO" property="refQno" />
-		<result column="REF_ANO" property="refAno" />
+		<result column="MAIN_FILE_NO" property="mainFileNo" />
 	</resultMap>
 	
 	<select id="selectMainCount" resultType="_int">
