@@ -53,6 +53,7 @@ div{
     margin-left: 160px;
     font-weight: bolder;
     color: rgb(182, 238, 86);
+    text-align: center;
 }
 .like{
     width: 35px;
@@ -89,29 +90,36 @@ div{
     margin-left: 730px;
 }
 .btnArea{
-    width: 205px;
+    width: 100%;
+}
+.btnAreaDiv{
+    width: fit-content;
     margin: auto;
 }
-.btnArea>button+a{
-    margin-left: 10px;
+.btnArea>button{
+    margin: auto;
 }
-.btnArea>.btn-outline-secondary{
+.btnArea .btn-outline-secondary{
     color: grey;
     border: 2px solid grey;
     font-weight: bolder;
 }
-.btnArea>.btn-outline-secondary:hover{
+.btnArea .btn-outline-danger{
+    border: 2px solid red;
+    font-weight: bolder;
+}
+.btnArea .btn-outline-secondary:hover{
     color: black;
     border: 2px solid black;
     font-weight: bolder;
     background-color: white;
 }
-.btnArea>.btn-outline-warning{
+.btnArea .btn-outline-warning{
     color: rgb(255, 163, 63);
     border: 2px solid rgb(255, 163, 63);
     font-weight: bolder;
 }
-.btnArea>.btn-outline-warning:hover{
+.btnArea .btn-outline-warning:hover{
     background-color: rgb(255, 163, 63);
     color: white;
     border: 2px solid rgb(255, 163, 63);

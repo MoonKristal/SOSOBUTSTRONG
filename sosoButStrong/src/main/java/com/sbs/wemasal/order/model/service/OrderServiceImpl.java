@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.PageInfo;
+import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.dao.OrderDao;
 import com.sbs.wemasal.order.model.vo.Order;
 
@@ -42,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.deleteCart(sqlSession, userNo);
 	}
 
+	// 특정주문 번호 조회
 	@Override
 	public String selectOrderNo(int userNo) {
 		return orderDao.selectOrderNo(sqlSession, userNo);
@@ -67,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
 
 	// 결제취소하는 주문서 불러들여오기
 	@Override
-	public Order selectOrderCancel(String orderNo) {
-		return orderDao.selectOrderCancel(sqlSession, orderNo);
+	public Order selectOrderCancel(Order order) {
+		return orderDao.selectOrderCancel(sqlSession, order);
 	}
 
 	// 주문 취소하기
@@ -89,7 +91,53 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectSearchList(sqlSession, map, pi);
 	}
 
+	// 판매자로부터 들어온 주문목록 갯수 조회
+	@Override
+	public int orderManageListCount(int userNo) {		
+		return orderDao.orderManageListCount(sqlSession, userNo);
+	}
 
+	// 판매자관리 페이지로 들어온 주문 목록 리스트
+	@Override
+	public ArrayList<Order> selectOrderManageList(PageInfo pi, int userNo) {		
+		return orderDao.orderManageList(sqlSession, pi, userNo);
+	}
+	
+	// 판매자 마이페이지서 주문 검색필터 목록 갯수
+	@Override
+	public int searchOrderManageCount(HashMap<String, String> map) {		
+		return orderDao.searchOrderManageCount(sqlSession, map);
+	}
+
+	// 판매자 마이페이지에서 주문 검색필터 목록 조회해오기
+	@Override
+	public ArrayList<Order> searchOrderManageList(PageInfo pi, HashMap<String, String> map) {
+		return orderDao.searchOrderManageList(sqlSession, pi, map);
+	}
+
+	// 판매자 마이페이지에서 상태변경 || 운송장번호 등록
+	@Override
+	public int updateStatus(Order order) {		
+		return orderDao.updateStatus(sqlSession, order);
+	}
+
+	// 판매자 주문상세페이지
+	@Override
+	public Order selectOrderManageDtail(Order order) {
+		return orderDao.selectOrderManageDtail(sqlSession, order);
+	}
+
+	// 구매자 주문시 포인트 차감
+	@Override
+	public int updatePoint(Member m) {
+		return orderDao.updatePoint(sqlSession, m);
+	}
+
+	// 구매자 결제취소시 포인트 다시 반환
+	@Override
+	public int cancelUserPoint(Order order) {
+		return orderDao.cancelUserPoint(sqlSession, order);
+	}
 
 
 

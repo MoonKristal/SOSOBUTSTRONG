@@ -64,7 +64,7 @@
                                     <td style="border-bottom-style: solid; border-right-style: solid;">
                                         <c:choose>
                                             <c:when test="${c.status eq '결제완료'}">
-                                                <input type="button" id="btn_orderNo" class="order-btn cancel" value="주문 취소" style="background: rgb(255, 163, 63);" data-orderNo="${c.orderNo}"> <br>
+                                                <input type="button" id="btn_orderNo" class="order-btn cancel" value="주문 취소" style="background: rgb(255, 163, 63);" data-orderNo="${c.orderNo}" onclick="cancle(this);"> <br>
                                             </c:when>   
                                             <c:otherwise>
                                                 <input type="button" class="order-btn cancel" value="주문 취소" style="background: #ccc;" disabled> <br>
@@ -158,7 +158,14 @@
     
     </div>
 
-    <script>           
+    <script>  
+        // 주문 취소하기 팝업창
+        function cancle(e){
+            //주문번호 가져오기
+            var $orderNo = $(e).attr('data-orderNo');
+            window.open('orderCancelForm.od?orderNo=' + $orderNo,'주문 취소','width=550,height=505,location=no,status=no,scrollbars=yes');
+        }
+        
         $(function(){
             // 키워드 검색 이벤트 일어날때
             $('#searchForm').submit(function(){
@@ -169,16 +176,8 @@
                 return true;
             })
 
-
             // 현재 해당 메뉴바 CSS효과주기 
-            $('#orderList').addClass('current');               
-            
-            //주문번호 가져오기
-            var $orderNo = $('#btn_orderNo').attr('data-orderNo');
-		    // 주문취소 팝업창
-			$('.cancel').click(function(){               
-				var windowObj = window.open('orderCancelForm.od?orderNo=' + $orderNo,'주문 취소','width=550,height=505,location=no,status=no,scrollbars=yes');
-			})
+            $('#orderList').addClass('current');           
 
 		})
 	

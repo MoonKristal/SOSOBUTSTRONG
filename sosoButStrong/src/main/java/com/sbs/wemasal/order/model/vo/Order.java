@@ -26,5 +26,7 @@ public class Order {
 	private String sellerName; // 판매자 상호명
 	private String sellerImage; // 판매자 프로필 이미지
 	private String deliveryNo;// 운송장번호
-	private int sellerCount;// 사용자가 주문한 가게의 수
+	private int sellerCount;// 사용자가 주문한 가게의 수	
+	private String productName; //주문한 상품명
+	private int productNo; //주문항 상품 번호
 }

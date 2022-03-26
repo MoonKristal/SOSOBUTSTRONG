@@ -68,9 +68,9 @@
 
                         <div class="card-body">
                             <p class="card-text" style="text-align: center;">
-                                ${ c.sellerName } <br>
-                                ${ c.productName } <br>
-                                ${ c.price }원
+                              <span style="font-style: italic; color: gray;">${ c.sellerName }</span> <br>
+                              <span style="font-weight: bold;">${ c.productName }</span> <br>
+                              <span style="font-weight: bolder; color: green;">${ c.price } 원</span>
                             </p>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
 
 				var pno = $(this).children().eq(0).val();
 
-				location.href = "saladDetailView.se?pno=" + pno;
+				location.href = "saladDetailView.cmm?pno=" + pno;
 			})
 		})
 	</script>

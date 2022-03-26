@@ -37,7 +37,7 @@
 				</tr>
 				<tr>
 					<td>
-						<b>${order.sellerName} 외 ${order.sellerCount}개 </b><br>
+						<b>${order.sellerName} 외 ${order.sellerCount - 1}개 </b><br>
 						<label style="font-size: 13px;">${order.quantity}개 / <fmt:formatNumber value="${order.orderPrice}"/> 원</label> 
 					</td>				
 				</tr>			
@@ -91,7 +91,7 @@
 								// 창 닫기
 								self.close();
 								//부모창에서 결제취소된 주문상세 페이지로 이동
-								opener.parent.location = "orderDetail.od?alertMsg='주문취소가 완료되었습니다.'&orderNo=" + $('#orderNo').attr('data-orderNo'); 				
+								opener.parent.location = "orderDetail.od?alertMsg=주문취소가 완료되었습니다.&orderNo=" + $('#orderNo').attr('data-orderNo'); 				
 							}
 						},
 						error : function(){
