@@ -53,9 +53,9 @@
 		                <div class="service_area">
 		                    <a href="logout.me">로그아웃</a>
 		                    <a href="myPage.cmm">마이페이지</a>
-		                    <a href="myCart.cs">장바구니</a>
-		                    <a href="myRecipeListView.co">마이페이지</a>
-		                    <a href="#">장바구니</a>
+							<c:if test="${loginUser.userNo eq 1}"> <!-- 장바구니는 일반회원(1) 만 사용 하도록 -->
+		                    	<a href="myCart.cs">장바구니</a>
+							</c:if>
 	                	</div>
 	                </c:otherwise>
 	            </c:choose>

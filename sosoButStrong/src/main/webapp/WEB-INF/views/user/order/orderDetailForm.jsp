@@ -37,8 +37,8 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
-                            <input type="text" class="productNo" value="${c.productNo}">
-                            <a href=""><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
+                            <input type="hidden" class="productNo" value="${c.productNo}">
+                            <input type="button" class="order-btn review" value="리뷰 작성하기" data-toggle='modal' data-target='#myModal'><br>
 
                         </c:if>
                     </td>                                   
@@ -165,7 +165,7 @@
             
             <div class="modal-body">
                 <form id="" action="uploadReview.cs" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="refPno" value="1"><!-- 리뷰작성할 상품번호 -->
+                    <input type="hidden" name="refPno" id="rpn"><!-- 리뷰작성할 상품번호 -->
                     <input type="hidden" name="reviewWriter" value="${loginUser.userNo}"> <!-- 리뷰작성하는 회원번호 -->
                     <table align="center">
                         <tr>
@@ -189,13 +189,21 @@
                         </div>
                 </form>
             </div>
-
-
-            
         </div>
         </div>
     </div>
+
+
+    <script>
+        $('.review').on('click', function(){ // 리뷰 작성하기 버튼이 클릭되면
+
+            var $rpn = $(this).prev().val(); // 클릭된 버튼 이전 요소(hidden 속성의 input 태그이며 상품번호 값 들어있음 )의 값을 변수에 담기
+
+            $('#rpn').val($rpn); // 담은 상품번호를 리뷰작성 폼 내부 hidden 속성 input 태그에 값으로 넣어주기
+        })        
+    </script>
     
+
     <script>    
        // 배송조회시 실행될 작은 사이즈의 창
         function goSubmit(){

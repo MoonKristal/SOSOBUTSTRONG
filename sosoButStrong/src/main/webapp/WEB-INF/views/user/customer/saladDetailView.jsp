@@ -32,7 +32,7 @@
                             <input type="hidden" name="quantity" value="1"> <!-- 수량 -->
                         </tr>
                         <tr>
-                            <td><img src="${ c.sellerImagePath }" width="70" height="70" alt="판매자대표이미지">&nbsp;&nbsp;<b>${ c.sellerName }</b></td>
+                            <td><img src="${ c.sellerImagePath }" width="70" height="70" alt="판매자대표이미지">&nbsp;&nbsp;<b style="font-style: italic; color: gray;">[${ c.sellerName }]</b></td>
                         </tr>
                         <tr class="sellerInfo">
                             <td>사업자 등록번호 : ${ c.sellerBrn }</td>
@@ -109,9 +109,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <button type="submit" formaction="orderNow.cs" style="font-weight: bolder;" class="btn btn-outline-success">바로주문</button> &nbsp;&nbsp;
-                                <button type="submit" formaction="addCart.cs" style="font-weight: bolder;" class="btn btn-outline-info">장바구니</button>
+                            <td><!-- 로그인한 회원유형이 판매자가 아니면 아래 주문,장바구니 버튼이 노출 , 단 비로그인 유저는 주문,장바구니 버튼 누르면 로그인페이지로 넘김-->
+                                <c:if test="${loginUser.userType ne 2}"> 
+                                    <button type="submit" formaction="orderNow.cs" style="font-weight: bolder;" class="btn btn-outline-success">바로주문</button> &nbsp;&nbsp;
+                                    <button type="submit" formaction="addCart.cs" style="font-weight: bolder;" class="btn btn-outline-info">장바구니</button>
+                                </c:if>
                             </td>
                         </tr>
                     </table>
@@ -200,16 +202,18 @@
                         let starRate = ""; // 별점 별문양 저장할 변수 선언
 
                         if(list.length != 0){ // 해당 상품에 등록된 리뷰가 있는 경우
+                             
+                            if(list.length == 1 || list.length == 2){
 
-                            for(var i = 0; i < 3; i++){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동 시 열람가능
-
-                                switch(list[i].score){ // 별점 화면상 숫자문양으로 변환하기 위한 조건문
+                                for(let i in list){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동 시 열람가능
+                                
+                                switch(list[i].score){ // 별점 화면상 숫자 -> 별문양으로 변환하기 위한 조건문
                                     case 0 : starRate = '☆☆☆☆☆'; break;
                                     case 1 : starRate = '⭐☆☆☆☆'; break;
                                     case 2 : starRate = '⭐⭐☆☆☆'; break;
                                     case 3 : starRate = '⭐⭐⭐☆☆'; break;
                                     case 4 : starRate = '⭐⭐⭐⭐☆'; break;
-                                    case 5 : starRate = '⭐⭐⭐⭐⭐'; 
+                                    case 5 : starRate = '⭐⭐⭐⭐⭐';
                                 }
                                 // 문자열 누적
                                 result += "<tr>"
@@ -217,12 +221,40 @@
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
                                 result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
-                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 100px; height:60px;' ></td>"
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 100px; height:60px;' class='img' ></td>"
                                 result += "</tr>"
                             }
                             
                             $(".review thead").append(result); // 리뷰 영역에 삽입
                             $("#rcount").text(list.length); // 리뷰 개수 노출영역에 삽입
+
+                            }
+                            else{
+
+                                for(let i = 0; i < 3; i++){ // for 문 사용 , 최근 리뷰 3건만 나오도록, 전체 리뷰는 리뷰 상세보기로 이동 시 열람가능
+                                
+                                switch(list[i].score){ // 별점 화면상 숫자 -> 별문양으로 변환하기 위한 조건문
+                                    case 0 : starRate = '☆☆☆☆☆'; break;
+                                    case 1 : starRate = '⭐☆☆☆☆'; break;
+                                    case 2 : starRate = '⭐⭐☆☆☆'; break;
+                                    case 3 : starRate = '⭐⭐⭐☆☆'; break;
+                                    case 4 : starRate = '⭐⭐⭐⭐☆'; break;
+                                    case 5 : starRate = '⭐⭐⭐⭐⭐';
+                                }
+                                // 문자열 누적
+                                result += "<tr>"
+                                result += "<td style='text-align: center; width:60px;'>" + list[i].userId + "</td>"
+                                result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
+                                result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
+                                result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
+                                result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 100px; height:60px;' class='img' ></td>"
+                                result += "</tr>"
+                            }
+                            
+                            $(".review thead").append(result); // 리뷰 영역에 삽입
+                            $("#rcount").text(list.length); // 리뷰 개수 노출영역에 삽입
+                                
+                            }
 
                         }
                         else { // 해당 상품에 등록된 리뷰가 없는 경우
