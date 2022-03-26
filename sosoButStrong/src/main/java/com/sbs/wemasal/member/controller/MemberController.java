@@ -63,7 +63,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUserId().equals("admin")) {
-				mv.setViewName("redirect:/list.se"); // 새로고침해서 url로 넘긴다.
+				mv.setViewName("redirect:/"); // 새로고침해서 url로 넘긴다. // 경로 추가하기
 			}else {
 				mv.setViewName("redirect:/");
 			}
