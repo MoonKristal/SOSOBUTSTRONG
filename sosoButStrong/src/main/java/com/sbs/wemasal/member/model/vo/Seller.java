@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Seller {
-	//private String userId; //	USER_NO	NUMBER
+	private String userNo; //	USER_NO	NUMBER
 	private String sellerName;   // 상호	SELLER_NAME	VARCHAR2(100 BYTE)
 	private String sellerBRN;    // 사업자등록번호  SELLER_BRN	VARCHAR2(50 BYTE) // corporate registration number
 	private String sellerPhone;  //	업체 연락처 SELLER_PHONE	VARCHAR2(13 BYTE)

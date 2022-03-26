@@ -17,8 +17,8 @@
 		    <div class="left">
 		    	<div id="content1">
 				        <!-- 일반회원 -->
-				        <div>
-				           <img src="/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/resources/images/일반회원.png" alt="일반회원">
+				        <div style="text-align:center;">
+				           <img src="resources/images/일반회원.png" alt="일반회원">
 				        </div>
 				        <!-- BTN -->
 				        <div class="btn_area" align="center"> 
@@ -29,8 +29,8 @@
 		    <div class="right">
 		    	<div id="content2">
 				        <!-- 판매자 -->
-				        <div>
-				           <img src="/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/resources/images/판매자.png" alt="판매자">
+				        <div style="text-align:center;">
+				           <img src="resources/images/판매자.png" alt="판매자">
 				        </div>
 				        <!--  -->
 				        <!-- BTN -->

@@ -1,63 +1,45 @@
-	div{
-	    border: 1px solid green;
-	    box-sizing: border-box;
-	}
-	
-	/* 헤더 아래 영역 전체 */
-	.outer{
-	    width: 1200px;
-	    margin: auto;
-	    /* height: auto; */
-	}
-	
-	/* 중간~우측 내용 영역 */
-	.content{
-	    width: 1200px;
-	    height: 100%;
-	    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
-	}
-	
-	/* footer에 float 적용되지 않도록 해제 */
-	.footer{
-	    clear: both;
-	}
-	
-	/*레이라웃 나누기*/
-    div.left {
-        width: 50%;
-        float: left;
-        box-sizing: border-box;
-        
-        background: #ff0;
-    }
-    div.right {
-        width: 50%;
-        float: right;
-        box-sizing: border-box;
-        
-        background: #0ff;
-    }
-    
-    /*---------left----------*/
-    
-    	#header {
-            padding-top: 100px;
-            padding-bottom: 30px;
-            text-align: center;
-        }
-		
-		h3{
-			font-weight: 900;
+		div{
+		   /* border: 1px solid green; */
+		    box-sizing: border-box;
 		}
 		
-		#content1 {
-            margin:auto;
-            width: 360px;
-        }
-        
-        /* 입력폼 */
-
-        .box {
+		/* 헤더 아래 영역 전체 */
+		.outer{
+		    width: 1200px;
+		    margin: auto;
+		    /* height: auto; */
+		}
+		
+		/* 중간~우측 내용 영역 */
+		.content{
+		    width: 1200px;
+		    height: 100%;
+		    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
+		}
+		
+		/* footer에 float 적용되지 않도록 해제 */
+		.footer{
+		    clear: both;
+		}
+		
+		/*레이라웃 나누기*/
+	    div.left {
+	        width: 50%;
+	        float: left;
+	        box-sizing: border-box;
+	        
+	       /* background: #ff0;*/
+	    }
+	    div.right {
+	        width: 50%;
+	        float: right;
+	        box-sizing: border-box;
+	        
+	       /*background: #0ff;*/
+	    }
+	    
+	    /* 입력폼 */
+	   	.box {
             display: block;
             width: 100;
             height: 51px;
@@ -67,14 +49,7 @@
             position: relative;
         }
         
-        .box_address {
-            display: block;
-            width: 100;
-            height: 51px;
-            padding: 10px 14px 10px 14px;
-            box-sizing: border-box;
-            position: relative;
-        }
+
         
         .int {
             display: block;
@@ -84,15 +59,36 @@
             border: none;
             font-size: 13px;
         }
+	    
+    /*---------left----------*/
+    
+    	#header1{
+            padding-top: 50px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+		
+		h3{
+			font-weight: 900;
+		}
+		#text1{
+			text-align: center;
+		}
+		
+		#content1 {
+            margin:auto;
+            width: 360px;
+        }
+        
 
-        /* 로그인 버튼 */
+        /*  버튼 */
         .btn_area {
             margin: 30px 0 91px;
         }
         
-        #btnLogin {
+        #btnFindID {
        		width: 100%;
-            padding: 21px 17px;
+            padding: 18px 13px;
             border: 0;
             color: #fff;
             border-radius: 7px;
@@ -103,49 +99,27 @@
     
         /*---------Right----------*/
 
-		#content1 {
+		#content2 {
             margin:auto;
             width: 360px;
         }
-        
-        /* 입력폼 */
-
-        .box {
-            display: block;
-            width: 100;
-            height: 51px;
-            border: solid 1px #dadada;
-            padding: 10px 14px 10px 14px;
-            box-sizing: border-box;
-            position: relative;
+		
+		#header2{
+            padding-top: 50px;
+            padding-bottom: 30px;
+            text-align: center;
         }
-        
-        .box_address {
-            display: block;
-            width: 100;
-            height: 51px;
-            padding: 10px 14px 10px 14px;
-            box-sizing: border-box;
-            position: relative;
-        }
-        
-        .int {
-            display: block;
-            position: relative;
-            width: 100%;
-            height: 29px;
-            border: none;
-            font-size: 13px;
-        }
-
+		#text2{
+			text-align: center;
+		}
         /* 로그인 버튼 */
         .btn_area {
             margin: 30px 0 91px;
         }
         
-        #btnLogin {
+        #btnFindPWD {
        		width: 100%;
-            padding: 21px 17px;
+            padding: 18px 13px;
             border: 0;
             color: #fff;
             border-radius: 7px;

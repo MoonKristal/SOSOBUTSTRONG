@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<resultMap type="seller" id="sellerResultset">
+		<result column="USER_NO" property="userNo"/>
 		<result column="SELLER_NAME" property="sellerName"/>
 		<result column="SELLER_BRN" property="sellerBRN"/>
 		<result column="SELLER_PHONE" property="sellerPhone"/>
@@ -29,6 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SELLER_IMAGEPATH" property="sellerImagePath"/>
 		<result column="STATUS" property="sellerStatus"/>
 	</resultMap>
+	
+	<resultMap id="certResultSet" type="cert">
+		<result column="IP_INFO" property="ipInfo"/>
+		<result column="VERI_CODE" property="veriCode"/>
+		<result column="CERT_TIME" property="certTime"/>
+	</resultMap>
+	
 	
 	<!-- 로그인 -->
 	<select id="loginMember" resultMap="memberResultset" parameterType="member">
@@ -99,5 +107,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 	SET STATUS = 'N'
 		  WHERE USER_ID = #{userId}
 	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="String" resultType="String">
+		SELECT USER_ID
+		  FROM MEMBER
+		 WHERE USER_NAME = #{userName}
+  		   AND EMAIL = #{email}
+   		   AND STATUS = 'Y'  
+	</select>
+	
+	<!-- 판매자 리스트 -->
+	<select id="sellerList" resultType="seller">
+		SELECT *
+		  FROM SELLER
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from seller
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectList" resultMap="sellerResultset">
+		select USER_NO, SELLER_NAME, SELLER_BRN, SELLER_PHONE,STATUS
+		  from seller
+		 order by USER_NO desc
+	</select>
+	
+	<!-- 이메일인증 -->
+	
+	<insert id="regist" parameterType="cert">
+		INSERT INTO CERT(IP_INFO,VERI_CODE, CERT_TIME) 
+		VALUES(#{ipInfo}, #{veriCode}, sysdate)
+	</insert>
+
+	<select id="emailValidate" resultType="_int"
+		parameterType="cert">
+		SELECT count(*) FROM CERT
+		WHERE
+		IP_INFO = #{ipInfo}
+		and VERI_CODE = #{veriCode}
+		and CERT_TIME between sysdate - 3/24/60 and sysdate
+		<!-- and sysdate / 24 / 60 - when / 24 / 60 <= 3 -->
+		<!-- 현재시각 - 생성시간 <= 3분 -->
+	</select>
+
+	<delete id="emailValidateRemove" parameterType="cert">
+		DELETE CERT WHERE
+		IP_INFO = #{ipInfo} and VERI_CODE = #{veriCode}
+	</delete>
+
+	<select id="emailDuplicationCheck" resultType="_int"
+		parameterType="string">
+		select count(*) as email
+		from member
+		where
+		email=#{email}
+	</select>
+	<select id="idDuplicationCheck" resultType="_int"
+		parameterType="string">
+		select count(*) as USER_ID
+		from member
+		where
+		USER_ID=#{userId}
+	</select>
+	
+	
 	
 </mapper>
