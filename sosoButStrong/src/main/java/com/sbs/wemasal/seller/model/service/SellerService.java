@@ -14,13 +14,21 @@ public interface SellerService {
 	
 	// 로그인한 판매자의 등록되어있는 상품리스트 전체 조회
 	ArrayList<Product> selectProduct(PageInfo pi, int uploader);
-
 	
 	// *상품등록
 	// 상품정보 참조 첨부파일 업로드 서비스
 	int uploadAttachment(Attachment at);
 	
-	// 상품정보 업로드 서비스
+	// 상품등록(업로드) 서비스
 	int uploadProduct(Product p);
-
+	
+	// *상품수정/삭제
+	// 상품삭제(상태변경) 서비스
+	int deleteProduct(int pno);
+	
+	// 상품수정 서비스
+	int updateProduct(Product p);
+	
+	// 상품 첨부파일(썸네일) 수정 서비스
+	int updateAttachment(Attachment at);
 }
