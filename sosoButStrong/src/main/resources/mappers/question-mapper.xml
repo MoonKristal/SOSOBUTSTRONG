@@ -2,6 +2,320 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="questionMapper">
 
+	<resultMap id="orderResultSet" type="order">
+		<result column="ORDER_ITEM" property="orderItem"/>
+		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="USE_POINT" property="usePoint"/>
+		<result column="PAY_METHOD" property="payMethod"/>
+		<result column="DELIVERY_NAME" property="deliveryName"/>
+		<result column="DELIVERY_ADDRESS" property="deliveryAddress"/>
+		<result column="DELIVERY_PHONE" property="deilveryPhone"/>
+		<result column="DELIVERY_MESSAGE" property="deliveryMessage"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="QUANTITY" property="quantity"/>
+		<result column="SELLER" property="seller"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="ORDER_NO" property="orderNo"/>	
+		<result column="DELIVERY_NO" property="deliveryNo"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>
+		<result column="SELLER_COUNT" property="sellerCount"/>		
+	</resultMap>
+	
+	<resultMap id="sellerResultset" type="seller">
+		<result column="USER_NO" property="userNo"/>
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_BRN" property="sellerBRN"/>
+		<result column="SELLER_PHONE" property="sellerPhone"/>
+		<result column="SELLER_LOCATION" property="sellerLocation"/>
+		<result column="SELLER_INTRO" property="sellerIntro"/>
+		<result column="SELLER_IMAGE" property="sellerImage"/>
+		<result column="SELLER_IMAGEPATH" property="sellerImagePath"/>
+		<result column="STATUS" property="sellerStatus"/>
+	</resultMap>
+	
+	<!--2022.3.24(목) 16h10 추가-->
+	<resultMap id="questionResultSet" type="question">
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="QUESTION_WRITER" property="questionWriter"/>
+		<result column="QUESTION_SELLER" property="questionSeller"/>
+		<result column="CATEGORY" property="category"/>
+		<result column="ORDER_NO" property="orderNo"/>
+		<result column="ANSWER_MODE" property="answerMode"/>
+		<result column="QUESTION_TITLE" property="questionTitle"/>
+		<result column="QUESTION_CONTENT" property="questionContent"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="ANSWER" property="answer"/>
+		<result column="STATUS" property="status"/>
+		
+		<!--QUESTION 테이블의 컬럼은 아니지만, 조회해오는 자료들 -> Question 클래스 필드로 추가해둠-->
+		<result column="SELLER_NAME" property="sellerName"/>
+		<result column="SELLER_PHONE" property="sellerPhone"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="ANSWER_DATE" property="answerDate"/>
+		<result column="SCORE" property="score"/>
+	</resultMap>
+	
+	<!--2022.3.25(금) 1h35-->
+	<resultMap id="answerResultSet" type="answer">
+		<result column="ANSWER_NO" property="answerNo"/>
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="ANSWER_WRITER" property="answerWriter"/>
+		<result column="ANSWER_CONTENT" property="answerContent"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="SCORE" property="score"/>
+		
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		
+		<result column="" property=""/>
+	</resultMap>
 
+	<!--2022.3.22(화) 16h10-->
+	<select id="selectBuyerOrderListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM "ORDER"
+		WHERE ORDERER = #{userNo}
+	</select>
+	
+	<!--2022.3.22(화) 19h-->
+	<select id="selectBuyerOrderList" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_NO, ORDER_DATE, SELLER, SELLER_NAME, ORDER_ITEM, QUANTITY,  ORDER_PRICE
+		FROM "ORDER"
+		WHERE ORDERER = #{userNo}
+		ORDER BY ORDER_DATE DESC
+	</select>
+	
+	<!--2022.3.23(수) 2h-->
+	<select id="countOrderNo" parameterType="question" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_WRITER = #{questionWriter}
+			AND QUESTION_SELLER = #{questionSeller}
+			AND ORDER_NO = #{orderNo}
+			AND STATUS = 'Y'
+	</select>
+	
+	<!--2022.3.23(수) 3h45-->
+	<select id="searchSeller" parameterType="string" resultMap="sellerResultset">
+		SELECT USER_NO, SELLER_NAME 
+		FROM SELLER
+		WHERE SELLER_NAME LIKE '%' || #{sellerNameKeyword} || '%'
+			AND STATUS = 'Y'
+		ORDER BY SELLER_NAME
+	</select>
+	
+	<!--2022.3.23(수) 18h40-->
+	<insert id="insertBuyerQuestion" parameterType="question">
+		INSERT INTO QUESTION(
+							QUESTION_NO
+						  , QUESTION_WRITER
+						  , QUESTION_SELLER
+						  , CATEGORY
+						  , ORDER_NO
+						  , ANSWER_MODE
+						  , QUESTION_TITLE
+						  , QUESTION_CONTENT
+						  )
+					VALUES(
+						SEQ_QNO.NEXTVAL
+					  , #{questionWriter}
+					  , #{questionSeller}
+					  , #{category}
+					  , #{orderNo}
+					  , #{answerMode}
+					  , #{questionTitle}
+					  , #{questionContent}
+					  )
+	</insert>
+	
+	<!--2022.3.25(금) 12h15-->
+	<insert id="insertSellerAnswer" parameterType="answer">
+		INSERT INTO ANSWER(
+							ANSWER_NO
+						  , QUESTION_NO
+						  , ANSWER_WRITER
+						  , ANSWER_CONTENT
+						  )
+					VALUES(
+							SEQ_ANNO.NEXTVAL
+						  , #{questionNo}
+						  , #{answerWriter}
+						  , #{answerContent}
+					)
+	</insert>
+	
+	<!--2022.3.24(목) 13h55-->
+	<insert id="insertQuestionAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , REF_QNO
+							  )
+					VALUES(
+							SEQ_ATNO.NEXTVAL
+						  , #{originName}
+						  , #{changeName}
+						  , SEQ_QNO.CURRVAL
+						  )
+	</insert>
+	
+	<!--2022.3.25(금) 12h20-->
+	<insert id="insertAnswerAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , REF_ANO
+							  )
+					VALUES(
+							SEQ_ATNO.NEXTVAL
+						  , #{originName}
+						  , #{changeName}
+						  , SEQ_ANNO.CURRVAL
+						  )
+	</insert>
+	
+	<!--2022.3.24(목) 15h10-->
+	<select id="selectBuyerQuestionListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_WRITER = #{buyerNo} AND STATUS = 'Y'
+	</select>
+	
+	<!--2022.3.24(목) 15h35-->
+	<select id="selectBuyerQuestionList" parameterType="_int" resultMap="questionResultSet">
+		<!--글 번호, 문의 날짜, 판매자, 카테고리, 제목, 주문번호, 처리 상태-->
+		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_SELLER, SELLER_NAME, CATEGORY, QUESTION_TITLE, ORDER_NO, ANSWER
+		FROM QUESTION Q
+		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
+		WHERE QUESTION_WRITER = #{buyerNo} AND Q.STATUS = 'Y'
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<!--2022.3.25(금) 1h5-->
+	<select id="selectBuyerQuestion" parameterType="_int" resultMap="questionResultSet">
+		<!--문의 글 번호, 문의 날짜, 판매자 번호+이름+연락처(SELLER 테이블), 처리 상태, 카테고리, 주문번호, 제목, 내용, 관련 첨부파일 원본명+수정명(ATTACHMENT 테이블)
+			db상 컬럼 번호 1, 3, 4, 5, 7, 8, 9, 10-->
+		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_SELLER, SELLER_NAME, SELLER_PHONE, ANSWER, CATEGORY, ORDER_NO, QUESTION_TITLE, QUESTION_CONTENT, ORIGIN_NAME, CHANGE_NAME
+		FROM QUESTION
+		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
+		LEFT JOIN ATTACHMENT ON (QUESTION_NO = REF_QNO)
+		WHERE QUESTION_NO = #{qno}
+	</select>
+	
+	<!--2022.3.25(금) 3h45-->
+	<select id="selectBuyerQuestionSearchListCount" parameterType="hashmap" resultType="_int">
+		<!--글 번호, 문의 날짜, 판매자, 카테고리, 제목, 주문번호, 처리 상태-->
+		SELECT COUNT(*)
+		FROM QUESTION Q
+		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
+		WHERE QUESTION_WRITER = #{questionWriter} AND Q.STATUS = 'Y'
+		<if test="startDate != ''">
+			AND CREATE_DATE BETWEEN #{startDate} and #{endDate}
+		</if>
+		<if test="answer != ''">
+			AND ANSWER = #{answer}
+		</if>
+		<if test="category != ''">
+			AND CATEGORY = #{category}
+		</if>
+		<if test="condition != ''">
+			<choose>
+				<when test="condition == 'sellerName'">
+					AND SELLER_NAME LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="condition == 'titleOrContent'">
+					AND QUESTION_TITLE LIKE '%' || #{keyword} || '%'
+					OR QUESTION_CONTENT LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND ORDER_NO = #{orderNo}
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<!--2022.3.25(금) 4h40-->
+	<select id="selectBuyerQuestionSearchList" parameterType="hashmap" resultMap="questionResultSet">
+		<!--글 번호, 문의 날짜, 판매자, 카테고리, 제목, 주문번호, 처리 상태-->
+		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_SELLER, SELLER_NAME, CATEGORY, QUESTION_TITLE, ORDER_NO, ANSWER
+		FROM QUESTION Q
+		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
+		WHERE QUESTION_WRITER = #{questionWriter} AND Q.STATUS = 'Y'
+		<if test="startDate != ''">
+			AND CREATE_DATE BETWEEN #{startDate} and #{endDate}
+		</if>
+		<if test="answer != ''">
+			AND ANSWER = #{answer}
+		</if>
+		<if test="category != ''">
+			AND CATEGORY = #{category}
+		</if>
+		<if test="condition != ''">
+			<choose>
+				<when test="condition == 'sellerName'">
+					AND SELLER_NAME LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="condition == 'titleOrContent'">
+					AND QUESTION_TITLE LIKE '%' || #{keyword} || '%'
+					OR QUESTION_CONTENT LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND ORDER_NO = #{orderNo}
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<!--2022.3.25(금) 9h30-->
+	<select id="selectSellerQuestionListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_SELLER = #{sellerNo} AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectSellerQuestionList" parameterType="_int" resultMap="questionResultSet">
+		<!--글 번호, 문의 날짜, 구매자 번호+ID, 카테고리, 제목, 주문번호, 처리 상태, 처리 날짜, 만족도 -> 2022.3.25(금) 12h5 나의 생각 = selectBuyerQuestionList 쿼리문과 중복되는 부분 재활용하는 등 코드 간소화하고 싶음-->
+		SELECT QUESTION_NO, TO_CHAR(Q.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_WRITER, USER_ID, CATEGORY, QUESTION_TITLE, ORDER_NO, ANSWER, TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "ANSWER_DATE", NVL(SCORE, '999') "SCORE"
+		FROM QUESTION Q
+		LEFT JOIN MEMBER ON (QUESTION_WRITER = USER_NO)
+		LEFT JOIN ANSWER A USING (QUESTION_NO)
+		WHERE QUESTION_SELLER = #{sellerNo} AND Q.STATUS = 'Y'
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<!--2022.3.25(금) 10h35-->
+	<select id="selectSellerQuestion" parameterType="_int" resultMap="questionResultSet">
+		<!--문의 글 번호, 문의 날짜, 구매자 id+이름(MEMBER 테이블), 처리 상태, 카테고리, 주문번호, 제목, 답변 수신 방법, 내용, 관련 첨부파일 원본명+수정명(ATTACHMENT 테이블)
+			db상 컬럼 번호 1, 3, 4, 5, 7, 8, 9, 10-->
+		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_WRITER, USER_ID, USER_NAME, ANSWER, CATEGORY, ORDER_NO, QUESTION_TITLE, QUESTION_CONTENT, ANSWER_MODE, ORIGIN_NAME, CHANGE_NAME
+		FROM QUESTION
+		LEFT JOIN MEMBER ON (QUESTION_WRITER = USER_NO)
+		LEFT JOIN ATTACHMENT ON (QUESTION_NO = REF_QNO)
+		WHERE QUESTION_NO = #{qno}
+	</select>
+	
+	<!--2022.3.25(금) 13h-->
+	<update id="updateAnswer" parameterType="_int">
+		UPDATE QUESTION
+		SET ANSWER = 'Y'
+		WHERE QUESTION_NO = #{qno}
+	</update>
+	
+	<!--2022.3.25(금) 1h35 -> 13h40 구현-->
+	<select id="selectAnswer" parameterType="_int" resultMap="answerResultSet">
+		SELECT ANSWER_NO, QUESTION_NO, ANSWER_WRITER, ANSWER_CONTENT, TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", NVL(SCORE, '999') "SCORE", ORIGIN_NAME, CHANGE_NAME, ANSWER_MODE
+		FROM ANSWER A
+		LEFT JOIN QUESTION USING (QUESTION_NO)
+		LEFT JOIN ATTACHMENT ON (ANSWER_NO = REF_ANO)
+		WHERE QUESTION_NO = #{qno}
+	</select>
 
 </mapper>

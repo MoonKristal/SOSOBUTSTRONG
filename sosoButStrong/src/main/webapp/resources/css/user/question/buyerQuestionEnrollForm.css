@@ -42,3 +42,20 @@ div{
     background-color: gray;
     color: white;
 }
+
+#autoComplete{
+    padding : 3px;
+    position: absolute;
+    width: 200px;
+    height: auto;
+    background: white;
+    margin-top: 3px;
+    cursor:pointer;
+}
+#autoComplete>div{
+    /* border : 1px solid #e6e6e6; */
+    margin-top : 3px;
+}
+#autoComplete>div:hover{
+    background : rgb(182, 238, 86);
+}

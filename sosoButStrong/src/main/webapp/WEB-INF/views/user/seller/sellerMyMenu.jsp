@@ -9,8 +9,9 @@
 <link rel="stylesheet" href="resources/css/user/seller/sellerMyMenu.css">
 </head>
 <body>
+
 	<div id="sellerMyMenu-area" style="height: 1000px;">
-	
+
 		<h2>판매자 My Menu</h2>
 
 		<ul>
@@ -18,7 +19,7 @@
 			<li><a href="productEnrollForm.se">상품등록</a></li>
 			<li><a id="orderManage" href="orderManage.se">주문/배송관리</a></li>
 			<li><a href="#">정산관리</a></li>
-			<li><a href="#">1:1 문의관리</a></li>
+			<li><a href="sellerList.qu">1:1 문의관리</a></li>
 			<li><a href="#">회원정보수정</a></li>
 			<li><a href="#">회원탈퇴</a></li>
 		</ul>

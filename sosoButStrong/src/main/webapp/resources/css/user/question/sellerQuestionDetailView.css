@@ -9,7 +9,7 @@ div{
 .outer{
     width: 1200px;
     margin: auto;
-    /* height: auto; */
+    /* height: 1200px; */
 }
 
 /* 중간~우측 내용 영역 */
@@ -25,21 +25,44 @@ div{
     clear: both;
 }
 
+.label{
+    background-color: rgb(182, 238, 86);
+}
+
+.greenBtn{
+    background-color: rgb(182, 238, 86);
+}
+
 .orangeBtn{
     background-color: rgb(255, 163, 63);
     color: white;
 }
 
-/* .pagination{
-    text-align: center;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-} */
+.grayBtn{
+    background-color: gray;
+    color: white;
+}
 
-.listView td[class=questionTitle]:hover{
-    color: rgb(182, 238, 86);
-    font-size: 17px;
-    font-weight: bolder;
+.star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
     cursor: pointer;
+}
+
+#colorStar {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: rgb(255, 163, 63);
+    overflow: hidden;
+    pointer-events: none;
 }
