@@ -19,4 +19,5 @@ public class Cart {
 	private String sellerName; //
 	private String sellerImage; //
 	private int seller; 
+	private String changeName; // 상품이미지
 }

@@ -1,5 +1,5 @@
-
 #sellerMyMenu-area {
+    width: 200px;
     height: 100%;
     padding: 20px;
     margin-bottom: 20px;
@@ -22,4 +22,11 @@
 
 #sellerMyMenu-area>ul>li>a:hover {
     color: rgb(182, 238, 86);
+}
+
+#sellerMyMenu-area .current{
+    color: rgb(182, 238, 86);
+    font-size: 20pt;
+    font-weight: bolder;
+    pointer-events: none;
 }

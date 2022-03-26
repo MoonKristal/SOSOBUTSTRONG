@@ -10,7 +10,9 @@
 		<result column="PRICE" property="price"/>
 		<result column="QUANTITY" property="quantity"/>
 		<result column="SELLER_NAME" property="sellerName"/>
-		<result column="SELLER_IMAGE" property="sellerImage"/>	
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>	
+		<result column="CHANGE_NAME" property="changeName"/>
+
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -29,8 +31,11 @@
 		<result column="SELLER_NAME" property="sellerName"/>
 		<result column="ORDER_NO" property="orderNo"/>	
 		<result column="DELIVERY_NO" property="deliveryNo"/>
-		<result column="SELLER_IMAGE" property="sellerImage"/>
-		<result column="SELLER_COUNT" property="sellerCount"/>		
+		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
+		<result column="SELLER_COUNT" property="sellerCount"/>	
+		<result column="ORDERER" property="orderer"/>   
+      	<result column="PRODUCT_NAME" property="productName"/>
+		<result column="PRODUCT_NO" property="productNo"/>
 	</resultMap>
 
 	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
@@ -40,11 +45,14 @@
 				C.PRICE, 
 				C.QUANTITY, 
 				S.SELLER_NAME, 
-				S.SELLER_IMAGE, 
-				S.USER_NO
+				S.SELLER_IMAGEPATH, 
+				S.USER_NO,
+				A.CHANGE_NAME				
+
 		FROM CART C
 		JOIN PRODUCT P ON (C.PRODUCT_NO = P.PRODUCT_NO)
-		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)
+		JOIN ATTACHMENT A ON (P.PRODUCT_NO = A.PRODUCT_NO)
+		JOIN SELLER S ON (P.UPLOADER = S.USER_NO)		
 		WHERE C.USER_NO = #{userNo}
 	</select>	
 	
@@ -78,7 +86,10 @@
 						QUANTITY,
 						ORDERER,
 						SELLER,
-						SELLER_NAME
+						SELLER_NAME,
+						PRODUCT_NAME,
+						PRODUCT_NO
+
 						)
 		VALUES
 		
@@ -95,9 +106,11 @@
 						#{quantity},
 						#{orderer},
 						#{seller},
-						#{sellerName}
-			)			
-		
+						#{sellerName},
+						#{productName},
+						#{productNo}
+			)
+
 	</insert>
 	
 	<select id="selectOrderNo" resultType="string">
@@ -113,11 +126,13 @@
 	</select>
 	
 	<select id="selectOrderDetail" resultMap="orderResultSet">
-		SELECT A.*, SELLER_IMAGE
+		SELECT A.*, SELLER_IMAGEPATH, PRODUCT_NO
 		FROM (SELECT *
 		        FROM "ORDER"
-		        WHERE ORDER_NO = #{orderNo}) A	
-		JOIN SELLER ON(SELLER = USER_No)
+		        WHERE ORDER_NO = #{orderNo}
+		       ) A	
+		JOIN SELLER ON(SELLER = USER_NO)
+		JOIN PRODUCT ON(SELLER = UPLOADER)
 	</select>
 	
 	<select id="selectOrderList" parameterType="_int" resultMap="orderResultSet">
@@ -127,7 +142,7 @@
 		        FROM (
 		               SELECT A.*, ROW_NUMBER() OVER (PARTITION BY ORDER_NO ORDER BY STATUS DESC) RNUM
 		                FROM (
-		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, S.SELLER_IMAGE
+		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, S.SELLER_IMAGEPATH
 		                        FROM "ORDER" O
 		                        JOIN SELLER S ON (O.SELLER = S.USER_NO)
 		                        WHERE ORDERER = #{userNo}
@@ -150,24 +165,24 @@
 		    )
 	</select>
 	
-	<select id="selectOrderCancel" parameterType="string" resultMap="orderResultSet">
+	<select id="selectOrderCancel" parameterType="order" resultMap="orderResultSet">
 		SELECT B.*, V.ORDER_PRICE, V.SELLER_NAME SELLER_COUNT, V.QUANTITY
 		FROM (      
 		        SELECT *
 		        FROM (
 		               SELECT A.*, ROW_NUMBER() OVER (PARTITION BY ORDER_NO ORDER BY STATUS DESC) RNUM
 		                FROM (
-		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGE
+		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, O.USE_POINT, S.SELLER_IMAGEPATH
 		                        FROM "ORDER" O
 		                        JOIN SELLER S ON (O.SELLER = S.USER_NO)
-		                        WHERE ORDERER = 2
+		                        WHERE ORDERER = #{orderer}
 		                        ORDER BY DECODE(O.STATUS, '상품준비중', 1, '배송중', 2, '배송완료', 3, '결제완료', 4, '결제취소', 5)
 		                      ) A
 		                )
 		        WHERE RNUM = 1 
 		            AND ORDER_NO = #{orderNo}
 		    )B
-		JOIN VW_ORDER_LIST V ON (V.ORDER_NO = B.ORDER_NO)	
+		JOIN VW_ORDER_LIST V ON (V.ORDER_NO = B.ORDER_NO)			
 	</select>
 	
 	<update id="orderCancel" parameterType="order">
@@ -183,18 +198,18 @@
 		        FROM (
 		               SELECT A.*, ROW_NUMBER() OVER (PARTITION BY ORDER_NO ORDER BY STATUS DESC) RNUM
 		                FROM (
-		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGE
+		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGEPATH
 		                        FROM "ORDER" O
 		                        JOIN SELLER S ON (O.SELLER = S.USER_NO)
 		                        WHERE ORDERER = #{userNo}
 		                        <if test="keyword != null">
-		                            AND O.SELLER_NAME LIKE '%' || '${keyword}' || '%' 
+		                            AND O.SELLER_NAME LIKE '%' || #{keyword} || '%' 
 		                        </if>
 		                        <if test="year != null">
-		                        	AND EXTRACT(YEAR FROM O.ORDER_DATE ) = ${year}
+		                        	AND EXTRACT(YEAR FROM O.ORDER_DATE ) = #{year}
 		                        </if>
 		                        <if test="month != null">
-		                        	AND O.ORDER_DATE >= ADD_MONTHS(SYSDATE, ${month})
+		                        	AND O.ORDER_DATE >= ADD_MONTHS(SYSDATE, #{month})
 		                        </if>
 		                        ORDER BY DECODE(O.STATUS, '상품준비중', 1, '배송중', 2, '배송완료', 3, '결제완료', 4, '결제취소', 5)
 		                      ) A
@@ -211,18 +226,18 @@
 		        FROM (
 		               SELECT A.*, ROW_NUMBER() OVER (PARTITION BY ORDER_NO ORDER BY STATUS DESC) RNUM
 		                FROM (
-		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGE
+		                        SELECT O.ORDER_NO, O.ORDER_ITEM, O.ORDER_DATE, O.STATUS, O.SELLER_NAME, O.PAY_METHOD, S.SELLER_IMAGEPATH
 		                        FROM "ORDER" O
 		                        JOIN SELLER S ON (O.SELLER = S.USER_NO)
-		                        WHERE ORDERER = ${userNo}
+		                        WHERE ORDERER = #{userNo}
 		                        <if test="keyword != null">
-		                            AND O.SELLER_NAME LIKE '%' || '${keyword}' || '%' 
+		                            AND O.SELLER_NAME LIKE '%' || #{keyword} || '%' 
 		                        </if>
 		                        <if test="year != null">
-		                        	AND EXTRACT(YEAR FROM O.ORDER_DATE ) = ${year}
+		                        	AND EXTRACT(YEAR FROM O.ORDER_DATE ) = #{year}
 		                        </if>
 		                         <if test="month != null">
-		                        	AND O.ORDER_DATE >= ADD_MONTHS(SYSDATE, ${month})
+		                        	AND O.ORDER_DATE >= ADD_MONTHS(SYSDATE, #{month})
 		                        </if>
 		                        ORDER BY DECODE(O.STATUS, '상품준비중', 1, '배송중', 2, '배송완료', 3, '결제완료', 4, '결제취소', 5)
 		                      ) A
@@ -233,7 +248,90 @@
 		ORDER BY B.ORDER_DATE DESC			
 	</select>
 	
+	<select id="orderManageListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM "ORDER"
+		WHERE SELLER = #{userNo}	
+	</select>
 	
+	<select id="orderManageList" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_DATE, ORDER_NO, ORDER_ITEM, ORDER_PRICE, QUANTITY, M.USER_ID ORDERER, O.STATUS, DELIVERY_NO, O.PRODUCT_NAME
+		FROM "ORDER" O
+		JOIN MEMBER M ON (ORDERER = USER_NO)
+		WHERE SELLER = #{userNo}
+		ORDER BY ORDER_DATE DESC
+	</select>	
+	
+	<select id="searchOrderManageCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM "ORDER" O
+		JOIN MEMBER M ON (ORDERER = USER_NO)
+		WHERE SELLER = #{userNo}
+		<if test="keyword != null and keyword != ''">
+			AND M.USER_ID LIKE '%' || #{keyword} || '%' 
+		</if>
+		<if test="year != null and year != ''">
+		   	AND EXTRACT(YEAR FROM ORDER_DATE ) = #{year}
+		</if>
+		<if test="month != null and month != ''">
+		    AND ORDER_DATE >= ADD_MONTHS(SYSDATE, #{month})
+		</if>	
+		<if test="status != null and status != ''">
+			AND O.STATUS = #{status}
+		</if>	
+	</select>
+	
+	<select id="searchOrderManageList" parameterType="hashmap" resultMap="orderResultSet">
+		SELECT ORDER_DATE, ORDER_NO, ORDER_ITEM, ORDER_PRICE, QUANTITY, M.USER_ID ORDERER, O.STATUS, DELIVERY_NO, O.PRODUCT_NAME
+		FROM "ORDER" O
+		JOIN MEMBER M ON (ORDERER = USER_NO)
+		WHERE SELLER = #{userNo}
+		<if test="keyword != null and keyword != ''">
+			AND M.USER_ID LIKE '%' || #{keyword} || '%' 
+		</if>
+		<if test="year != null and year != ''">
+		   	AND EXTRACT(YEAR FROM O.ORDER_DATE ) = #{year}
+		</if>
+		<if test="month != null and month != ''">
+		    AND O.ORDER_DATE >= ADD_MONTHS(SYSDATE, #{month})
+		</if>		
+		<if test="status != null and status != ''">
+			AND O.STATUS = #{status}
+		</if>
+		ORDER BY O.ORDER_DATE DESC
+	</select>
+	
+	<update id="updateStatus" parameterType="order">
+		UPDATE "ORDER"
+		SET STATUS = #{status}
+		<if test="deliveryNo != null and deliveryNo != ''">
+			, DELIVERY_NO = #{deliveryNo}
+		</if>		
+		WHERE SELLER = #{seller}
+			AND ORDER_NO = #{orderNo}			
+	</update>	
+	
+	<select id="selectOrderManageDtail" parameterType="order" resultMap="orderResultSet">
+		SELECT A.*, SELLER_IMAGEPATH
+		FROM (SELECT *
+		        FROM "ORDER"
+		        WHERE ORDER_NO = #{orderNo}
+                    AND SELLER = #{seller}    
+            	) A	
+		JOIN SELLER ON(SELLER = USER_NO)
+	</select>
+	
+	<update id="updatePoint" parameterType="_int">
+		UPDATE "MEMBER"
+		SET POINT = POINT - #{point}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="cancelUserPoint" parameterType="order">
+		UPDATE "MEMBER"
+		SET POINT = POINT + #{usePoint}
+		WHERE USER_NO = #{orderer}
+	</update>
  
  
 </mapper>

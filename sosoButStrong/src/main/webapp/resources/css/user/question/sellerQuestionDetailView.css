@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+div{
+    /* border: 1px solid green; */
+    box-sizing: border-box;
+}
+
+/* 헤더 아래 영역 전체 */
+.outer{
+    width: 1200px;
+    margin: auto;
+    /* height: 1200px; */
+}
+
+/* 중간~우측 내용 영역 */
+.content{
+    width: 1000px;
+    height: 100%;
+	float: left;
+    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
+}
+
+/* footer에 float 적용되지 않도록 해제 */
+.footer{
+    clear: both;
+}
+
+.label{
+    background-color: rgb(182, 238, 86);
+}
+
+.greenBtn{
+    background-color: rgb(182, 238, 86);
+}
+
+.orangeBtn{
+    background-color: rgb(255, 163, 63);
+    color: white;
+}
+
+.grayBtn{
+    background-color: gray;
+    color: white;
+}
+
+.star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#colorStar {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: rgb(255, 163, 63);
+    overflow: hidden;
+    pointer-events: none;
+}

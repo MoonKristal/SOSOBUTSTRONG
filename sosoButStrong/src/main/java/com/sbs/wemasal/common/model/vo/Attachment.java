@@ -15,7 +15,7 @@ public class Attachment {
 	private String uploadDate; // 업로드 날짜
 	private int userNo; // 회원번호
 	private int productNo; // 상품번호
-	private int refMpno; // 메인페이지번호
+	private int mainFileNo; // 메인페이지번호
 	private int refCno; // 커뮤니티 글 번호
 	private int refRno; // 리뷰번호
 	private int refNno; // 공지글 번호

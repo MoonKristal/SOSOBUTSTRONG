@@ -37,17 +37,19 @@
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            
                         </c:if>
                         <c:if test="${c.status eq '배송완료'}">
-                            <a href="#"><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
+                            <input type="text" class="productNo" value="${c.productNo}">
+                            <a href=""><input type="button" class="order-btn review" value="리뷰 작성하기" ></a> <br>
+
                         </c:if>
                     </td>                                   
                 </tr>
                 <tr>
-                    <td colspan="2" style="font-weight: bold; border-left: solid; border-right-style: solid; border-right-color:#ccc; font-size: 20px;">${c.status}</td>       
+                    <td colspan="2" style="font-weight: bold; padding-left: 30px; border-left: solid; border-right-style: solid; border-right-color:#ccc; font-size: 20px;"><span style="color: rgb(255, 163, 63); ">${c.status}</span></td>       
                                    
                 </tr>
                 <tr>
                     <td align="center"  width="18%" style="padding-top:0px; border-left-style: solid; border-bottom-style: solid;"><img style="width: 130px; height: 110px;" src="${c.sellerImage}"></td>
-                    <td style="border-right-style: solid; border-right-color:#ccc; border-bottom-style: solid;"><b>[${c.sellerName}]</b><br><br>
+                    <td style="border-right-style: solid; border-right-color:#ccc; border-bottom-style: solid;"><b>[${c.sellerName}]</b>&nbsp; ${c.productName}<br><br>
                         ${c.orderItem}<br><br>
                         <label>${c.quantity}개 / ${c.orderPrice}원</label>                    
                     </td>                                      
@@ -86,7 +88,7 @@
 
             <c:set var="sum" value="0"/>				
 				<c:forEach var="test" items="${list}">				
-				 	<c:set var="sum" value="${sum + test.orderPrice}"/>					
+				 	<c:set var="sum" value="${sum + test.orderPrice * test.quantity}"/>					
 				</c:forEach>
 
 
@@ -120,7 +122,7 @@
                     <tr>
 						<td style="border-bottom-style: solid; border-bottom-color: #ccc;"></td>
 						<td height="25" style="font-weight: bold; background: #ccc;">총 결제금액</td>
-                        <td  align="right" style="background: #ccc;font-weight: bold; color: red; border-bottom-style: solid; border-bottom-color: #ccc;">14,500 원</td>
+                        <td  align="right" style="background: #ccc;font-weight: bold; color: red; border-bottom-style: solid; border-bottom-color: #ccc;"><fmt:formatNumber value="${sum - list[0].usePoint}"/> 원</td>
 					</tr>
 				</table>
 			</div>
@@ -149,6 +151,50 @@
         </form>
     </div>
 
+
+
+    <!-- 리뷰 작성용 모달 -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+            <h4 class="modal-title">리뷰 작성</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="" action="uploadReview.cs" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="refPno" value="1"><!-- 리뷰작성할 상품번호 -->
+                    <input type="hidden" name="reviewWriter" value="${loginUser.userNo}"> <!-- 리뷰작성하는 회원번호 -->
+                    <table align="center">
+                        <tr>
+                            <td><!-- 별점 -->
+                                <input type="number" name="score" id="rStar" min="0" max="5" class="form-control" placeholder="별점을 숫자로 입력하세요 (0~5)"> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><!-- 리뷰내용 -->
+                                <textarea name="reviewContent" id="rCon" cols="40" rows="6" style="resize: none;" class="form-control"></textarea> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="file" name="thumbnail" class="form-control-file border" required> <!-- 리뷰이미지 -->
+                            </td>
+                        </tr>
+                    </table>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">등록</button> <!-- 리뷰등록 버튼 -->
+                        </div>
+                </form>
+            </div>
+
+
+            
+        </div>
+        </div>
+    </div>
     
     <script>    
        // 배송조회시 실행될 작은 사이즈의 창

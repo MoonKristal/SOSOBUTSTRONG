@@ -1,0 +1,59 @@
+.wrap{
+    width: 1200px;
+}
+#menubar{
+    float: left;
+}
+div{
+    /* border: 1px solid black; */
+}
+.content{
+    width: 70%;
+    margin-left: 350px;
+    padding-top: 100px;
+}
+.content_1{
+    height: 100px;
+}
+.content_1>div{
+    float: left;
+}
+.title{
+    width: 80%;
+}
+.title>h2{
+    font-weight: bolder;
+    padding-left: 5%;
+}
+
+.table {
+    text-align: center;
+}
+.pagingArea{
+    margin: auto;
+}
+.pagingDiv{
+    width: fit-content;
+    margin: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
