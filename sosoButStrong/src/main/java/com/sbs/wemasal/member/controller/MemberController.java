@@ -31,6 +31,7 @@ import com.sbs.wemasal.member.model.service.MemberService;
 import com.sbs.wemasal.member.model.vo.Cert;
 import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.member.model.vo.Seller;
+import com.sbs.wemasal.seller.model.service.SellerService;
 
 @Controller
 public class MemberController {
@@ -62,7 +63,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUserId().equals("admin")) {
-				mv.setViewName("redirect:/"); // 새로고침해서 url로 넘긴다. // 경로 추가하기
+				mv.setViewName("redirect:/list.se"); // 새로고침해서 url로 넘긴다.
 			}else {
 				mv.setViewName("redirect:/");
 			}
@@ -123,7 +124,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId) {
-
 		return memberService.idCheck(checkId) > 0 ? "NN" : "NY";
 	}
 	
@@ -131,7 +131,6 @@ public class MemberController {
 	public void updateMember() {
 		
 	}
-
 	// --------------------------------------------
 	@RequestMapping("sellerInsert.se")
 	public String insertSeller(Member m, Seller s, Model model, HttpSession session, MultipartFile upfile) {
@@ -143,7 +142,7 @@ public class MemberController {
 			
 		String changeName = SaveFile.saveFile(upfile, session); // 파일경로설정
 		s.setSellerImage(upfile.getOriginalFilename()); // Seller객체에 이미지 원본명 추가 (String으로 반환해서 넣어주기)
-		s.setSellerImagePath(changeName); // Seller객체에 imagePath에 사진경로 추가 
+		s.setSellerImagePath("resources/uploadFiles/"+changeName); // Seller객체에 imagePath에 사진경로 추가 
 			
 		int result = memberService.insertSeller(m,s);
 			
@@ -245,7 +244,8 @@ public class MemberController {
 		return "user/member/login";
 		}
 	}
-		
+	
+	// 관리자 판매자 승인여부 리스트
 	@RequestMapping("list.se")
 	public ModelAndView selectList(@RequestParam(value = "cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
@@ -255,10 +255,62 @@ public class MemberController {
 		
 		ArrayList<Seller> list = memberService.selectList(pi);
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("user/member/admin/sellerList");
+		mv.addObject("pi", pi).addObject("list", list).setViewName("admin/member/sellerList");
 		
 		return mv;
 	}
+	
+	// 관리자 판매자 승인여부 상세페이지
+	@RequestMapping("detail.bo")
+	public ModelAndView selectSeller(ModelAndView mv, int no) { // 키값과 똑같은 이름의 매개변수, int형으로 쓰면 알아서 파싱이 됩니다.
+		
+		Seller s = memberService.selectSeller(no);
+		mv.addObject("s", s).setViewName("/admin/member/sellerListDetail");
+		
+		return mv;
+	}
+	
+	// 관리자 판매자 승인여부 상세페이지 판매자 이름 가져오기
+	@ResponseBody
+	@RequestMapping(value = "sellerUserName.ajax", produces = "application/text; charset=UTF-8")
+	public String sellerUserName(int userNo) {
+		String result = memberService.sellerUserName(userNo);
+		return result;
+	}
+	
+	
+	@RequestMapping("approveSeller.ad") 
+	public ModelAndView approveSeller(String userNo, ModelAndView mv, HttpSession session) {
+			
+		int result = memberService.approveSeller(userNo);
+			
+		if(result > 0) { // 승인성공
+			session.setAttribute("alertMsg", "승인되었습니다.");
+			mv.setViewName("redirect:/list.se");
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			mv.setViewName("redirect:/list.se");
+		}
+		return mv;
+	}
+	
+	// 관리자 판매자관리 리스트
+	@RequestMapping("memberSellerList.ad")
+	public ModelAndView memberSellerList(@RequestParam(value = "cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+		int listCount = memberService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Seller> list = memberService.memberSellerList(pi);
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("admin/member/memberSellerList");
+		
+		return mv;
+	}
+	
+	
+	
 
 //	 인증번호전송(메일 내용 수정 / return값 수정 필요)
 	@ResponseBody
@@ -292,5 +344,8 @@ public class MemberController {
 //		System.out.println(result);
 		return result;
 	}
+	
+	
+	
 	
 }

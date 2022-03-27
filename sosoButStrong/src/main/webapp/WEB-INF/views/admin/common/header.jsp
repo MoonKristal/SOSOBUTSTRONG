@@ -36,8 +36,8 @@
                 <li>
                     <a href="#">판매자 관리</a>
                     <ul>
-                        <li><a href="#">판매자 승인 / 거절</a></li>
-                        <li><a href="#">판매자 관리</a></li>
+                        <li><a href="list.se">판매자 승인 / 거절</a></li>
+                        <li><a href="memberSellerList.ad">판매자 관리</a></li>
                     </ul>
                 </li>
                 <li>

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>판매자 승인/거절</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 	.wrap{
 	    width: 1200px;
@@ -15,7 +16,7 @@
 	    float: left;
 	}
 	div{
-	   border: 1px solid black;
+	   /*border: 1px solid black;*/
 	}
 	.content{
 	    width: 70%;
@@ -39,7 +40,7 @@
         </div>
         <div class="content">
             <!--  === Main ===  -->
-			<div id="main-title"><h3>판매자 승인/거절</h3></div>
+			<div id="main-title"><h3 style="font-weight: bold;" >판매자 승인/거절</h3></div>
 			<div class="innerOuter" style="padding:5% 10%;">
             <table id="boardList" class="table table-hover" align="center">
  				<thead>                  
@@ -54,11 +55,22 @@
                 <tbody>
 					<c:forEach items="${list}" var="sl">
 	                    <tr>
-	                        <td>${sl.userNo}</td>
+	                        <td class="no">${sl.userNo}</td>
 	                        <td>${sl.sellerName}</td>
 	                        <td>${sl.sellerBRN}</td>
 	                        <td>${sl.sellerPhone}</td>
-	                        <td>${sl.sellerStatus}</td>
+	                        <td>
+	                        <!--처리 상태(answer)가 "N"인 경우 '미처리' vs "Y"인 경우 '처리 완료' 배지 표시-->
+			                    <c:choose>
+			                    	<c:when test="${ sl.sellerStatus eq 'N' }">
+			                   			<span class="badge badge-danger">거절</span>
+			                      	</c:when>
+			                   		<c:otherwise>
+			                        <span class="badge badge-success">승인</span>
+			                    	</c:otherwise>
+			                    </c:choose>
+	                        </td>
+	                        
 	                    </tr>
                    </c:forEach>
                 </tbody>   
@@ -67,7 +79,7 @@
 			<script>
             	$(function(){
 					    $("#boardList>tbody>tr").click(function(){
-					    	location.href = "/wemasal/sellerNYDetail?userNo=" + userNo;
+					    	location.href = 'detail.bo?no=' + $(this).children(".no").text();
 					    })        		
             	})
             </script>

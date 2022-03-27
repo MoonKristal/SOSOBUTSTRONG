@@ -95,7 +95,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="">사업자등록번호*</label></h6>
 						            <span class="box">
-						                <input type="text" id="" class="int" name="sellerBRN" maxlength="" placeholder="- 뺴고 입력" required>
+						                <input type="text" id="" class="int" name="sellerBRN" maxlength="" placeholder="- 포함해서 입력" required>
 						            </span>
 						        </div>
 						

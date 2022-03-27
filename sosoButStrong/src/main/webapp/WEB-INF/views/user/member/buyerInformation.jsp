@@ -38,7 +38,7 @@
 		        <div>
 		           <h6 class="join_title">이름</h6>
 		           <span class="box box_name">
-		               <input type="text" class="int" name="userName" value="${ loginUser.userName }" >
+		               <input type="text" class="int" name="userName" value="${ loginUser.userName }" required >
 		            </span>
 		        </div>
 		
@@ -46,7 +46,7 @@
 		        <div>
 		            <h6 class="join_title">이메일</h6>
 		            <span class="box">
-		                <input type="text" class="int" name="email" value="${ loginUser.email }">
+		                <input type="text" class="int" name="email" value="${ loginUser.email }" required>
 		            </span>
 		        </div>
 		        
@@ -54,7 +54,7 @@
 		        <div>
 		            <h6 class="join_title">연락처</h6>
 		            <span class="box">
-		                <input type="tel" class="int" name="phone" value="${ loginUser.phone }">
+		                <input type="tel" class="int" name="phone" value="${ loginUser.phone }" required>
 		            </span>
 		        </div>
 		
@@ -62,7 +62,7 @@
 		        <div>
 		            <h6 class="join_title">주소</h6>
 		            <span class="box">
-		                <input type="text" class="int" name="address" value="${ loginUser.address }">
+		                <input type="text" class="int" name="address" value="${ loginUser.address }" required>
 		            </span>
 		        </div>
 		           
@@ -90,7 +90,7 @@
                     	})
                 </script>
 		        <br>
-		        <!-- JOIN BTN -->
+		        <!-- BTN -->
 		        <div class="btn_area" align="center"> 
 		           <button type=submit" id="btnUpdate">수정하기</button>
 		           <button type="button" id="btnDelete" data-toggle="modal" data-target="#deleteForm">탈퇴하기</button>
@@ -99,6 +99,7 @@
 		</div> 
 		<!-- content-->
 		
+		<!-- 회원탈퇴 모달 창 -->
 		<div class="modal fade" id="deleteForm">
 	        <div class="modal-dialog modal-sm">
 	            <div class="modal-content">

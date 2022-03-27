@@ -121,6 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="sellerList" resultType="seller">
 		SELECT *
 		  FROM SELLER
+		  
 	</select>
 	
 	<select id="selectListCount" resultType="_int">
@@ -165,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where
 		email=#{email}
 	</select>
+	
 	<select id="idDuplicationCheck" resultType="_int"
 		parameterType="string">
 		select count(*) as USER_ID
@@ -174,5 +176,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!-- 판매자 승인 상세보기 -->
+	<select id="selectSeller" resultMap="sellerResultset">
+		select 
+			  USER_NO, SELLER_NAME, SELLER_BRN, SELLER_PHONE, SELLER_LOCATION, SELLER_INTRO, SELLER_IMAGE , SELLER_IMAGEPATH
+	      from
+	           seller 
+	     where
+	           USER_NO = #{userNo}
+	</select>
 	
+	<select id="sellerUserName" resultType="String">
+			select USER_NAME
+			from member
+			where USER_NO = #{userNo}
+	</select>
+	
+	
+	<!-- 판매자 승인버튼 -->
+	<update id="approveSeller" parameterType="string">
+		 UPDATE SELLER
+		 	SET STATUS = 'Y'
+		  WHERE USER_NO = #{userNo}
+	</update>
+	
+	<!-- 판매자 리스트 -->
+	<select id="memberSellerList" resultMap="sellerResultset">
+		select USER_NO, SELLER_NAME, SELLER_BRN, SELLER_PHONE
+		  from seller
+		 order by USER_NO desc
+	</select>
 </mapper>
