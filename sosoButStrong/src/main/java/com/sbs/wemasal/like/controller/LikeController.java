@@ -26,6 +26,7 @@ public class LikeController {
 		l.setUserNo(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 		
 		System.out.println(isLike);
+		System.out.println(l);
 		
 		int result = 0;
 		

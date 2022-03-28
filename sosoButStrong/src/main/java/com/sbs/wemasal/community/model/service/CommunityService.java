@@ -32,7 +32,7 @@ public interface CommunityService {
 	ArrayList<Reply> selectReplyList(int refComNo);
 	
 	// 커뮤니티 상세조회 조회시 로그인 유저에 따른 좋아요 정보
-	String selectIsLike(Like l);
+	String selectIsLike(Like like);
 
 	// 커뮤니티 상세조회시 해당 게시글 좋아요 수
 	int selectLikeCount(int cno);

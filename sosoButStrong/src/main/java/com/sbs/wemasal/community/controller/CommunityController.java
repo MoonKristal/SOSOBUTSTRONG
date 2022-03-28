@@ -83,34 +83,41 @@ public class CommunityController {
 	}
 	
 	@RequestMapping("communityDetail.co")
-	public ModelAndView communityDetail(ModelAndView mv, int cno, Like l, HttpServletRequest request) {
+	public ModelAndView communityDetail(ModelAndView mv, int cno, Like like, HttpServletRequest request) {
 		
+		// 게시글 정보 조회
 		CoAttachment coA = communityService.selectCommunity(cno);
 		
-		int memberNo = 0;
+		// 기본값으로 0값 대입
+		// 비로그인 회원일 경우 null이 아닌 0
+		like.setUserNo(0);
 		
+		// 로그인이 된 회원 정보
 		Member mem = (Member)request.getSession().getAttribute("loginUser");
 		
+		// 로그인이 되어있으면 userNo을 로그인된 회원의 userNo값 대입
 		if(mem != null) {
-			 l.setUserNo(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+			like.setUserNo(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 		}
-		l.setComNo(cno);
+		
+		like.setComNo(cno); // 조회할 게시글의 번호를 Like객체에 대입
 		 
-		//Like like = communityService.selectLike(l);
+		// 조회한 사람이 해당 게시글을 "좋아요" 했는지 조회와 동시에 대입
+		like.setMyLike(communityService.selectIsLike(like));
 		
+		// "좋아요"를 누르지 않으면 null값이 오는데 "N"값으로 변경해주기
+		if(like.getMyLike() == null) {
+			like.setMyLike("N");
+		}
 		
-		l.setMyLike(communityService.selectIsLike(l));
-		//Like like = communityService.selectIsLike2(l);
-		//System.out.println(like);
-		String isLike = l.getMyLike();
+		// 해당 게시글의 "좋아요"수 조회와 동시에 대입
+		like.setLikeCount(communityService.selectLikeCount(cno));
 		
-		//int likeCount = communityService.selectLikeCount(cno); // 에러
-		//System.out.println(likeCount);
-		
+		System.out.println(like);
 		
 		if(coA != null) {
 			
-			mv.addObject("coA", coA).addObject("isLike", isLike).setViewName("user/community/communityDetailView");
+			mv.addObject("coA", coA).addObject("like", like).setViewName("user/community/communityDetailView");
 		
 		} else {
 			

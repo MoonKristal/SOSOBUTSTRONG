@@ -214,19 +214,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectIsLike" resultType="string">
-		SELECT NVL(MY_LIKE, 'N') MY_LIKE
-		  FROM (SELECT LIKE_NO, CASE WHEN USER_NO = #{userNo} AND COM_NO = #{comNo} THEN 'Y'
-						ELSE 'N'
-						END AS MY_LIKE
-    			  FROM "LIKE"
-    			 WHERE USER_NO = #{userNo})
+		SELECT CASE WHEN COM_NO = #{comNo} THEN 'Y'  
+                     ELSE 'N'  
+                     END MY_LIKE
+		FROM "LIKE"
+		WHERE USER_NO = #{userNo}
 	</select>
 	
 	<select id="selectLikeCount" resultType="_int">
-		SELECT COUNT(LIKE_NO) LIKE_COUNT
-		  FROM "LIKE"
-		 GROUP BY COM_NO
-		HAVING COM_NO = #{comNo}
+		SELECT COUNT(COM_NO) LIKE_COUNT
+		FROM "LIKE"
+		WHERE COM_NO = #{comNo}
 	</select>
 	
 	<select id="selectLike" resultMap="likeResultSet">

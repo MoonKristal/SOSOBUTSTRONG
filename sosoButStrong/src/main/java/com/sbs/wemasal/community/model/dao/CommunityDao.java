@@ -52,8 +52,8 @@ public class CommunityDao {
 		return (ArrayList)sqlSession.selectList("communityMapper.selectReplyList", refComNo);
 	}
 
-	public String selectIsLike(SqlSessionTemplate sqlSession, Like l) {
-		return sqlSession.selectOne("communityMapper.selectIsLike", l);
+	public String selectIsLike(SqlSessionTemplate sqlSession, Like like) {
+		return sqlSession.selectOne("communityMapper.selectIsLike", like);
 	}
 
 	public int selectLikeCount(SqlSessionTemplate sqlSession, int cno) {

@@ -61,8 +61,8 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public String selectIsLike(Like l) {
-		return communityDao.selectIsLike(sqlSession, l);
+	public String selectIsLike(Like like) {
+		return communityDao.selectIsLike(sqlSession, like);
 	}
 
 	@Override
