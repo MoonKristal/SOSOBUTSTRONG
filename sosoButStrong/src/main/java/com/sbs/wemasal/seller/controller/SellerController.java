@@ -127,11 +127,11 @@ public class SellerController {
 		        os.flush();
 		        os.close();
 	
-		        sFileInfo += "&bNewLine=true"; // 정보 출력
+		        sFileInfo += "&bNewLine=true"; // 정보출력
 		        
 		        sFileInfo += "&sFileName="+ fileName;; // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	
-		        sFileInfo += "&sFileURL=http://localhost:8765/wemasal/resources/uploadFiles/"+realFileNm;
+		        sFileInfo += "&sFileURL=http://localhost:8765/wemasal/resources/uploadFiles/"+realFileNm; // 삽입한 이미지가 저정된 경로
 	
 		        PrintWriter print = response.getWriter();
 	
@@ -139,7 +139,7 @@ public class SellerController {
 		        print.flush();
 		        print.close();
 	
-		   } catch (Exception e) {
+		   } catch (Exception e) {// 예외처리
 		       e.printStackTrace();
 		   }
 	}

@@ -111,8 +111,8 @@
                         <tr>
                             <td><!-- 로그인한 회원유형이 판매자가 아니면 아래 주문,장바구니 버튼이 노출 , 단 비로그인 유저는 주문,장바구니 버튼 누르면 로그인페이지로 넘김-->
                                 <c:if test="${loginUser.userType ne 2}"> 
-                                    <button type="submit" formaction="orderNow.cs" style="font-weight: bolder;" class="btn btn-outline-success">바로주문</button> &nbsp;&nbsp;
-                                    <button type="submit" formaction="addCart.cs" style="font-weight: bolder;" class="btn btn-outline-info">장바구니</button>
+                                    <button type="submit" formaction="orderNow.cs" style="font-weight: bolder; width: 200px;" class="btn btn-outline-success">주문하기</button> &nbsp;&nbsp;
+                                    <button type="submit" formaction="addCart.cs" style="font-weight: bolder; width: 200px;" class="btn btn-outline-info">장바구니</button>
                                 </c:if>
                             </td>
                         </tr>

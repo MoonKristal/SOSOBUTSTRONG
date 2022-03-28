@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="resources/css/user/order/orderDetailForm.css">
 </head>
 <body>
-
     <jsp:include page="../common/header.jsp"/>	
 
     <div class="orderDetail_outer">
@@ -169,8 +168,12 @@
                     <input type="hidden" name="reviewWriter" value="${loginUser.userNo}"> <!-- 리뷰작성하는 회원번호 -->
                     <table align="center">
                         <tr>
-                            <td><!-- 별점 -->
-                                <input type="number" name="score" id="rStar" min="0" max="5" class="form-control" placeholder="별점을 숫자로 입력하세요 (0~5)"> 
+                            <td><!-- 별점 영역 -->
+                                <span class="star">
+                                    ★★★★★
+                                    <span>★★★★★</span>
+                                    <input type="range" name="score" id="rStar" oninput="drawStar(this)" value="0" step="1" min="0" max="5">
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -185,7 +188,7 @@
                         </tr>
                     </table>
                         <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">등록</button> <!-- 리뷰등록 버튼 -->
+                        <button type="submit" class="btn btn-primary ">등록</button> <!-- 리뷰등록 버튼 -->
                         </div>
                 </form>
             </div>
@@ -193,6 +196,11 @@
         </div>
     </div>
 
+    <script>
+        const drawStar = (target) => { // 리뷰작성 폼에서 사용자가 클릭 or 드래그 한 만큼 별점 보여지도록 함
+            document.querySelector('.star span').style.width = $('#rStar').val() * 20 + '%';
+        }
+    </script>
 
     <script>
         $('.review').on('click', function(){ // 리뷰 작성하기 버튼이 클릭되면
@@ -200,7 +208,8 @@
             var $rpn = $(this).prev().val(); // 클릭된 버튼 이전 요소(hidden 속성의 input 태그이며 상품번호 값 들어있음 )의 값을 변수에 담기
 
             $('#rpn').val($rpn); // 담은 상품번호를 리뷰작성 폼 내부 hidden 속성 input 태그에 값으로 넣어주기
-        })        
+        })
+        
     </script>
     
 

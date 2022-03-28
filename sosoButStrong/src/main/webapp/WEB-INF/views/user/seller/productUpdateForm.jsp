@@ -76,7 +76,7 @@
             
             <br>
 
-            <div align="center">
+            <div style="margin-left: 830px;">
                 <button type="reset" class="btn btn-secondary">취소</button>
                 <button type="button" class="btn btn-dark submitBtn">상품수정</button>
                 <button type="submit" style="display:none;" id="realBtn">숨겨진 찐 제출버튼</button>
