@@ -36,6 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="UPLOAD_DATE" property="uploadDate" />
 		<result column="REF_CNO" property="refCno" />
+		
+		<result column="LIKE_COUNT" property="like_count" />
 	</resultMap>
 	
 	<resultMap id="replyResultSet" type="reply">
@@ -57,6 +59,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MY_LIKE" property="myLike" />
 		<result column="LIKE_COUNT" property="likeCount" />
 	</resultMap>
+	
+	
+	<select id="selectTop3List" resultMap="coAttachmentResultSet">
+		SELECT R.COM_NO
+			  , LIKE_COUNT
+			  , C.USER_NO
+			  , COM_TITLE
+			  , SALAD_NAME
+			  , SALAD_MATERIAL
+			  , SALAD_SAUCE
+			  , SALAD_COMMENT
+			  , REPORT
+			  , CREATE_DATE
+			  , MODIFY_DATE
+              , FILE_NO
+              , ORIGIN_NAME
+              , CHANGE_NAME
+              , UPLOAD_DATE
+              , REF_CNO
+		FROM(SELECT COM_NO, LIKE_COUNT
+		       FROM(SELECT COM_NO, COUNT(COM_NO) LIKE_COUNT
+			          FROM "LIKE"
+				     GROUP BY COM_NO
+				     ORDER BY LIKE_COUNT DESC)
+		      WHERE ROWNUM &lt;= 3) R
+		LEFT JOIN COMMUNITY C ON(C.COM_NO = R.COM_NO)
+		LEFT JOIN ATTACHMENT A ON (A.REF_CNO = C.COM_NO)
+		WHERE C.COM_NO = R.COM_NO
+		AND ROWNUM &lt;= 3
+		ORDER BY LIKE_COUNT DESC
+	</select>
+	
+	
+	
 	
 	<select id="selectCommunityCount" resultType="_int">
 		SELECT COUNT(*)
@@ -89,7 +125,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER
 				BY
 					CREATE_DATE DESC
-	
 	</select>
 	
 	<select id="selectPic">
@@ -219,6 +254,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      END MY_LIKE
 		FROM "LIKE"
 		WHERE USER_NO = #{userNo}
+		  AND COM_NO = #{comNo}
 	</select>
 	
 	<select id="selectLikeCount" resultType="_int">

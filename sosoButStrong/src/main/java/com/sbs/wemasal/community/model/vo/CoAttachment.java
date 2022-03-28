@@ -30,5 +30,6 @@ public class CoAttachment {
 	private int refCno; // 커뮤니티 글 번호
 	
 	private String reportUserNo;
+	private int like_count;
 	
 }

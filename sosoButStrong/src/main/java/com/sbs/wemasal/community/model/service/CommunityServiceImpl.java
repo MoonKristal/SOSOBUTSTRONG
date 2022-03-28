@@ -24,7 +24,16 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private CommunityDao communityDao;
 	
-
+	@Override
+	public ArrayList<Integer> selectTop3ComNo() {
+		return communityDao.selectTop3ComNo(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Community> selectTop3List() {
+		return communityDao.selectTop3List(sqlSession);
+	}
+	
 	@Override
 	public int selectCommunityCount() {
 		return communityDao.selectCommunityCount(sqlSession);
@@ -104,6 +113,9 @@ public class CommunityServiceImpl implements CommunityService {
 	public int deleteCommunity(int cno) {
 		return communityDao.deleteCommunity(sqlSession, cno);
 	}
+
+
+	
 
 
 

@@ -12,6 +12,14 @@ import com.sbs.wemasal.report.model.vo.Report;
 
 public interface CommunityService {
 	
+	// 베스트 커뮤니티 리스트
+	// top3 comNo
+	ArrayList<Integer> selectTop3ComNo();
+	
+	// top3 리스트
+	ArrayList<Community> selectTop3List();
+	
+	// 신규 등록된 커뮤니티 리스트
 	// 커뮤니티 리스트 (select)
 	ArrayList<Community> communityList(PageInfo pi);
 	
@@ -56,6 +64,13 @@ public interface CommunityService {
 
 	// 레시피 게시글 삭제
 	int deleteCommunity(int cno);
+
+
+
+
+	
+
+	
 
 	
 
