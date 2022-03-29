@@ -27,7 +27,7 @@
                 <table class="table" align="center">
                     <thead>
                         <tr>
-                            <th width="50px"><input type="checkbox" class="batch" id="all"></th>
+                            <th width="50px"></th>
                             <th width="100px">사진번호</th>
                             <th width="300px">사진명</th>
                             <th width="150px">사진 등록 날짜</th>

@@ -15,13 +15,14 @@
 <body>
     
     <jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/buyerMyPageMenuBar.jsp"/>
-
+    
     <br><br>
     
-    <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;
-        <img src="resources/images/cartImage.png" alt="카트이미지" style="width: 45px; height: 45px;">&nbsp;장바구니</h2>
     <div class="outer" align="center">
+        <jsp:include page="/WEB-INF/views/user/common/buyerMyPageMenuBar.jsp"/>
+        
+        <h2 style="font-weight: bolder; margin-left: 0;" >&nbsp;&nbsp;
+            <img src="resources/images/cartImage.png" alt="카트이미지" style="width: 45px; height: 45px;">&nbsp;장바구니</h2>
     
         <hr class="divider"> <!-- 구분선 -->
 
@@ -29,7 +30,7 @@
         <c:choose>
             <c:when test="${ !empty list }">
                 <c:forEach var="c" items="${list}">
-                    <div class="" style="width: 1000px; margin-top: 30px;">
+                    <div class="" style="width: 1200px; margin-top: 30px; padding-left: 200px;">
                         <table align="center" class="detailList" style="width: 100%;">
                             <thead>
                                 <tr>
@@ -38,7 +39,7 @@
                                     <td><input type="hidden" value="${c.productNo}"></td>
                                     <td align="center"  width="18%" style="padding-top:0px;"><img style="width: 150px; height: 150px;" src="${c.changeName}"></td>
                                     <td style=""><i style="color: gray;">[${c.sellerName}]</i><br><br><b style="font-size: larger;">${c.productName}</b><br>
-                                        <br><p style="width: 450px;">${c.option}</p>
+                                        <br><p style="width: 400px;">${c.option}</p>
                                         <td style="width: 200px; font-weight: bold; color:green;">${c.quantity}개 / ${c.price} 원</td>                    
                                     </td>
                                     <td class="cBtn"><a href="deleteCart.cs?cno=${c.cartNo}" style="font-weight:bolder; font-size:larger;">X</a></td>                                   
@@ -57,7 +58,7 @@
 
         <hr class="divider"> <!-- 구분선 -->
     
-        <div align="center" style="margin-bottom: 50px; margin-right: 300px;">
+        <div align="center" style="margin-bottom: 50px; margin-right: 20px;">
             <a href="saladListView.cmm" class="btn btn-dark">쇼핑계속하기</a>
             <a href="orderForm.od" class="btn btn-primary">주문하기</a>
         </div>

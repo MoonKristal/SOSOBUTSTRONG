@@ -5,28 +5,9 @@ div{
     width: 1200px;
     margin: auto;  
 }
-.content{
-    width: 1000px;
-    margin-left: 200px;
-    padding: 25px;
-}
-.order-btn{
-    margin: 10px;
-    width: 210px;
-    height: 43px;
-    border-radius: 10px;
-    font-weight: bold;  
-    font-size: 19px;  
-    color: white;
-    border-style: none;
-}
 .list{
     margin-left: 730px;
     margin-bottom: 15px;
-}
-.orderList table{
-    margin-top: 20px;
-    width: 100%;   
 }
 td{
     padding: 6px;
@@ -64,3 +45,8 @@ th{
 }
 .cBtn a:hover{color: rgb(255, 163, 63);}
 .cBtn a{color: black;}
+.outer{
+    width: 1200px;
+    margin: auto;
+    height: 900px;
+}

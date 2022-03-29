@@ -11,13 +11,10 @@
 <body>
     <jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 
+    <br><br><br>
+
     <div class="wrap">
-        <div class="vanner">
-            <div class="point">
-                <b>베스트 레시피에 선정되신 분께는 적립금 5,000원을 드립니다.</b><br>
-                즉시사용 가능
-            </div>
-        </div>
+       
         <div class="bestRecipe">
             <b>BEST RECIPE</b>
             <c:forEach var="best" items="${ bestRecipe }" varStatus="status">

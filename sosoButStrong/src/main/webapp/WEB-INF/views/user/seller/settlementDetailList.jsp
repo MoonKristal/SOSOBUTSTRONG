@@ -23,50 +23,7 @@
             <h2>정산 내역 상세 조회</h2>
             <br>
 
-            <div id="search-area"> 
-                <form action="search.st">                    
-                    <table class="table table-borderless" style="background-color: rgb(238, 238, 238);">
-                        <tr>
-                            <th>조회 기간</th>
-                            <td>
-                                <select name="searchPeriod">
-                                    <option value="" selected>전체</option>
-                                    <option value="deliveryCompleteDate">정산 기준일</option>
-                                    <option value="settlementExpectedDate">정산 예정일</option>
-                                </select>
-                                <input type="date" name="startDate"> ~ <input type="date" name="endDate">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>정산 상태</th>
-                            <td>
-                                <select name="settlementStatus">
-                                    <option value="" selected>전체</option> 
-                                    <option>정산완료</option>
-                                    <option>미정산</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>주문 번호</th>
-                            <td>                                
-                                <input type="text" name="orderNo" placeholder="주문번호 입력">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>구매자 ID</th>
-                            <td>                                
-                                <input type="text" name="userId" placeholder="구매자 ID 입력">
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div align="center">
-                        <button type="submit" class="orangeBtn">검색</button>
-                        <button type="reset">초기화</button>
-                    </div>                    
-                </form>
-            </div> <!--div id="search-area" 영역 끝-->
+            
             <br><br>
 
             <h3>정산 내역 및 목록</h3>
@@ -128,7 +85,7 @@
                     				<tr>
                     					<td>${ o.orderNo }</td>
                                         <td>${ o.productName }</td>
-                                        <td>${ o.userId }</td>
+                                        <td>${ o.orderer }</td>
                                         <td>${ o.status }</td>
                                         <td>
                                         	<fmt:parseDate value="${ o.deliveryCompleteDate }" var="parseDeliveryCompleteDate" pattern="yyyy-MM-dd HH:ss" />

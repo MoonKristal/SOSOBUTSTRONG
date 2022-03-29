@@ -185,8 +185,7 @@
             <span><img src="resources/images/refresh.png" alt="새로고침" width="18" height="18" onclick="refreshOverview(2);"></span>
             <br><br>
 
-            <div id="graph_area">
-                <div id="chart_div"></div>
+            <div id="graph_area">              
 
                 <!--2022.3.29(화) 0h15-->
                 <table class="table table-bordered" align="center">

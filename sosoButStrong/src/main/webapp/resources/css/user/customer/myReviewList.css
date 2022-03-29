@@ -29,3 +29,7 @@ color: rgb(255, 200, 61);
 overflow: hidden;
 pointer-events: none;
 }
+.outer{
+  width: 1200px;
+  margin: auto;
+}

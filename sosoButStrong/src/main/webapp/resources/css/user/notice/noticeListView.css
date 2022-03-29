@@ -1,0 +1,215 @@
+.listView{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+}
+
+div{
+    /* border: 1px solid black; */
+}
+
+.title{
+    text-align: center;
+    width: 100%;
+    height: 800px;
+    font-size: 30px;
+    color: rgb(182, 238, 86);
+}
+
+.table-bordered {
+    text-align: center;
+}
+
+.table-bordered tr:hover{
+    text-decoration: none;
+    color: rgb(182, 238, 86);
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+
+
+
+.vanner{
+    width: 100%;
+    height: 180px;
+}
+.point{
+    width: 50%;
+    height: 80px;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+    padding-top: 15px;
+    border: 3px solid rgb(255, 163, 63);
+}
+
+.topRecipe{
+    margin: auto;
+    margin-top: 30px;
+    border: 3px solid rgb(182, 238, 86);
+    width: 40%;
+    height: 200px;
+}
+.topRecipe div{
+    float: left;
+}
+.imgDiv1{
+    width: 40%;
+    height: 100%;
+}
+.salImg{
+    margin-left: 1%;
+    width: 100%;
+    height: 100%;
+}
+.content1_1{
+    width: 57%;
+    height: 100%;
+    margin-left: 3%;
+}
+.imgs{
+    width: 100%;
+    height: 25%;
+}
+.No1{
+    width: 20%;
+    height: 100%;
+}
+.medal{
+    width: 40px;
+    height: 40px;
+}
+.icons{
+    width: 80%;
+    height: 100%;
+    padding-left: 170px;
+    /* border: 1px solid red; */
+}
+.icons img{
+    width: 25px;
+    height: 25px;
+}
+.icons>a{
+    text-decoration: none;
+    font-style: normal;
+}
+.content1_2{
+    width: 100%;
+    height: 75%;
+}
+.title{
+    width: 100%;
+    height: 25%;
+    text-align: left;
+    color: rgb(255, 163, 63);
+    font-weight: bolder;
+    font-size: 20px;
+}
+.content_wrap{
+    width: 100%;
+}
+.content1_2 p{
+    width: 95%;
+    height: 75%;
+    text-align: left;
+    font-size: 12px;
+    color: black;
+}
+
+/*----------------------------*/
+
+.newRecipe{
+    width: 100%;
+    height: 1600px;
+    font-size: 30px;
+    color: rgb(182, 238, 86);
+}
+.newHeader{
+    width: 100%;
+    height: 80px;
+}
+.newHeader>div{
+    float: left;
+}
+.newTitle{
+    width: 50%;
+    height: 100%;
+    padding-left: 230px;
+}
+.insertBtn{
+    width: 50%;
+    height: 100%;
+    padding-left: 260px;
+    padding-top: 25px;
+}
+.insertBtn>.btn-outline-primary{
+    color: rgb(255, 163, 63);
+    font-weight: bolder;
+    border: 2px solid rgb(255, 163, 63);
+}
+.insertBtn>.btn-outline-primary:hover{
+    background-color: rgb(247, 140, 26);
+    border: 2px solid rgb(255, 163, 63);
+}
+
+.outer{
+    width: 100%;
+    height: 85%;
+    padding-left: 60px;
+}
+.outer>div{
+    float: left;
+}
+.content2{
+    width: 220px;
+    height: 380px;
+    margin-left: 100px;
+    margin-top: 5%;
+}
+.content2_1{
+    width: 100%;
+    height: 50%;
+}
+.imgDiv2{
+    width: 100%;
+    height: 100%;
+}
+.content2_1>.icons{
+    width: 100%;
+    height: 28%;
+    padding-left: 170px;
+    /* border: 3px solid red; */
+}
+.content2_2{
+    width: 100%;
+    height: 50%;
+    /* border: 1px solid blue; */
+}
+.content2_2>.title{
+    width: 100%;
+    padding-left: 5%;
+    padding-top: 5px;
+}
+
+.content2_2 p{
+    width: 90%;
+    height: 75%;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+}
+
+.pagingArea{
+    margin: auto;
+}
+.pagingDiv{
+    width: fit-content;
+    margin: auto;
+}
+.pagingArea ul{
+    margin: auto;
+}
+.pagingArea ul li{
+    font-size: 15px;
+}

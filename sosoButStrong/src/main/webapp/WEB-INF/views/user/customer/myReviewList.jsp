@@ -17,18 +17,22 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/buyerMyPageMenuBar.jsp"/>
 	
-    <br><br>
-    <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;리뷰 관리</h2>
-    <br>
-    <h6 style="font-weight: bolder; margin-left: 340px;" >&nbsp;&nbsp;내가 작성한 리뷰(<span id="rcount"></span>)</h6>
+	
+   
 	<div class="outer" align="center" style="height: 1000px;">
+
+        <jsp:include page="/WEB-INF/views/user/common/buyerMyPageMenuBar.jsp"/>
+
+        <br><br>
+        <h2 style="font-weight: bolder;" >&nbsp;&nbsp;리뷰 관리</h2>
+        <br>
+        <h6 style="font-weight: bolder;" >&nbsp;&nbsp;내가 작성한 리뷰(<span id="rcount"></span>)</h6>
 
           <hr class="divider"> <!-- 구분선 / 위는 상품 요약, 옵션선택 주문 영역 아래는 상품 리뷰영역-->
 
           <!-- 상품리뷰 영역 -->
-          <div class="review">
+          <div class="review" style="margin-left: 260px;">
             <table align="center">
                 <thead>
 
@@ -142,13 +146,12 @@
                                 result += "<td style='text-align: center; width: 70px;'><img src='" + list[i].changeName + "' style='width: 130px; height: 100px' class='img' alt=" + list[i].refPno + "></td>"    
                                 result += "<td style='text-align: center; width:90px;'>" + list[i].userId + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + starRate + "</td>"
-                                result += "<td style='text-align: left; width:370px;'>" + list[i].reviewContent + "</td>"
+                                result += "<td style='text-align: left; width:320px;'>" + list[i].reviewContent + "</td>"
                                 result += "<td style='text-align: center; width: 150px;'>" + list[i].createDate + "</td>"
                                 result += "<td style='width:60px'><a onclick='updateReviewForm(" + list[i].reviewNo + ");' data-toggle='modal' data-target='#myModal' class='reBtn' style='text-decoration: none;'>수정 &nbsp; |</a></td>" 
                                 result += "<td style='width:60px'><a onclick='deleteReview(" + list[i].reviewNo + ");' class='reBtn' style='text-decoration: none;'>삭제</a></td>"
                                 result += "</tr>"
-                            }
-                            
+                            }                            
                             $(".review thead").html(result); // 리뷰 영역에 삽입
                             $("#rcount").text(list.length); // 리뷰 개수 노출영역에 삽입
 

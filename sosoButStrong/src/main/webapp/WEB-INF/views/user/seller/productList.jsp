@@ -10,10 +10,10 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
     <div class="outer" style="height: 1000px;">
+        <jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
         <br><br>
-        <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품조회/수정</h2>
+        <h2 style="font-weight: bolder; margin-left: 230px;" >&nbsp;&nbsp;상품조회/수정</h2>
         <br>
         <table align="center" class="list-area">
             <thead>
@@ -54,7 +54,7 @@
         </table>
 
         <!-- 페이징 영역-->
-        <div id="pagingArea" style="margin-left: 770px;">
+        <div id="pagingArea" style="margin-left: 680px;">
             <ul class="pagination">
                 <c:choose>
                 <c:when test="${ pi.currentPage eq 1 }">

@@ -12,18 +12,18 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
-
+    
     <div class="outer" style="height: 1200px;">
-
+        <jsp:include page="/WEB-INF/views/user/seller/sellerMyMenu.jsp"/>
+        
         <br><br>
-        <h2 style="font-weight: bolder; margin-left: 330px;" >&nbsp;&nbsp;상품등록</h2>
+        <h2 style="font-weight: bolder; margin-left: 100px;" >&nbsp;&nbsp;상품등록</h2>
         <form id="enrollForm" action="uploadProduct.se" method="post" enctype="multipart/form-data">
             <table align="center">
                 <input type="hidden" value="${loginUser.userNo}" name="uploader"> <!-- 상품등록 작성자 -->
                 <tr>
-                    <th><div class="cFrame" style="width: 100px;">대표이미지</div></th>
-                    <td><input type="file" style="width: 950px;" class="form-control-file border" name="thumbnail" required></td>
+                    <th style="width: 100px;"><div class="cFrame" style="width: 100px;">대표이미지</div></th>
+                    <td><input type="file" style="width: 100%;" class="form-control-file border" name="thumbnail" required></td>
                 </tr>
                 <tr>
                     <th><div class="cFrame">판매상태</div></th>
@@ -53,13 +53,13 @@
                 </tr>
                 <tr>
                     <th><div class="cFrame">상세페이지</div></th>
-                    <td><textarea name="description" id="editorTxt" rows="25" cols="120" ></textarea></td>
+                    <td><textarea name="description" id="editorTxt" rows="25" cols="100" ></textarea></td>
                 </tr>
             </table>
             
             <br>
 
-            <div style="margin-left: 830px;">
+            <div style="margin-left: 650px;">
                 <button type="reset" class="btn btn-secondary">취소</button>
                 <button type="button" class="btn btn-dark submitBtn">상품등록</button>
                 <button type="submit" style="display:none;" id="realBtn">숨겨진 찐 제출버튼</button>
