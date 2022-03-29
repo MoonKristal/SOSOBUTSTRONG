@@ -22,7 +22,6 @@
 		<result column="SELLER" property="seller"/>
 		<result column="PRODUCT_NAME" property="productName"/>
 		<result column="ORDERER" property="orderer"/>
-		<result column="USER_ID" property="userId"/>
 		<result column="STATUS" property="status"/>
 		<result column="DELIVERY_COMPLETE_DATE" property="deliveryCompleteDate"/>	
 		<result column="SETTLEMENT_EXPECTED_DATE" property="settlementExpectedDate"/>	
@@ -84,7 +83,7 @@
 		SELECT ORDER_NO,
 			   SELLER,
 			   PRODUCT_NAME,
-			   USER_ID,
+			   ORDERER,
 			   STATUS, 
 			   DELIVERY_COMPLETE_DATE, 
 			   SETTLEMENT_EXPECTED_DATE, 
