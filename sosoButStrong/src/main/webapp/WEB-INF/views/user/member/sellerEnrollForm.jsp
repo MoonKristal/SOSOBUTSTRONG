@@ -35,10 +35,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="pswd1">비밀번호*</label></h6>
 						            <span class="box">
-	
 						                <input type="password" id="password1" class="int" name="userPwd" maxlength="20" placeholder="영문자, 숫자, 특수문자(!@#$%^)로 총 8~15자로 입력하시오" required>
-	
-						                <span class="error_next_box" id="error_password1"></span>
 						            </span>
 						            <span class="error_next_box" id="error_password1"></span>
 						        </div>
@@ -46,9 +43,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="pswd2">비밀번호 확인*</label></h6>
 						            <span class="box">
-	
 						                <input type="password" id="password2" class="int" maxlength="20" placeholder="비밀번호 확인" required>
-	
 						            </span>
 						            <span class="error_next_box" id="error_password2"></span>
 						        </div>
@@ -95,7 +90,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="">사업자등록번호*</label></h6>
 						            <span class="box">
-						                <input type="text" id="" class="int" name="sellerBRN" maxlength="" placeholder="- 뺴고 입력" required>
+						                <input type="text" id="" class="int" name="sellerBRN" maxlength="" placeholder="- 포함해서 입력" required>
 						            </span>
 						        </div>
 						
@@ -283,7 +278,7 @@
 	                // document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
 	                
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                $('#sample4_Address').val('[' + data.zonecode + '] '+ roadAddr + ' '); 
+	                $('#sample4_Address').val( roadAddr + ' '); 
 	                
 	        
 	            }

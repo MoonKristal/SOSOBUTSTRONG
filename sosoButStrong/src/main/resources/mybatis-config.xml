@@ -32,7 +32,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 		<typeAlias type="com.sbs.wemasal.question.model.vo.Question" alias="question" />
 		<typeAlias type="com.sbs.wemasal.question.model.vo.Answer" alias="answer" />
-
+		<typeAlias type="com.sbs.wemasal.seller.model.vo.DailySales" alias="dailysales" />
+		
 		<typeAlias type="com.sbs.wemasal.customer.model.vo.Review" alias="review"/>
 		
 		<typeAlias type="com.sbs.wemasal.community.model.vo.Reply" alias="reply" />
@@ -40,6 +41,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.sbs.wemasal.report.model.vo.Report" alias="report" />
 	
 		<typeAlias type="com.sbs.wemasal.like.model.vo.Like" alias="like" />
+		
+		<typeAlias type="com.sbs.wemasal.notice.model.vo.Notice" alias="notice" />
     
 	</typeAliases>
 	
@@ -70,7 +73,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="/mappers/report-mapper.xml" />
 		
 		<mapper resource="/mappers/like-mapper.xml" />
-
+		
+		<mapper resource="/mappers/settlement-mapper.xml" />
+		
+		<mapper resource="/mappers/notice-mapper.xml" />
 
 	</mappers>
 

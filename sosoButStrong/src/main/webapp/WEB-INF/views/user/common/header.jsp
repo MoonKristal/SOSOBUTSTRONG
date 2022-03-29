@@ -53,8 +53,9 @@
 		                <div class="service_area">
 		                    <a href="logout.me">로그아웃</a>
 		                    <a href="myPage.cmm">마이페이지</a>
+
 							<c:if test="${loginUser.userNo eq 1}"> <!-- 장바구니는 일반회원(1) 만 사용 하도록 -->
-		                    	<a href="myCart.cs">장바구니</a>
+		                    <a href="myCart.cs">장바구니</a>
 							</c:if>
 	                	</div>
 	                </c:otherwise>
@@ -68,7 +69,7 @@
                     <li class="navi_item"><a href="#" class="link navi">ABOUT</a></li>
                     <li class="navi_item"><a href="saladListView.cmm" class="link navi">SALA:D</a></li>
                     <li class="navi_item"><a href="communityList.co" class="link navi">COMMUNITY</a></li>
-                    <li class="navi_item"><a href="#" class="link navi">SERVICE</a></li>
+                    <li class="navi_item"><a href="list.no" class="link navi">SERVICE</a></li>
                 </ul>
             </div>
         </div>

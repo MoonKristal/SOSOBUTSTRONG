@@ -8,7 +8,6 @@
     background-color: gray;
     color: white;
 }
-
 /* 메뉴바 상단 프로필 영역 */
 .menu_bar .profile{
     width: 100%;
@@ -28,7 +27,6 @@
     height: 50px;
     padding: 5px; 
 }
-
 /* 메뉴바 하단 메뉴 영역 */
 .menu_bar .menu{
     width: 100%;

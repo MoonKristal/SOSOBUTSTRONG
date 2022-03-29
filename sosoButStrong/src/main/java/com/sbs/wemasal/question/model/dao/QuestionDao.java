@@ -113,5 +113,10 @@ public class QuestionDao {
 	public int updateAnswer(SqlSessionTemplate sqlSession, int qno) {
 		return sqlSession.update("questionMapper.updateAnswer", qno);
 	}
+	
+	// 2022.3.25(금) 14h50
+	public int updateScore(SqlSessionTemplate sqlSession, Answer a) {
+		return sqlSession.update("questionMapper.updateScore", a);
+	}
 
 }
