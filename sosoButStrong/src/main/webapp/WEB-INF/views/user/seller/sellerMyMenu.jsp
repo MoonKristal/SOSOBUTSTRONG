@@ -17,7 +17,6 @@
 			<div class="profile_name">${loginUser.userId}님의 My Menu</div>
 		</div>
 
-
 		<div class="menu">
 			<div class="menu_group">
 				<div class="menu_item"><a href="sellerProductList.se">상품조회/수정</a></div>
@@ -29,5 +28,6 @@
 			</div>
 		</div>
   </div>
+
 </body>
 </html>

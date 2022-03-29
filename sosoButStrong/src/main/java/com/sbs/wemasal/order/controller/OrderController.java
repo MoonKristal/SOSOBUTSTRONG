@@ -44,7 +44,7 @@ public class OrderController {
 	}
 	
 	// 주소검색창 페이지
-	@RequestMapping("address")
+	@RequestMapping("address.od")
 	public String addressForm() {
 		return "user/order/addressForm";
 	}

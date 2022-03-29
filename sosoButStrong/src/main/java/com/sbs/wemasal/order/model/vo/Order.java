@@ -21,7 +21,7 @@ public class Order {
 	private String orderDate; //ORDER_DATE	DATE
 	private String status; //STATUS	VARCHAR2(20 BYTE)	
 	private int quantity; //QUANTITY	NUMBER
-	private String orderer; //ORDERER	NUMBER
+	private String orderer;  // view로부터 정산 목록의 '구매자 id'를 담아올 필드
 	private int seller; //판매자 번호
 	private String sellerName; // 판매자 상호명
 	private String sellerImage; // 판매자 프로필 이미지
@@ -30,13 +30,14 @@ public class Order {
 	private String productName; //주문한 상품명
 	private int productNo; //주문항 상품 번호
 	
+
 	// 2022.3.28(월) 10h35'정산 관리' 기능 구현 시, 은영 추가
 	private String orderCancelDate;
 	private String deliveryCompleteDate;
 	private String settlementExpectedDate; // SETTLEMENT_EXPECTED_DATE
 	private String settlementStatus;
 	
-	private String userId; // view로부터 정산 목록의 '구매자 id'를 담아올 필드
 	private int fee; // view로부터 정산 목록의 '매출 연동 수수료'를 담아올 필드
 	private int settlementAmount;
+
 }

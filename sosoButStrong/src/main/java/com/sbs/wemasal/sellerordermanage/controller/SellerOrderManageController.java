@@ -104,6 +104,8 @@ public class SellerOrderManageController {
 	@ResponseBody
 	@RequestMapping(value="updateStatus.od", produces="text/html; charset=utf-8")
 	public String  updateStatus(Order order) {	
+		
+		System.out.println(order);
 							
 		int result = orderService.updateStatus(order);		
 		

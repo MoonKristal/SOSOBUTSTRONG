@@ -15,7 +15,7 @@
                 <div class="profile_photo">
                     <img src="resources/images/defaultUserProfilePhoto.png" alt="로그인 회원 프로필 사진" width="90px" height="90px">
                 </div>
-                <div class="profile_name">구매자1의 My Menu</div>
+                <div class="profile_name">${loginUser.userName}의 My Menu</div>
             </div>
 
             <div class="menu">

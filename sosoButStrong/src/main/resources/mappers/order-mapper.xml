@@ -307,7 +307,8 @@
 		<if test="deliveryNo != null and deliveryNo != ''">
 			, DELIVERY_NO = #{deliveryNo}
 		</if>
-		<if test="status == '배송완료' and status != ''">
+
+		<if test="status == '배송완료' and status != '' and status != null ">
 			, DELIVERY_COMPLETE_DATE = SYSDATE
 			, SETTLEMENT_EXPECTED_DATE = DECODE(TO_CHAR(SYSDATE, 'DY'), '일', SYSDATE + 1,
 		                                                            '월', SYSDATE + 1,
@@ -319,7 +320,7 @@
 		</if>
 		WHERE SELLER = #{seller}
 			AND ORDER_NO = #{orderNo}			
-	</update>	
+	</update>
 	
 	<select id="selectOrderManageDtail" parameterType="order" resultMap="orderResultSet">
 		SELECT A.*, SELLER_IMAGEPATH
