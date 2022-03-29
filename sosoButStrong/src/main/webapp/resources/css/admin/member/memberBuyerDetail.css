@@ -1,6 +1,6 @@
 		.wrap{
 		    width: 1200px;
-		    height: 1600px;
+		    height: 1000px;
 		}
 		#menubar{
 		    float: left;
@@ -10,7 +10,7 @@
 		}
 		.content{
 		    width: 70%;
-		    height: 1600px;
+		    height: 1000px;
 		    margin-left: 350px;
 		    padding-top: 50px;
 		}
@@ -63,18 +63,18 @@
         /* 버튼 */
         .btn_area {
             margin: 50px 0 91px;
-            margin-left:20%
+            margin-left:5%;
         }
         
-        #btn {
-       		width: 100px;
+        #btnDelete {
+       		width: 70px;
             padding: 10px 8px;
             border: 0;
             color: #fff;
             border-radius: 7px;
             background-color: rgb(127, 140, 141);
             font-size: 18px;
-            font-weight: 900;
+            font-weight: 500;
         }
         
       

@@ -28,9 +28,11 @@ import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
 import com.sbs.wemasal.common.template.SaveFile;
 import com.sbs.wemasal.member.model.service.MemberService;
+import com.sbs.wemasal.member.model.service.MemberServicePl;
 import com.sbs.wemasal.member.model.vo.Cert;
 import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.member.model.vo.Seller;
+import com.sbs.wemasal.member.model.vo.admin;
 import com.sbs.wemasal.seller.model.service.SellerService;
 
 @Controller
@@ -160,8 +162,8 @@ public class MemberController {
 	// 상호 중복체크
 	@ResponseBody
 	@RequestMapping("sellerNameCheck.se")
-	public String sellerIdCheck(String checkName) {
-		return memberService.sellerNameCheck(checkName) > 0 ? "NN" : "NY";
+	public String sellerIdCheck(String sellerName) {
+		return memberService.sellerNameCheck(sellerName) > 0 ? "NN" : "NY";
 	}
 		
 	// -----------------------------------------------------------------
@@ -251,7 +253,7 @@ public class MemberController {
 		
 		int listCount = memberService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 15);
 		
 		ArrayList<Seller> list = memberService.selectList(pi);
 		
@@ -261,7 +263,7 @@ public class MemberController {
 	}
 	
 	// 관리자 판매자 승인여부 상세페이지
-	@RequestMapping("detail.bo")
+	@RequestMapping("detail.se")
 	public ModelAndView selectSeller(ModelAndView mv, int no) { // 키값과 똑같은 이름의 매개변수, int형으로 쓰면 알아서 파싱이 됩니다.
 		
 		Seller s = memberService.selectSeller(no);
@@ -278,7 +280,7 @@ public class MemberController {
 		return result;
 	}
 	
-	
+	//관리자 판매자 승인하기
 	@RequestMapping("approveSeller.ad") 
 	public ModelAndView approveSeller(String userNo, ModelAndView mv, HttpSession session) {
 			
@@ -294,56 +296,209 @@ public class MemberController {
 		return mv;
 	}
 	
+	//관리자 판매자 승인거절
+	@RequestMapping("refuseSeller.ad") 
+	public ModelAndView refuseSeller(String userNo, ModelAndView mv, HttpSession session) {
+			
+		int result = memberService.refuseSeller(userNo);
+			
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "승인 철회 되었습니다.");
+			mv.setViewName("redirect:/list.se");
+		}else {
+			session.setAttribute("alertMsg", "실패하였습니다.");
+			mv.setViewName("redirect:/list.se");
+		}
+		return mv;
+	}
+	
 	// 관리자 판매자관리 리스트
 	@RequestMapping("memberSellerList.ad")
 	public ModelAndView memberSellerList(@RequestParam(value = "cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
 		int listCount = memberService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 15);
 		
-		ArrayList<Seller> list = memberService.memberSellerList(pi);
+		ArrayList<admin> List = memberService.memberSellerList(pi);
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("admin/member/memberSellerList");
+		
+		mv.addObject("pi", pi).addObject("List", List).setViewName("admin/member/memberSellerList");
 		
 		return mv;
 	}
 	
+		// 관리자 판매자 상세페이지
+		@RequestMapping("sellerDetail.ad")
+		public ModelAndView adminSelectSeller(ModelAndView mv, int no) {
+				
+			admin admin = memberService.adminSelectSeller(no);
+			mv.addObject("admin", admin).setViewName("/admin/member/memberSellerDetail");
+				
+			return mv;
+		}
 	
+		//관리자 판매자 탈퇴시키기 수정해야함
+		@RequestMapping("memberDelete.ad") 
+		public ModelAndView memberDelete(String userId, ModelAndView mv, HttpSession session) {
+				
+			int result = memberService.memberDelete(userId);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "퇄퇴시켰습니다.");
+				mv.setViewName("redirect:/memberSellerList.ad");
+			}else {
+				session.setAttribute("alertMsg", "실패하였습니다.");
+				mv.setViewName("redirect:/memberSellerList.ad");
+			}
+			return mv;
+		}
+		
+		// 관리자 일반회원 리스트
+		@RequestMapping("memberBuyerList.ad")
+		public ModelAndView memberBuyerList(@RequestParam(value = "cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+			
+			int listCount = memberService.selectListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 15);
+			
+			ArrayList<Member> list = memberService.memberBuyerList(pi);
+			
+			mv.addObject("pi", pi).addObject("list", list).setViewName("admin/member/memberBuyerList");
+			
+			return mv;
+		}	
 	
-
+		
+		// 관리자 일반회원 상세페이지
+		@RequestMapping("buyerDetail.ad")
+		public ModelAndView adminSelectBuyer(ModelAndView mv, int no) { 
+			
+			Member m = memberService.adminSelectBuyer(no);
+			mv.addObject("m", m).setViewName("/admin/member/memberBuyerDetail");
+			
+			return mv;
+		}
+		
+		
+		@RequestMapping("buyerDelete.ad")
+		public ModelAndView adminDeleteBuyer(String userId, ModelAndView mv, HttpSession session) {
+			
+			int result = memberService.adminDeleteBuyer(userId);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "퇄퇴시켰습니다.");
+				mv.setViewName("redirect:/memberBuyerList.ad");
+			}else {
+				session.setAttribute("alertMsg", "실패하였습니다.");
+				mv.setViewName("redirect:/memberBuyerList.ad");
+			}
+			return mv;
+		}
+		
+		
+		
+		
+		
+//이메일 인증 수정1-----------------------------------------------------------------------------------------------------
 //	 인증번호전송(메일 내용 수정 / return값 수정 필요)
-	@ResponseBody
-	@RequestMapping(value = "email.chk", produces = "application/json; charset=utf-8")
-	public String emailInput(String email, HttpServletRequest request) throws MessagingException {
-		String ip = request.getRemoteAddr();
-		String secret = memberService.sendMail(ip);
-
-		MimeMessage message = sender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-		helper.setTo(email);
-		helper.setSubject("인증하섿요");
-		helper.setText("인증번호 : " + secret);
-
-		sender.send(message);
+	//@ResponseBody
+	//@RequestMapping(value = "email.chk", produces = "application/json; charset=utf-8")
+	//public String emailInput(String email, HttpServletRequest request) throws MessagingException {
+	//	String ip = request.getRemoteAddr();
+	//	String secret = memberService.sendMail(ip);
+//
+	//	MimeMessage message = sender.createMimeMessage();
+	//	MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+	//	helper.setTo(email);
+	//	helper.setSubject("인증하섿요");
+	//	helper.setText("인증번호 : " + secret);
+//
+	//	sender.send(message);
 //		System.out.println("인증번호전송성공");
-		return secret;
-	}
+	//	return secret;
+	//}
 
 //	인증번호 일치여부 확인(return값 수정 필요)
-	@ResponseBody
-	@RequestMapping(value = "emailVali.chk", produces = "application/json; charset=utf-8")
-	public int valiCheck(String emailVali, HttpServletRequest request) {
+	//@ResponseBody
+	//@RequestMapping(value = "emailVali.chk", produces = "application/json; charset=utf-8")
+	//public int valiCheck(String emailVali, HttpServletRequest request) {
 //		System.out.println("인증번호일치확인하러옴?");
 //		
 //		System.out.println(request.getRemoteAddr());
 //		System.out.println(emailVali);
 
-		int result = memberService
-				.valiCheck(Cert.builder().ipInfo(request.getRemoteAddr()).veriCode(emailVali).build());
+		//int result = memberService
+				//.valiCheck(Cert.builder().ipInfo(request.getRemoteAddr()).veriCode(emailVali).build());
 //		System.out.println(result);
-		return result;
-	}
+		//return result;
+	//}
+	
+//이메일 인증 수정2-----------------------------------------------------------------------------------------------------	
+//	@RequestMapping("sendmail.me")
+//	public String sendMail(String email,String userId,HttpServletRequest request,HttpSession session) throws MessagingException {
+//
+//		String ip = request.getRemoteAddr(); //ip알려주는 메소드 
+//		
+//		String secret = memberService.sendMail(ip); //인증번호db에 insert해와줌
+//		
+//		MimeMessage message = sender.createMimeMessage();
+//		MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8"); // 도구 (인자, 파일첨부여부,인코딩) => 예외처리 throws MessagingException 해주기
+//		// helper에 정보설정 해주기
+//		helper.setTo(email); // 받는사람
+//		helper.setSubject("메일인증");  // 제목 
+//		helper.setText("인증번호:"+ secret); // 본문  
+//		
+//		sender.send(message); // 메일보내기 버튼 (전송)
+//		
+//		
+//		memberService.updatePwd(secret,userId);
+//		
+//		return "redirect:/";
+//	}
+	
+//이메일 인증 수정3------------------------------------------------------------------------------------------------------------
+		//비밀번호찾기
+		@RequestMapping("findPwd.me")
+		public ModelAndView searchPwd(Member m, ModelAndView mv, HttpServletRequest request) throws MessagingException {
+					
+			int count = memberService.searchPwd(m);
+				
+			if(count>0) { //비밀번호 찾기 실행 (일치하는 정보가 있을 경우)
+					
+				String secret = new MemberServicePl().generateSecret(); //임시비밀번호 생성
+						
+				MimeMessage message = sender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
+				helper.setTo(m.getEmail()); // 받는사람
+				helper.setSubject("위메샐 임시비밀번호입니다."); // 제목
+				helper.setText("안녕하세요 위매셀입니다 임시비밀번호는 " + secret + " 입니다."); // 본문
+						
+				sender.send(message); //임시비밀번호 메일발송 (전송)
+						
+				String encPwd = bcryptPasswordEncoder.encode(secret);//임시비밀번호 암호화
+						
+				HashMap<String,Object> map= new HashMap<String,Object>();
+				map.put("m", m);
+				map.put("encPwd", encPwd);
+						
+				int result = memberService.updatePwd(map);
+						
+				if(result>0){
+						
+				request.setAttribute("alertMsg", "임시비밀번호가 발송되었습니다");
+				mv.setViewName("user/member/login");
+						
+				}else {
+					System.out.println("임시비밀번호 발급 실패");
+				}
+					
+			}else { //비밀번호찾기 정보가 일치하지않으면
+					
+				request.setAttribute("alertMsg", "실패하였습니다");
+				mv.setViewName("user/member/findIDPW");
+			}
+				
+				return mv;
+			}
 	
 	
 	

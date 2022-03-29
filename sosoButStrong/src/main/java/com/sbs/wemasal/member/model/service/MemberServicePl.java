@@ -4,6 +4,7 @@ package com.sbs.wemasal.member.model.service;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +17,7 @@ import com.sbs.wemasal.member.model.dao.MemberDao;
 import com.sbs.wemasal.member.model.vo.Cert;
 import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.member.model.vo.Seller;
+import com.sbs.wemasal.member.model.vo.admin;
 
 @Service
 public class MemberServicePl implements MemberService {
@@ -52,8 +54,8 @@ public class MemberServicePl implements MemberService {
 
 	// 판매자 상호 중복체크
 	@Override
-	public int sellerNameCheck(String checkName) {
-		return memberDao.sellerNameCheck(sqlSession, checkName);
+	public int sellerNameCheck(String sellerName) {
+		return memberDao.sellerNameCheck(sqlSession, sellerName);
 	}
 
 	// 일반회원 정보수정
@@ -105,52 +107,120 @@ public class MemberServicePl implements MemberService {
 		return memberDao.approveSeller(sqlSession, userNo);
 	}
 	
+	// 관리자페이지 판매자 거절버튼
+	@Override
+	public int refuseSeller(String userNo) {
+		return memberDao.refuseSeller(sqlSession, userNo);
+	}
+	
 	// 관리자 판매자관리 리스트
 	@Override
-	public ArrayList<Seller> memberSellerList(PageInfo pi) {
+	public ArrayList<admin> memberSellerList(PageInfo pi) {
 		return memberDao.memberSellerList(sqlSession, pi);	
 	}
+
+	// 관리자 판매자 상세조회
+	@Override
+	public admin adminSelectSeller(int no) {
+		return memberDao.adminSelectSeller(sqlSession, no);
+	}
+
+	// 관리자 판매자 탈퇴시키기
+	@Override
+	public int memberDelete(String userId) {
+		return memberDao.memberDelete(sqlSession, userId);
+	}
 	
+	// 관리자 일반회원관리 리스트
+	@Override
+	public ArrayList<Member> memberBuyerList(PageInfo pi) {
+		return memberDao.memberBuyerList(sqlSession, pi);	
+	}
 	
+	// 관리자 일반회원 상세조회
+	@Override
+	public Member adminSelectBuyer(int userNo) {
+		return memberDao.adminSelectBuyer(sqlSession, userNo);
+	}
 	
+	// 관리자 일반회원 탈퇴시키기
+	@Override
+	public int adminDeleteBuyer(String userId) {
+		return memberDao.adminDeleteBuyer(sqlSession, userId);
+	}
 	
-	
-	
+	//이메일 인증 수정1-----------------------------------------------------------------------------------------------------
 	//랜덤값 생성
-	public String generateVeriCode() {
+//	public String generateVeriCode() {
+//		Random r = new Random();
+//		int n = r.nextInt(100000);
+//		Format f = new DecimalFormat("000000");
+//		String VeriCode = f.format(n);
+//
+//		return VeriCode;
+//
+//	}
+//	@Override
+//	public String sendMail(String ip) {
+//		String veriCode = this.generateVeriCode();
+//		Cert certVo = Cert.builder().ipInfo(ip).veriCode(veriCode).build();
+//		memberDao.insertVeriCode(sqlSession, certVo);
+//		return veriCode;
+//	}
+//
+//	@Override
+//	public int valiCheck(Cert cert) {
+//
+//		return memberDao.valiCheck(sqlSession, cert);
+//	}
+//
+//	@Override
+//	public int emailDuplicationCheck(String emailDupl) {
+//
+//		return memberDao.emailDuplicationCheck(sqlSession, emailDupl);
+//	}
+//
+//	@Override
+//	public int idDuplicationCheck(String id) {
+//
+//		return memberDao.idDuplicationCheck(sqlSession, id);
+//	}
+	// 이메일 인증 수정2-----------------------------------------------------------------------------------------------------	
+//	@Override
+//	public void updatePwd(String secret,String userId) {
+//		 memberDao.updatePwd(sqlSession,secret,userId);
+//	}
+
+	// 이메일 인증 수정 3--------------------------------------------------------------------------------------------------------
+	//인증번호 만들기 
+	public String generateSecret() {
 		Random r = new Random();
 		int n = r.nextInt(100000);
-		Format f = new DecimalFormat("000000");
-		String VeriCode = f.format(n);
-
-		return VeriCode;
-
+		Format f = new DecimalFormat("000000"); //자리수가 비워져있어도 자동으로 채워지는 메소드 
+		String secret = f.format(n); //랜덤수를 데시마 포맷에 넣어주기
+		
+		return secret;
 	}
+
+	// 비밀번호 찾기 (일치하는 정보가 있을경우)
 	@Override
-	public String sendMail(String ip) {
-		String veriCode = this.generateVeriCode();
-		Cert certVo = Cert.builder().ipInfo(ip).veriCode(veriCode).build();
-		memberDao.insertVeriCode(sqlSession, certVo);
-		return veriCode;
+	public int searchPwd(Member m) {
+		return memberDao.searchPwd(sqlSession, m);
 	}
 
+	// 임시비밀번호로 수정하기
 	@Override
-	public int valiCheck(Cert cert) {
-
-		return memberDao.valiCheck(sqlSession, cert);
+	public int updatePwd(HashMap<String, Object> map) {
+		return memberDao.updatePwd(sqlSession, map);
 	}
 
-	@Override
-	public int emailDuplicationCheck(String emailDupl) {
 
-		return memberDao.emailDuplicationCheck(sqlSession, emailDupl);
-	}
+	
 
-	@Override
-	public int idDuplicationCheck(String id) {
 
-		return memberDao.idDuplicationCheck(sqlSession, id);
-	}
+
+
+
 
 
 

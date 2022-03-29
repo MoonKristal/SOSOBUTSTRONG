@@ -32,7 +32,7 @@
         </div>
         <div class="ad_menubar">
             <ul class="menubar">
-                <li><a href="#">회원관리</a></li>
+                <li><a href="memberBuyerList.ad">회원관리</a></li>
                 <li>
                     <a href="#">판매자 관리</a>
                     <ul>

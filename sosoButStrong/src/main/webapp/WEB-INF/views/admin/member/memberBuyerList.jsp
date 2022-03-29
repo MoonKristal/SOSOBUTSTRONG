@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 판매자리스트</title>
-<link rel="stylesheet" href="resources/css/admin/member/memberSellerList.css">
+<title>관리자 일반회원리스트</title>
+<link rel="stylesheet" href="resources/css/admin/member/memberBuyerList.css">
 
 </head>
 <body>
@@ -17,7 +17,7 @@
         </div>
         <div class="content">
             <!--  === Main ===  -->
-			<div id="main-title"><h3 style="font-weight: bold;" >판매자 관리</h3></div>
+			<div id="main-title"><h3 style="font-weight: bold;" >일반회원 관리</h3></div>
 			
 			<div class="innerOuter" style="padding:5% ">
             <table id="boardList" align="center">
@@ -25,21 +25,21 @@
                     <tr height=35px>
                         <th width=100px >USER.NO</th>
                         <th width=150px>아이디</th>
-                        <th width=150px>판매자이름</th>
-                        <th width=220px>상호</th>
-                        <th width=220px>사업자등록번호</th>
-                        <th width=180px>업체연락처</th>
+                        <th width=150px>이름</th>
+                        <th width=200px>연락처</th>
+                        <th width=200px>이메일</th>
+                        <th width=150px>적립금</th>
                     </tr>
                 </thead>
                 <tbody>
-					<c:forEach items="${List}" var="list">
+					<c:forEach items="${list}" var="m">
 	                    <tr>
-	                        <td class="no">${list.seller.userNo}</td>
-	                        <td>${list.member.userId}</td>
-	                        <td>${list.member.userName}</td>
-	                        <td>${list.seller.sellerName}</td>
-	                        <td>${list.seller.sellerBRN}</td>
-	                        <td>${list.seller.sellerPhone}</td>
+	                        <td class="no">${m.userNo}</td>
+	                        <td>${m.userId}</td>
+	                        <td>${m.userName}</td>
+	                        <td>${m.phone}</td>
+	                        <td>${m.email}</td>
+	                        <td>${m.point}</td>
 	                    </tr>
                    </c:forEach>
                 </tbody>   
@@ -54,12 +54,12 @@
 	                    	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li><!-- 1번페이지일경우 -->
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="memberSellerList.ad?cpage=${ pi.currentPage - 1 }">Previous</a></li>
+	                    	<li class="page-item"><a class="page-link" href="memberBuyerList.ad?cpage=${ pi.currentPage - 1 }">Previous</a></li>
 	                    </c:otherwise>
 					</c:choose>
 
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="memberSellerList.ad?cpage=${ p }">${ p }</a></li>
+                    	<li class="page-item"><a class="page-link" href="memberBuyerList.ad?cpage=${ p }">${ p }</a></li>
 					</c:forEach>
 
 					<c:choose>
@@ -67,7 +67,7 @@
 		                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li><!-- 마지막페이지일경우 -->
 						</c:when>
 						<c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="memberSellerList.ad?cpage=${ pi.currentPage + 1 }">Next</a></li><!-- 마지막페이지일경우 -->
+		                    <li class="page-item"><a class="page-link" href="mmemberBuyerList.ad?cpage=${ pi.currentPage + 1 }">Next</a></li><!-- 마지막페이지일경우 -->
 						</c:otherwise>
 					</c:choose>
                 </ul>
@@ -75,12 +75,11 @@
         </div>
 	</div>
 	</div>
-	
 	<!-- 상세정보조회 -->
 	<script>
             	$(function(){
 					    $("#boardList>tbody>tr").click(function(){
-					    	location.href = 'sellerDetail.ad?no=' + $(this).children(".no").text();
+					    	location.href = 'buyerDetail.ad?no=' + $(this).children(".no").text();
 					    })        		
             	})
     </script>

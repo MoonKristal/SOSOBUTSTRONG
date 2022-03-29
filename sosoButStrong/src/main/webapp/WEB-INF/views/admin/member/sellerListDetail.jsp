@@ -70,7 +70,7 @@
 		</div><!-- content 영역 끝 -->   
 	</div><!-- wrap 영역 끝 -->
 	
-	<!-- 지도 api -->
+<!-- 지도 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=548936865aa00185ca643159f049f27c&libraries=services"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -116,7 +116,23 @@
 			$.ajax ({
 				url : "sellerUserName.ajax",
 				data : {
-					"userNo" : ${s.userNo};
+					"userNo" : ${s.userNo}
+				},
+				success : function(e){
+					$("#userName").text("판매자  "+ e + "  님");
+				},
+				error : function(){
+					console.log("실패");
+				}
+			})
+		})
+	<!-- 판매자 이름 가져오기 -->
+	<script>
+		$(function(){
+			$.ajax ({
+				url : "sellerUserName.ajax",
+				data : {
+					"userNo" : ${s.userNo}
 				},
 				success : function(e){
 					$("#userName").text("판매자  "+ e + "  님");
@@ -157,7 +173,7 @@
 	        </div>
 	    </div>	
 	    <!-- 모달 창 -->
-		<div class="modal fade" id="#refuseForm">
+		<div class="modal fade" id="refuseForm">
 	        <div class="modal-dialog modal-sm">
 	            <div class="modal-content">
 	
@@ -171,7 +187,7 @@
 	                    <!-- Modal body -->
 	                    <div class="modal-body">
 	                        <div align="center">
-				                             판매자 승인을 취소하시겠습니까? <br>
+				                             판매자 승인을 철회하시겠습니까? <br>
 	                        </div>
 	                        <br>
 	                        <input type="hidden" name="userNo" value="${ s.userNo }">

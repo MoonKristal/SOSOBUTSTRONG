@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cert {
-   private String ipInfo;
-   private String veriCode; 
-   private Date certTime;
+   private String who; // 누구
+   private String secret; // 인증번호
+   private String when; //언제
 }
+

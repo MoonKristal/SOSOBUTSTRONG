@@ -1,0 +1,39 @@
+	.wrap{
+	    width: 1200px;
+	    height: 800px;
+	}
+	#menubar{
+	    float: left;
+	}
+	div{
+	   /*border: 1px solid black;*/
+	}
+	table{
+	   border: 1px solid black;
+	}
+	th{
+	  background-color: rgb(127, 140, 141);
+	}
+	tr{
+	   border: 1px solid rgb(127, 140, 141);
+	   text-align: center;
+	}
+	
+	th {
+ 		 text-align: center;
+	}
+	.content{
+	    width: 70%;
+	    height: 800px;
+	    margin-left: 350px;
+	    padding-top: 50px;
+	}
+	#main-title {
+		width: 100%;
+		text-align: left;
+	}
+
+	#pagingArea {
+		width:fit-content;
+		margin:auto;
+	}

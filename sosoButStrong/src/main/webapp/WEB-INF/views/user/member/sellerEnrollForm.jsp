@@ -35,10 +35,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="pswd1">비밀번호*</label></h6>
 						            <span class="box">
-	
 						                <input type="password" id="password1" class="int" name="userPwd" maxlength="20" placeholder="영문자, 숫자, 특수문자(!@#$%^)로 총 8~15자로 입력하시오" required>
-	
-						                <span class="error_next_box" id="error_password1"></span>
 						            </span>
 						            <span class="error_next_box" id="error_password1"></span>
 						        </div>
@@ -46,9 +43,7 @@
 						        <div>
 						            <h6 class="join_title"><label for="pswd2">비밀번호 확인*</label></h6>
 						            <span class="box">
-	
 						                <input type="password" id="password2" class="int" maxlength="20" placeholder="비밀번호 확인" required>
-	
 						            </span>
 						            <span class="error_next_box" id="error_password2"></span>
 						        </div>
