@@ -68,7 +68,7 @@
 
                         <div class="card-body">
                             <p class="card-text" style="text-align: center;">
-                              <span style="font-style: italic; color: gray;">${ c.sellerName }</span> <br>
+                              <span style="font-style: italic; color: gray;">[${ c.sellerName }]</span> <br>
                               <span style="font-weight: bold;">${ c.productName }</span> <br>
                               <span style="font-weight: bolder; color: green;">${ c.price } 원</span>
                             </p>

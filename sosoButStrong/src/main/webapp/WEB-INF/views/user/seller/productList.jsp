@@ -33,8 +33,8 @@
                     <c:when test="${ !empty list }">
                         <c:forEach var="p" items="${ list }">
                                 <tr>
-                                    <td><a href="updateProductForm.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-warning" onclick="return confirm('상품을 수정 하시겠습니까?')">수정</a></td>
-                                    <td><a href="deleteProduct.se?pno=${ p.productNo }&filePath=${ p.changeName }" class="btn btn-danger" onclick="return confirm('상품을 삭제 하시겠습니까?')">삭제</a></td>
+                                    <td><a href="updateProductForm.se?pno=${ p.productNo }&filePath=${ p.changeName }" onclick="return confirm('상품을 수정 하시겠습니까?')" class="btn btn-outline-warning btn-sm" style="font-weight: bolder;">수정</a></td>
+                                    <td><a href="deleteProduct.se?pno=${ p.productNo }&filePath=${ p.changeName }" onclick="return confirm('상품을 삭제 하시겠습니까?')" class="btn btn-outline-danger btn-sm" style="font-weight: bolder;">삭제</a></td>
                                     <td>${ p.productNo }</td>
                                     <td>${ p.productName }</td>
                                     <td>${ p.sellStatus }</td>
