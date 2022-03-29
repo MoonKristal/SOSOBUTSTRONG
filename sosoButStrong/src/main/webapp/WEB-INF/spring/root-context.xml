@@ -71,7 +71,7 @@
 	 	
 	 </bean>	  
 	 
-	 <!-- 메일 전송 관련 -->
+		<!-- 비밀번호 찾기 메일 인증번호 발송 (수정 전) -->
 		<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 			<property name="host" value="smtp.gmail.com" />
 			<property name="port" value="587" />
@@ -82,12 +82,10 @@
 				<props>
 					<prop key="mail.smtp.auth">true</prop>
 					<prop key="mail.smtp.starttls.enable">true</prop>
-					<prop key="mail.transport.protocol">smtp</prop>
-					<prop key="mail.debug">true</prop>
+					
 				</props>
 			</property>
 		</bean>
-	
 
 	  
 
