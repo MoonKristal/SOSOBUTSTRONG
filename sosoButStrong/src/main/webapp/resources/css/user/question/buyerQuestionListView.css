@@ -25,8 +25,17 @@ div{
     clear: both;
 }
 
+.greenBtn{
+    background-color: rgb(182, 238, 86);
+}
+
 .orangeBtn{
     background-color: rgb(255, 163, 63);
+    color: white;
+}
+
+.grayBtn{
+    background-color: gray;
     color: white;
 }
 
