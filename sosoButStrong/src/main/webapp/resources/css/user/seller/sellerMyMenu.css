@@ -8,10 +8,10 @@
     background-color: rgb(127, 140, 141);
 }
 
-#sellerMyMenu-area>ul {
+#sellerMyMenu-area ul {
     list-style: none;
     font-size: 20pt;
-    line-height: 1.9cm;
+    line-height: 1.4cm;
 }
 
 #sellerMyMenu-area>ul>li>a {
@@ -20,7 +20,7 @@
     color: rgb(255, 255, 255);
 }
 
-#sellerMyMenu-area>ul>li>a:hover {
+#sellerMyMenu-area ul li a:hover {
     color: rgb(182, 238, 86);
 }
 
@@ -29,4 +29,12 @@
     font-size: 20pt;
     font-weight: bolder;
     pointer-events: none;
+}
+/* 2022.3.29(화) 0h45 은영 추가 */
+#sellerMyMenu-area>ul>li>ul>li>a {
+    text-decoration: none;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    line-height: 0.4cm;
+    font-size: medium;
 }

@@ -18,7 +18,12 @@
 			<li><a href="sellerProductList.se">상품조회/수정</a></li>
 			<li><a href="productEnrollForm.se">상품등록</a></li>
 			<li><a id="orderManage" href="orderManage.se">주문/배송관리</a></li>
-			<li><a href="#">정산관리</a></li>
+			<li>
+				<a href="overview.st">정산관리</a>
+				<ul>
+					<li><a href="detail.st">정산 내역 상세 조회</a></li>
+				</ul>
+			</li>
 			<li><a href="sellerList.qu">1:1 문의관리</a></li>
 			<li><a href="#">회원정보수정</a></li>
 			<li><a href="#">회원탈퇴</a></li>

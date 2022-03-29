@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 메뉴</title>
 <!-- ajax, 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
@@ -51,7 +51,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">공지사항 관리</a>
+                    <a href="managerList.no">공지사항 관리</a>
                 </li>
                	<li>
                		<a href="#">로그아웃</a>

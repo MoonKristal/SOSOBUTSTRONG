@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>판매자 1:1문의 관리</title>
-</head>
 <link rel="stylesheet" href="resources/css/user/question/sellerQuestionListView.css">
+</head>
 <body>
 
     <jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
