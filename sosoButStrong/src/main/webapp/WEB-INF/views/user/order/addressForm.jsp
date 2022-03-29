@@ -72,28 +72,23 @@
 						window.opener.document.getElementById('dvPhone').innerText = $('#phone').val();						
 						
 						// 창 닫기
-						self.close();
-						return true;
-						
+						self.close();						
 					}
 					else{
 						alert("휴대폰이 입력되지 않았습니다.");
-						$('#phone').focus();
-						return false;
+						$('#phone').focus();						
 					}
 				
 				}
 				else{
 					alert("주소가 입력되지 않았습니다.");
-					$('#sample3_Address').focus();
-					return false;
+					$('#sample3_Address').focus();					
 				}
 
 			}
 			else{
 				alert("이름이 입력되지 않았습니다.");
-				$('#name').focus();
-				return false;
+				$('#name').focus();				
 			}		
 		}
 	</script>

@@ -12,7 +12,7 @@
 
 	<div id="sellerMyMenu-area" style="height: 1000px;">
 
-		<h2>판매자 My Menu</h2>
+		<h2>${loginUser.userName} My Menu</h2>
 
 		<ul>
 			<li><a href="sellerProductList.se">상품조회/수정</a></li>

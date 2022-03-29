@@ -129,7 +129,12 @@
 						<th>사용</th>
 						<td height="42">
 							<input type="number" step="500" min="0" max="${loginUser.point}" placeholder="0" id="usePoint" style="color: rgb(255, 163, 63); width: 200px; display: inline;" class="form-control form-control-sm"> &nbsp; 
-							<button type="button" class="btn btn-sm point" style="background:rgb(182, 238, 86); color: white;" ><b>전액사용</b></button> &nbsp;&nbsp; <label style="font-size: 13px;">500이상부터 사용 가능</label>
+							<c:if test="${loginUser.point eq 0}"> <!-- 회원의 보유포인트 0일시 전액사용 버튼 비활성화-->
+								<button type="button" class="btn btn-sm point" style="background: #ccc;; color: white;" disabled><b>전액사용</b></button> &nbsp;&nbsp; <label style="font-size: 13px;">500이상부터 사용 가능</label>
+							</c:if>
+							<c:if test="${loginUser.point ne 0}">
+								<button type="button" class="btn btn-sm point" style="background:rgb(182, 238, 86); color: white;" ><b>전액사용</b></button> &nbsp;&nbsp; <label style="font-size: 13px;">500이상부터 사용 가능</label>
+							</c:if>
 						</td>
 					</tr>								
 				</table>
@@ -165,8 +170,8 @@
 						<tr>
 							<th>결제수단</th>
 							<td height="42">
-								<input type="radio" id="card" name="payMethod" value="html5_inicis" data-how="카드결제">  <label for="card">신용/체크 카드</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;								
-								<input type="radio" id="phonePay" name="payMethod" value="danal" data-how="휴대폰결제">  <label for="phonePay">휴대폰 소액결제</label>
+								<input type="radio" id="card" name="payMethod" value="html5_inicis" data-how="카드결제" data-pay="card">  <label for="card">신용/체크 카드</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;								
+								<input type="radio" id="phonePay" name="payMethod" value="danal_tpay" data-how="휴대폰결제" data-pay="phone">  <label for="phonePay">휴대폰 소액결제</label>
 							</td>
 						</tr>									
 					</table>
@@ -227,6 +232,7 @@
 					}
 					else{
 						alert('500이상부터 사용가능합니다.');
+						$('.point').attr('disabled','true').css('background', '#ccc'); //전액사용 버튼 비활성화
 						$(this).val(0); //적립금사용 입력 다시 0으로
 						$('.usePoint').val(0); // 결제정보 적립금사용 역시 다시 0으로
 						$('#finalPay').text('<fmt:formatNumber value="${sum}"/>' + '원'); // 주문금액 그대로
@@ -237,7 +243,7 @@
 
 				// 배송지변경 팝업창
 				$('#changeAdd').click(function(){
-					var windowObj = window.open('address','배송지 변경','width=508,height=580,location=no,status=no,scrollbars=yes');
+					var windowObj = window.open('address.od','배송지 변경','width=508,height=580,location=no,status=no,scrollbars=yes');
 				})
 
 
@@ -248,9 +254,9 @@
 				})
 
 
-				// 판매자별로 각각 다른 상품들 반복문으로 각각 주문서객체로 만들어서 배열에 담기 객체 만들어주기
-				var $orderNo = new Date().getTime();
-				var arr = new Array();							
+				// 판매자별로 각각 다른 상품들 반복문으로 각각 주문객체로 만들어서 배열에 담아 객체배열 만들기
+				var $orderNo = new Date().getTime(); // Date 타입의 시간을 밀리초로 환산해 주문번호로 만든다.
+				var arr = new Array();	 // 판매자별로 주문객체를 담기위한 배열 선언						
 				<c:forEach var="item" items="${list}">				
 						var order = new Object();
 						order.seller = "${item.seller}";
@@ -265,6 +271,7 @@
 						arr.push(order);
 				</c:forEach>					
 				
+				/* 주문하기 연습코드
 				$('#btn-pay').click(function(){						
 					// 공통배송정보데이터 객체배열에 마저 추가
 					for(var i in arr){						
@@ -298,7 +305,7 @@
 													}
 													var qr = $.param(query); //쿼리스트링 만들어주는 메소드													
 	
-													location.href='paySuccess.od?' + qr;
+													location.href='orderForm.od"; // 결제 주문하기 페이지로 다시 돌아감
 												}
 											}		
 											,error: function(){
@@ -306,10 +313,10 @@
 											}		
 									})		
 				})
-					
+				*/	
 				
 				
-				/*
+				
 				// 결제 API
 				$('#btn-pay').click(function(){
 						
@@ -319,7 +326,7 @@
 						// ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
 						IMP.request_pay({
 							pg: $("input[name=payMethod]:checked").val(),
-							pay_method: 'card',
+							pay_method: $("input[name=payMethod]:checked").attr('data-pay'),
 							merchant_uid: $orderNo,
 							
 							name: 'We Make Salad 결제',
@@ -329,7 +336,8 @@
 							amount: $('#finalPay').attr('data-final'),
 							// amount: ${bid.b_bid},
 							// 가격 
-							buyer_name: '안소영',
+							buyer_name: '${loginUser.userName}',
+							buyer_email: '${loginUser.email}'
 							// 구매자 이름, 구매자 정보도 model값으로 바꿀 수 있습니다.
 							// 구매자 정보에 여러가지도 있으므로, 자세한 내용은 맨 위 링크를 참고해주세요.							
 							}, function (rsp) { //callback
@@ -354,7 +362,7 @@
 												method: "POST",	
 												traditional: true, 	//배열 자바로 넘기기								
 												data: {								
-													data: JSON.stringify(arr) // 자바스크립트 배열 JSON문자열화 시키기
+													data: JSON.stringify(arr) // 자바스크립트 객체배열 JSON문자열화 시키기
 												},											
 												success:function(result){
 													if(result == 'success'){	// 결제를 성공했다면 주문성공페이지에 넘어가기위한 정보 쿼리로 담기
@@ -381,11 +389,11 @@
 								msg += '에러내용 : ' + rsp.error_msg;
 								//실패시 이동할 페이지
 								alert(msg);
-								location.href="payFail.od"; //장바구니로 다시 돌아가야함
+								location.href="orderForm.od"; // 결제 주문하기 페이지로 다시 돌아감
 							}
 						});
 					})
-					*/
+					
 					
 				})
 				

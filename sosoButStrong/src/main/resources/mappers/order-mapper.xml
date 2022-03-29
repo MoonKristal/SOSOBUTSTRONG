@@ -184,7 +184,8 @@
 	
 	<update id="orderCancel" parameterType="order">
 		UPDATE "ORDER"
-		SET STATUS = '결제취소'		
+		SET STATUS = '결제취소'
+			, ORDER_CANCEL_DATE = SYSDATE		
 		WHERE ORDER_NO = #{orderNo}
 	</update>
 	
@@ -303,10 +304,20 @@
 		SET STATUS = #{status}
 		<if test="deliveryNo != null and deliveryNo != ''">
 			, DELIVERY_NO = #{deliveryNo}
-		</if>		
+		</if>
+		<if test="status == '배송완료' and status != '' and status != null ">
+			, DELIVERY_COMPLETE_DATE = SYSDATE
+			, SETTLEMENT_EXPECTED_DATE = DECODE(TO_CHAR(SYSDATE, 'DY'), '일', SYSDATE + 1,
+		                                                            '월', SYSDATE + 1,
+		                                                            '화', SYSDATE + 1,
+		                                                            '수', SYSDATE + 1, 
+		                                                            '목', SYSDATE + 1, 
+		                                                            '금', SYSDATE + 3, 
+		                                                            '토', SYSDATE + 2)
+		</if>
 		WHERE SELLER = #{seller}
 			AND ORDER_NO = #{orderNo}			
-	</update>	
+	</update>
 	
 	<select id="selectOrderManageDtail" parameterType="order" resultMap="orderResultSet">
 		SELECT A.*, SELLER_IMAGEPATH

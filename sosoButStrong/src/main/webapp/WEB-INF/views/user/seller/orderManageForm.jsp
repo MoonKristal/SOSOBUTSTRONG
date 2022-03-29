@@ -118,7 +118,7 @@
 										<c:when test="${o.status eq '배송중' || o.status eq '배송완료'}">
 											<a href="#" class="deliveryNo">${o.deliveryNo}</a> 
 											<c:if test="${o.status ne '배송완료'}">
-												<input class="complete" type="button" value="배송완료" style="color:white; background:rgb(255, 163, 63);" data-orderNo="${o.orderNo}" data-status="배송완료">
+												<input class="complete" type="button" value="배송완료" style="color:white; background:rgb(255, 163, 63);" data-orderNo="${o.orderNo}" >
 											</c:if>
 										</c:when>										
 										<c:otherwise>
@@ -300,7 +300,7 @@
 						url: "updateStatus.od",
 						data: {
 							orderNo: $(this).attr('data-orderNo'),
-							status: $(this).attr('data-status'),
+							status: $(this).val(),
 							seller: $('#pSeller').val()							
 						},
 						success: function(result){

@@ -29,4 +29,6 @@ public class Order {
 	private int sellerCount;// 사용자가 주문한 가게의 수	
 	private String productName; //주문한 상품명
 	private int productNo; //주문항 상품 번호
+	
+	
 }
