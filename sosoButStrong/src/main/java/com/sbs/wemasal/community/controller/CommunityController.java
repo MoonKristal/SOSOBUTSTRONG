@@ -13,7 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +30,7 @@ import com.sbs.wemasal.community.model.vo.Reply;
 import com.sbs.wemasal.community.model.vo.SmarteditorVO;
 import com.sbs.wemasal.like.model.vo.Like;
 import com.sbs.wemasal.member.model.vo.Member;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Controller
 public class CommunityController {
@@ -38,24 +38,11 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityService;
 	
-	@RequestMapping(value = "/main")
-	public ModelAndView communityMain(ModelAndView mv) {
-		
-		// ----- 베스트레시피 LIST -----
-		ArrayList<Community> bestList = communityService.selectTop3List();
-		
-		
-		
-		mv.addObject("bestList", bestList).setViewName("main");
-		
-		return mv;
-	}
-	
 	@RequestMapping("communityList.co")
 	public ModelAndView communityList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
 		// ----- 베스트레시피 LIST -----
-		ArrayList<Community> bestList = communityService.selectTop3List();
+		ArrayList<Community> bestRecipe = communityService.selectTop3List();
 		
 		// ----- 신규레시피 LIST -----
 		
@@ -66,7 +53,7 @@ public class CommunityController {
 
 		ArrayList<Community> list = communityService.communityList(pi);
 
-		mv.addObject("list", list).addObject("pi", pi).addObject("bestList", bestList).setViewName("user/community/communityListView");
+		mv.addObject("list", list).addObject("pi", pi).addObject("bestRecipe", bestRecipe).setViewName("user/community/communityListView");
 		
 		return mv;
 	}

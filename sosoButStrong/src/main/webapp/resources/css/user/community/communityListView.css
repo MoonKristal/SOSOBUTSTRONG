@@ -4,7 +4,7 @@
     margin: auto;
 }
 div{
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 .vanner{
     width: 100%;
@@ -41,13 +41,14 @@ div{
     height: 100%;
 }
 .salImg{
+    margin-left: 1%;
     width: 100%;
     height: 100%;
 }
 .content1_1{
-    width: 60%;
+    width: 57%;
     height: 100%;
-
+    margin-left: 3%;
 }
 .imgs{
     width: 100%;
@@ -64,7 +65,7 @@ div{
 .icons{
     width: 80%;
     height: 100%;
-    padding-left: 130px;
+    padding-left: 170px;
     /* border: 1px solid red; */
 }
 .icons img{
@@ -86,6 +87,9 @@ div{
     color: rgb(255, 163, 63);
     font-weight: bolder;
     font-size: 20px;
+}
+.content_wrap{
+    width: 100%;
 }
 .content1_2 p{
     width: 95%;
@@ -169,6 +173,7 @@ div{
     padding-left: 5%;
     padding-top: 5px;
 }
+
 .content2_2 p{
     width: 90%;
     height: 75%;

@@ -20,7 +20,7 @@
         </div>
         <div class="bestRecipe">
             <b>BEST RECIPE</b>
-            <c:forEach var="best" items="${ bestList }" varStatus="status">
+            <c:forEach var="best" items="${ bestRecipe }" varStatus="status">
                 <div class="topRecipe">
                     <div class="imgDiv1">
                         <c:choose>
@@ -40,9 +40,7 @@
                             <div class="icons">
                                 <a href="#">
                                     <img src="resources/images/돋보기.png" alt="더보기">
-                                </a>
-                                <a href="#">
-                                    <img src="resources/images/빈하트.png" alt="좋아요">
+                                    <input type="hidden" value="${ best.comNo }">
                                 </a>
                             </div>
                         </div>
@@ -50,7 +48,7 @@
                             <div class="title">
                                 ${ best.saladName}
                             </div>
-                            <div>
+                            <div class="content_wrap">
                                 <p>
                                     ${ best.comTitle}
                                 </p>
@@ -121,7 +119,10 @@
                     $(".content2").mouseleave(function(){
                         $('.content2_1>.icons').hide();
                     })
-                    $(".icons>a>img").click(function(){
+                    $(".content2_1>.icons>a>img").click(function(){
+                    	location.href='communityDetail.co?cno=' + $(this).parent().children().eq(1).val();
+                    })
+                    $(".content1_1>.imgs>.icons>a>img").click(function(){
                     	location.href='communityDetail.co?cno=' + $(this).parent().children().eq(1).val();
                     })
                 })

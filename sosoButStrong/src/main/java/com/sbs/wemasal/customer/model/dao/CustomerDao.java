@@ -9,6 +9,7 @@ import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Repository
 public class CustomerDao {
@@ -63,6 +64,10 @@ public class CustomerDao {
 
 	public int deleteCart(SqlSessionTemplate sqlSession, int cartNo) {
 		return sqlSession.delete("customerMapper.deleteCart", cartNo);
+	}
+
+	public ArrayList<Seller> selectTop3SellerList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("customerMapper.selectTop3SellerList");
 	}
 	
 

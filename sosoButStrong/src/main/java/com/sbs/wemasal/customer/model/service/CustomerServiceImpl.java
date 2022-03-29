@@ -11,6 +11,7 @@ import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.dao.CustomerDao;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -84,6 +85,11 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public int deleteCart(int cartNo) {
 		return customerDao.deleteCart(sqlSession, cartNo);
+	}
+
+	@Override
+	public ArrayList<Seller> selectTop3SellerList() {
+		return customerDao.selectTop3SellerList(sqlSession);
 	}
 
 }

@@ -20,4 +20,6 @@ public class Cart {
 	private String sellerImage; //
 	private int seller; 
 	private String changeName; // 상품이미지
+	
+	private String calculateAmount; // 정산금액
 }
