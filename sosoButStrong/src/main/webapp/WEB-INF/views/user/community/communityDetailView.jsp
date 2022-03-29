@@ -36,7 +36,7 @@
                     <div class="likes">
                         <a onclick="saladLike()" id="saladLike">
                             <c:choose>
-                                <c:when test="${like.myLike eq 'Y'}">
+                                <c:when test="${ like.myLike eq 'Y'}">
                                     <img src="resources/images/하트.png" class="like fullHeart" id="fullHeart" alt="좋아요">
                                 </c:when>
                                 <c:otherwise>
@@ -44,7 +44,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </a>
-                        <b>${ like.likeCount }</b>
+                       	<b>${ like.likeCount }</b>
                     </div>
                 </div>
             </div>
@@ -271,7 +271,7 @@
                 isLike = "N"; 
             }
     		
-            if(${loginUser != null}){
+            if(${ not empty loginUser}){
                 $.ajax({
                     url : 'like.he',
                     data : {

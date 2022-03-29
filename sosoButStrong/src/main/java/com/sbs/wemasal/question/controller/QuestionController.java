@@ -267,7 +267,7 @@ public class QuestionController {
 		String condition = request.getParameter("condition");
 		String keyword = request.getParameter("keyword");
 		
-		HashMap<String, String> map = new HashMap();
+		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("questionWriter", questionWriter);
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
@@ -326,6 +326,15 @@ public class QuestionController {
 		mv.addObject("q", q).addObject("a", a).setViewName("user/question/sellerQuestionDetailView");
 		
 		return mv;
+	}
+	
+	// 2022.3.25(금) 14h15
+	@ResponseBody
+	@RequestMapping("answerRating.qu")
+	public String ajaxUpdateScore(Answer a) {
+		System.out.println(a);
+		
+		return questionService.updateScore(a) > 0? "success" : "fail";
 	}
 
 }

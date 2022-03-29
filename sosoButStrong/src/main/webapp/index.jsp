@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
+<%
+	response.sendRedirect(request.getContextPath()+"/main");
+%>
+<!-- 
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -9,7 +14,7 @@
 </head>
 <body>
 	
-	<jsp:forward page="/WEB-INF/views/main.jsp"/>
+	
 
 </body>
-</html>
+</html> -->

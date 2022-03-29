@@ -36,7 +36,6 @@
                                     <td><input type="hidden" value="${c.userNo}"></td>
                                     <td><input type="hidden" value="${c.cartNo}"></td>
                                     <td><input type="hidden" value="${c.productNo}"></td>
-                                    <td><input type="checkbox" name=""></td>
                                     <td align="center"  width="18%" style="padding-top:0px;"><img style="width: 150px; height: 150px;" src="${c.changeName}"></td>
                                     <td style=""><i style="color: gray;">[${c.sellerName}]</i><br><br><b style="font-size: larger;">${c.productName}</b><br>
                                         <br><p style="width: 450px;">${c.option}</p>

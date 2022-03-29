@@ -182,10 +182,11 @@
 		JOIN VW_ORDER_LIST V ON (V.ORDER_NO = B.ORDER_NO)			
 	</select>
 	
+	<!--2022.3.28(월) 10h30 '결제 취소 일자' 컬럼 값 추가_은영-->
 	<update id="orderCancel" parameterType="order">
 		UPDATE "ORDER"
 		SET STATUS = '결제취소'
-			, ORDER_CANCEL_DATE = SYSDATE		
+			, ORDER_CANCEL_DATE = SYSDATE
 		WHERE ORDER_NO = #{orderNo}
 	</update>
 	
@@ -299,12 +300,14 @@
 		ORDER BY O.ORDER_DATE DESC
 	</select>
 	
+	<!--2022.3.28(월) 10h30 '배송 완료 일자' 컬럼 값 추가_은영-->
 	<update id="updateStatus" parameterType="order">
 		UPDATE "ORDER"
 		SET STATUS = #{status}
 		<if test="deliveryNo != null and deliveryNo != ''">
 			, DELIVERY_NO = #{deliveryNo}
 		</if>
+
 		<if test="status == '배송완료' and status != '' and status != null ">
 			, DELIVERY_COMPLETE_DATE = SYSDATE
 			, SETTLEMENT_EXPECTED_DATE = DECODE(TO_CHAR(SYSDATE, 'DY'), '일', SYSDATE + 1,

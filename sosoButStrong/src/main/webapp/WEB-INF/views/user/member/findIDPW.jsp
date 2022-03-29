@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,12 +43,13 @@
 					</form>
 				</div>
 		    </div><!-- left 영역 끝 -->
+		    <!-- 이메일 인증 수정 3 -->
 		    <div class="right">
 		    	<div id="header2"><h3>비밀번호 찾기</h3></div>
 		    	<div id="text2"><h6>가입하신 아이디 + 이메일 주소를 입력하시면<br>임시 비밀번호를 발급해드립니다.</h6></div>
 		    	<br>
 		    	<div id="content2">
-			        <form action="" method="post">
+			        <form action="findPwd.me" method="post">
 				        <div>
 				           <h6>아이디</h6>
 				           <span class="box">
@@ -62,7 +64,7 @@
 				        </div>
 				        <!-- BTN -->
 				        <div class="btn_area" align="center"> 
-				           <button type="submit" id="btnFindPWD" data-toggle="modal" data-target="#login_searchPwd">비밀번호 찾기</button>
+				           <button type="submit" id="btnFindPWD">임시비밀번호 발급</button>
 				    	</div>
 					</form>
 				</div>
@@ -70,64 +72,90 @@
 		</div> 
 		<!--div class="content" 영역 끝-->
     </div>
+   
+   	<!-- 이메일 인증 수정2 -->
+    <script>
+	function sendMail(){
+		
+		$.ajax({
+			
+			url:"sendMail.me",
+			data:{email:$("#email").val()},
+			success:function(result){ 
+				if(result=='0'){
+				alert("이메일발송실패");
+					}else{
+						alert("이메일이발송되었습니다.3분이내 입력해주세요");
+					}
+				},error:function(){
+					
+					console.log("메일발송실패");
+				}
+		})
+	}
+    
+    </script>
     
 	<jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
-	        <!-- 비번찾기용 모달 -->
-    <div class="modal" id="login_searchPwd">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            
-            <!-- Modal Header -->
-                <div class="modal-header">
-                    <div class="modal-title">
-                        임시비밀번호발급
-                    </div>
-                </div>
-
-              <!-- Modal body -->
-            <form action="" method="post">
-                <div class="modal-body">
-                    <div id="login_modal_content">
-                        <div style="padding-left: 15px; line-height: 50px;">본인인증</div>
-                        <hr style="margin: 0px;">
-
-                        <div id="searchPwd_form">
+	<!-- 이메일 인증 수정1 -->
+	<!-- 비밀번호 찾기 모달 창 -->
+		<div class="modal fade" id="login_searchPwd">
+	        <div class="modal-dialog modal-sm">
+	            <div class="modal-content">
+	
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h4 class="modal-title">비밀번호 찾기</h4>
+	                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                </div>
+					<!-- Modal body -->
+	                <form action="check.mail" method="post">
+	                    <div class="modal-body">
+	                        <div align="center">
+				                             본인인증 <br>
+	                        </div>
+	                        <br>
+	                        <div id="searchPwd_form">
                             <table id="login_searchPwd_information">
-                                <tr>
-                                    <td class="login_td1">아이디</td>
-                                    <td class="login_td2"><input type="text"><br></td>
-                                </tr>
-                                <tr>
-                                    <td class="login_td1">이름</td>
-                                    <td class="login_td2"><input type="text"><br></td>
-                                </tr>
-                                <tr>
-                                    <td class="login_td1">이메일</td>
-                                    <td class="login_td2"><input type="text" style="width: 200px;"><button>인증</button><br></td>
-                                </tr>
-                                <tr>
-                                    <td class="login_td1">인증번호</td>
-                                    <td class="login_td2"><input type="text" style="width: 200px;"><button>확인</button><br></td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height: 5px;"></td>
-                                    <td style="height: 5px;"><br>&nbsp;</td>
-                                </tr>
+	                            <tr>
+	                                <td class="login_td1">아이디</td>
+	                                <td class="login_td2"><input type="text" id="user_id" name="memberName" required><br></td>
+	                            </tr>
+	                            <tr>
+	                                <td style="height: 5px;"></td>
+	                                <td id="email_result" style="height: 5px;"></td>
+	                            </tr>
+	                            <tr>
+	                                <td class="login_td1">인증번호</td>
+	                                <td class="login_td2"><input type="text" id="email_chk" name="email_chk" style="width: 200px;" required>
+	                                <button type="button" id="email_chk_btn" onclick="checkmail();">확인</button><br></td>
+	                            </tr>
+	                            <tr>
+	                                <td style="height: 5px;"></td>
+	                                <td id="vali_result" style="height: 5px;"></td>
+	                            </tr>
                             </table>
                         </div>
-                        <div class="modal-footer">
+	                    </div>
+	                    <!-- Modal footer -->
+	                    <div class="modal-footer">
                             <button type="submit">등록</button>
                             <button type="button" data-dismiss="modal">취소</button>
                         </div>
-                    </div><!-- 로그인모달content -->
-                </div> <!-- 바디 -->
-            </form>
-            </div> <!-- 모달content -->
-        </div><!-- dialog -->
-    </div><!-- 비번찾기모달끝 -->
-    
-    <script>
+	                </form>
+	            </div>
+	        </div>
+	    </div>	
+	
+	
+	     
+
+
+<script>
+function checkmail(){
+	var chknum = $("#email_chk").val();
+	
+}
     
     window.onload = $(function(){
     	$('#email_vali').hide();
@@ -192,5 +220,11 @@
     </script>
 	
 	
+	
+	
+	
+	
+    
+    
 </body>
 </html>

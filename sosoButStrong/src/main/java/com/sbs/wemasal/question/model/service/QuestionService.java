@@ -69,4 +69,7 @@ public interface QuestionService {
 	// 2022.3.25(금) 12h55
 	int updateAnswer(int qno);
 	
+	// 2022.3.25(금) 14h50
+	int updateScore(Answer a);
+	
 }

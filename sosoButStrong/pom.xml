@@ -293,6 +293,7 @@
 			<version>1.1</version>
 		</dependency>
 
+		<!-- 메일 -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
@@ -316,6 +317,7 @@
 			<artifactId>activation</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
       	
 	</dependencies>
 	

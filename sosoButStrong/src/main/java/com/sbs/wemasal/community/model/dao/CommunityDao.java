@@ -16,6 +16,14 @@ import com.sbs.wemasal.report.model.vo.Report;
 
 @Repository
 public class CommunityDao {
+	
+	public ArrayList<Integer> selectTop3ComNo(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("communityMapper.selectTop3ComNo");
+	}
+
+	public ArrayList<Community> selectTop3List(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("communityMapper.selectTop3List");
+	}
 
 	public int selectCommunityCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("communityMapper.selectCommunityCount");
@@ -52,8 +60,8 @@ public class CommunityDao {
 		return (ArrayList)sqlSession.selectList("communityMapper.selectReplyList", refComNo);
 	}
 
-	public String selectIsLike(SqlSessionTemplate sqlSession, Like l) {
-		return sqlSession.selectOne("communityMapper.selectIsLike", l);
+	public String selectIsLike(SqlSessionTemplate sqlSession, Like like) {
+		return sqlSession.selectOne("communityMapper.selectIsLike", like);
 	}
 
 	public int selectLikeCount(SqlSessionTemplate sqlSession, int cno) {
@@ -91,6 +99,9 @@ public class CommunityDao {
 		return sqlSession.delete("communityMapper.deleteCommunity", cno);
 	}
 
+
+
+	
 	
 
 

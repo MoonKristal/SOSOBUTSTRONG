@@ -172,7 +172,7 @@
         	$.ajax({
         		url : "answerRating.qu",
         		data : {
-        			answerNo : 2,
+        			answerNo : ${ a.answerNo },
         			score : score
         		},
         		success : function(result) {

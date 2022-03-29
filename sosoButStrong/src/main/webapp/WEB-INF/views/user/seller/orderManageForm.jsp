@@ -30,7 +30,7 @@
 					<input type="hidden" name="cpage" value="1">
 					<button type="submit" style="color: #ccc; background: none; border-style:none;"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
 					<input type="search" name="keyword" class="form-control form-control-sm keyword" style="width: 300px; margin-bottom: 10px; display: inline-block;" placeholder="회원 아이디로 검색" value="${keyword}">
-					 <br>	
+					<br>	
 				</form>
 				<form action="searchManage.se" id="statusForm">					
 					<select name="status" id="selected" class="form-control form-control-sm" style="width: 200px; margin-bottom: 10px;">

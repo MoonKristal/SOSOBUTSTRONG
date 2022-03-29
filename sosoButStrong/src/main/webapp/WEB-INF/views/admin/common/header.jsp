@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 메뉴</title>
 <!-- ajax, 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
@@ -32,12 +32,12 @@
         </div>
         <div class="ad_menubar">
             <ul class="menubar">
-                <li><a href="#">회원관리</a></li>
+                <li><a href="memberBuyerList.ad">회원관리</a></li>
                 <li>
                     <a href="#">판매자 관리</a>
                     <ul>
-                        <li><a href="#">판매자 승인 / 거절</a></li>
-                        <li><a href="#">판매자 관리</a></li>
+                        <li><a href="list.se">판매자 승인 / 거절</a></li>
+                        <li><a href="memberSellerList.ad">판매자 관리</a></li>
                     </ul>
                 </li>
                 <li>
@@ -51,7 +51,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">공지사항 관리</a>
+                    <a href="managerList.no">공지사항 관리</a>
                 </li>
                	<li>
                		<a href="#">로그아웃</a>

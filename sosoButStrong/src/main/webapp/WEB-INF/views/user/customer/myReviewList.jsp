@@ -56,7 +56,11 @@
                     <table align="center">
                         <tr>
                             <td><!-- 별점 -->
-                                <input type="number" name="score" id="rStar" min="0" max="5" class="form-control"> 
+                                <span class="star">
+                                    ★★★★★
+                                    <span>★★★★★</span>
+                                    <input type="range" name="score" id="rStar" oninput="drawStar(this)" value="" step="1" min="0" max="5">
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -87,12 +91,20 @@
     </div>
 
     <script>
+        const drawStar = (target) => { // 리뷰작성 폼에서 사용자가 클릭 or 드래그 한 만큼 별점 보여지도록 함
+            document.querySelector('.star span').style.width = $('#rStar').val() * 20 + '%';
+        }
+    </script>
+
+
+    <script>
         $(document).on("click", ".img", function(){ // 리뷰 이미지를 클릭하면 해당 상품상세 페이지로 이동
 
             location.href = 'saladDetailView.cmm?pno='+ this.alt;
 
         })
     </script>
+
 
     <script>
 
@@ -186,9 +198,9 @@
                         
                         // 조회 해온 리뷰내용을 수정 폼에 값을 넣어 보여주도록 함
                         $('#rNo').val(result.reviewNo);
-                        $('#rStar').val(result.score);
                         $('#rCon').text(result.reviewContent);
                         $('#rStar').val(result.score);
+                        drawStar(result.score);
                         $('#rImg').attr('href', result.changeName).attr('download',result.originName).text(result.originName);
                         $('#oImg').val(result.changeName);
                     },

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="settlementMapper">
+
+	<resultMap id="dailysalesResultSet" type="dailysales">
+		<result column="NEW_ORDERS_COUNT" property="newOrdersCount"/>	
+		<result column="CURRENT_DATE" property="currentDate"/>
+		<result column="NEW_ORDERS_AMOUNT" property="newOrdersAmount"/>
+			
+		<result column="TO_BE_DISPATCHED" property="toBeDispatched"/>		
+		<result column="ON_DELIVERY" property="onDelivery"/>		
+		<result column="DELIVERY_COMPLETE" property="deliveryComplete"/>		
+		<result column="CANCELED" property="canceled"/>		
+		<result column="SETTLE_TODAY" property="settleToday"/>		
+		<result column="SETTLE_TMR" property="settleTmr"/>
+		
+		<result column="" property=""/>
+	</resultMap>
+	
+	<resultMap id="orderResultSet" type="order">
+		<result column="ORDER_NO" property="orderNo"/>
+		<result column="SELLER" property="seller"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="ORDERER" property="orderer"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="STATUS" property="status"/>
+		<result column="DELIVERY_COMPLETE_DATE" property="deliveryCompleteDate"/>	
+		<result column="SETTLEMENT_EXPECTED_DATE" property="settlementExpectedDate"/>	
+		<result column="SETTLEMENT_STATUS" property="settlementStatus"/>
+		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="FEE" property="fee"/>
+		<result column="SETTLEMENT_AMOUNT" property="settlementAmount"/>
+		
+		<result column="" property=""/>
+	</resultMap>
+	<!--CREATE OR REPLACE VIEW VW_SETTLEMENT_LIST AS
+		SELECT ORDER_NO, //
+		       SELLER, //
+		       PRODUCT_NAME, //
+		       USER_ID, //
+		       DELIVERY_COMPLETE_DATE, //
+		       SETTLEMENT_EXPECTED_DATE,    //     
+		       CASE WHEN SETTLEMENT_EXPECTED_DATE <= SYSDATE THEN '정산완료'            
+		            ELSE '미정산'
+		       END "SETTLEMENT_STATUS", //
+		       ORDER_PRICE * QUANTITY "ORDER_PRICE", //
+		       FLOOR(ORDER_PRICE * QUANTITY * 0.05) "FEE", //
+		       ORDER_PRICE * QUANTITY - FLOOR(ORDER_PRICE * QUANTITY * 0.05) "SETTLEMENT_AMOUNT"  
+		FROM "ORDER"
+		LEFT JOIN MEMBER ON (ORDERER = USER_NO)-->
+
+	<!--2022.3.28(월) 16h40-->
+	<select id="selectSalesOverview" parameterType="_int" resultMap="dailysalesResultSet">
+		SELECT (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_DATE) = TO_CHAR(SYSDATE) AND STATUS != '결제취소') "NEW_ORDERS_COUNT",
+		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND STATUS = '상품준비중') "TO_BE_DISPATCHED",
+		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND STATUS = '배송중') "ON_DELIVERY",
+		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(DELIVERY_COMPLETE_DATE) = TO_CHAR(SYSDATE)) "DELIVERY_COMPLETE",
+		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_CANCEL_DATE) = TO_CHAR(SYSDATE)) "CANCELED",
+		       (SELECT NVL(TO_CHAR(SUM(ORDER_PRICE * QUANTITY - FLOOR(ORDER_PRICE * QUANTITY * 0.05)), '999,999,999,999'), 0) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(SETTLEMENT_EXPECTED_DATE) = TO_CHAR(SYSDATE)) "SETTLE_TODAY",
+		       (SELECT NVL(TO_CHAR(SUM(ORDER_PRICE * QUANTITY - FLOOR(ORDER_PRICE * QUANTITY * 0.05)), '999,999,999,999'), 0) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(DELIVERY_COMPLETE_DATE) = TO_CHAR(SYSDATE)) "SETTLE_TMR"
+		FROM "ORDER"
+		WHERE SELLER = #{sellerNo}
+		GROUP BY SELLER
+	</select>
+	
+	<!--2022.3.28(월) 21h15-->
+	<select id="selectSalesGraph" parameterType="hashmap" resultMap="dailysalesResultSet">
+		SELECT TO_CHAR(TO_DATE(#{currentDate})) "CURRENT_DATE",
+		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate})) AND STATUS != '결제취소') "NEW_ORDERS_COUNT",
+		       (SELECT NVL(TO_CHAR(SUM(ORDER_PRICE * QUANTITY), '999,999,999,999'), 0) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate})) AND STATUS != '결제취소') "NEW_ORDERS_AMOUNT"
+		FROM "ORDER"
+		WHERE SELLER = #{sellerNo}
+		GROUP BY SELLER
+	</select>
+	
+	<!--2022.3.29(화) 1h35-->
+	<select id="selectSettlementDetailListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM VW_SETTLEMENT_LIST
+		WHERE SELLER = #{sellerNo}
+	</select>
+	
+	<!--2022.3.29(화)1H50-->
+	<select id="selectSettlementDetailList" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_NO,
+			   SELLER,
+			   PRODUCT_NAME,
+			   USER_ID,
+			   STATUS, 
+			   DELIVERY_COMPLETE_DATE, 
+			   SETTLEMENT_EXPECTED_DATE, 
+			   SETTLEMENT_STATUS, 
+			   ORDER_PRICE, 
+			   FEE, 
+			   SETTLEMENT_AMOUNT
+		FROM VW_SETTLEMENT_LIST
+		WHERE SELLER = #{sellerNo}
+	</select>
+	
+	<!--2022.3.29(화) 2h30-->
+	<select id="selectSettlementSummary" parameterType="_int" resultMap="orderResultSet">
+		SELECT SUM(ORDER_PRICE * QUANTITY) "ORDER_PRICE",
+		       SUM(FLOOR(ORDER_PRICE * QUANTITY * 0.05)) "FEE",
+		       SUM(ORDER_PRICE * QUANTITY - FLOOR(ORDER_PRICE * QUANTITY * 0.05)) "SETTLEMENT_AMOUNT"  
+		FROM "ORDER"
+		WHERE SELLER = #{sellerNo} AND STATUS != '결제취소'
+	</select>
+	
+
+</mapper>

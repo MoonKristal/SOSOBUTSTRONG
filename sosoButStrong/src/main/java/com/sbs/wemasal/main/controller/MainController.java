@@ -19,13 +19,38 @@ import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
 import com.sbs.wemasal.common.template.SaveFile;
+import com.sbs.wemasal.community.model.service.CommunityService;
+import com.sbs.wemasal.community.model.vo.Community;
+import com.sbs.wemasal.customer.model.service.CustomerService;
 import com.sbs.wemasal.main.model.service.MainService;
+import com.sbs.wemasal.member.model.vo.Seller;
 
 @Controller
 public class MainController {
 	
 	@Autowired
 	private MainService mainService;
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private CustomerService customerService;
+	
+	
+
+	@RequestMapping(value = "/main")
+	public ModelAndView communityMain(ModelAndView mv) {
+		
+		// ----- 베스트레시피 LIST -----
+		ArrayList<Community> bestRecipe = communityService.selectTop3List();
+		
+		// ----- 베스트셀러 LIST -----
+		ArrayList<Seller> bestSeller = customerService.selectTop3SellerList();
+		
+		mv.addObject("bestRecipe", bestRecipe).addObject("bestSeller", bestSeller).setViewName("main");
+		
+		return mv;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="picList.main", produces="application/json; charset=utf-8")
