@@ -278,7 +278,7 @@
 	                // document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
 	                
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                $('#sample4_Address').val('[' + data.zonecode + '] '+ roadAddr + ' '); 
+	                $('#sample4_Address').val( roadAddr + ' '); 
 	                
 	        
 	            }
