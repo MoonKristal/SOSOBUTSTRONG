@@ -6,6 +6,7 @@ import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.Attachment;
 import com.sbs.wemasal.customer.model.vo.Customer;
 import com.sbs.wemasal.customer.model.vo.Review;
+import com.sbs.wemasal.member.model.vo.Seller;
 import com.sbs.wemasal.seller.model.vo.Product;
 
 public interface CustomerService {
@@ -48,4 +49,7 @@ public interface CustomerService {
 	
 	// 장바구니 상품 삭제
 	int deleteCart(int cartNo);
+
+	// 베스트 셀러 (메인페이지)
+	ArrayList<Seller> selectTop3SellerList();
 }

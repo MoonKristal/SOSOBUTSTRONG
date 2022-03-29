@@ -49,6 +49,7 @@
 		<result column="SELLER_NAME" property="sellerName"/>
 		<result column="SELLER_IMAGEPATH" property="sellerImage"/>
 		<result column="CHANGE_NAME" property="changeName" />
+		<result column="CALCULATE_AMOUNT" property="calculateAmount" />
 	</resultMap>
 
 	<select id="selectSaladList" resultMap="customerResultSet">
@@ -281,5 +282,21 @@
 		 WHERE 
 		 		CART_NO = #{cartNo}
 	</delete>
+	
+	<select id="selectTop3SellerList" resultMap="cartResultSet">
+		SELECT SELLER, CALCULATE_AMOUNT, PRODUCT_NO, PRODUCT_NAME, SELLER_NAME, CHANGE_NAME
+		FROM(SELECT O.SELLER
+		            , SUM(ORDER_PRICE * QUANTITY) "PAYMENT_AMOUNT"
+		            , SUM(FLOOR(ORDER_PRICE * QUANTITY * 0.05)) "매출연동 수수료"
+		            , SUM(ORDER_PRICE * QUANTITY - FLOOR(ORDER_PRICE * QUANTITY * 0.05)) "CALCULATE_AMOUNT"  
+			    FROM "ORDER" O
+			    WHERE O.STATUS != '결제취소'
+			    GROUP BY SELLER
+			    ORDER BY PAYMENT_AMOUNT DESC)
+		LEFT JOIN "PRODUCT" ON (SELLER = UPLOADER)
+		JOIN SELLER ON (UPLOADER = USER_NO)
+		LEFT JOIN ATTACHMENT USING (PRODUCT_NO)
+		WHERE ROWNUM &lt;=3
+	</select>
 	
 </mapper>
