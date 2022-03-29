@@ -137,9 +137,7 @@
                 <button type="button" onclick="location.href='buyerList.qu'">문의 목록으로 돌아가기</button> <!--나의 질문 = 최근에 보고 있던 currentPage로 어떻게 돌아가지?-->
 
                 <!--현재 조회 중인 1:1문의 내역(Question 객체)의 answer 필드 값이 'N'인 경우, '수정' 및 '삭제' 버튼 보여주기-->
-                <c:if test="${ q.answer eq 'N' }">
-                	<button type="button" class="orangeBtn" onclick="postFormSubmit(1);">수정</button> <!--location.href='updateForm.qu?qno=' + $(this).siblings(".qno").text();-->
-	                <button type="button" class="grayBtn" onclick="postFormSubmit(2);">삭제</button>
+                <c:if test="${ q.answer eq 'N' }">           
 	                
 	                <!--post 방식으로 요청 보내면서 name 속성 값을 보낼 수 있는 방법-->
 	                <form method="post" action="" id="postForm">

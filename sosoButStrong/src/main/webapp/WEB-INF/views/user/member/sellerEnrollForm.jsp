@@ -75,7 +75,7 @@
 			    </div><!-- left 끝 -->
 			    <div class="right">
 			    	<div id="content2">
-			    		<div id="header2"><h5>판매자대표 정보</h5></div>
+			    		<div id="header2"><h5>사업장 정보</h5></div>
 						        <!-- 상호 -->
 						        <div>
 						            <h6 class="join_title"><label for="id">상호*</label></h6>

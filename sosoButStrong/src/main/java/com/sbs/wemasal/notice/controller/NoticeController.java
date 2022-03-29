@@ -94,11 +94,12 @@ public class NoticeController {
 		return mv;
 	}
 	
+	
 	@RequestMapping("detail.no")
 	public ModelAndView selectNotice(ModelAndView mv, int nno) {
 		Notice n = noticeService.selectNotice(nno);
 		
-		mv.addObject("n", n).setViewName("admin/notice/noticeDetailView");
+		mv.addObject("n", n).setViewName("user/notice/noticeDetailView");
 		
 		return mv;
 	}

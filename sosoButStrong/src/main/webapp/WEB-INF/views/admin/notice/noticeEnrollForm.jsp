@@ -50,7 +50,7 @@
                         <tr>
                             <th class="label">중요도</th>
                             <td>
-                                <input type="checkbox" name="show" value="Y" id="show"> <label for="show">게시 여부</label>
+                                <input type="checkbox" name="show" value="Y" id="show" checked> <label for="show">게시 여부</label>
                                 <input type="checkbox" name="top" value="Y" id="top"> <label for="top">중요 여부</label>
                             </td>                            
                         </tr>

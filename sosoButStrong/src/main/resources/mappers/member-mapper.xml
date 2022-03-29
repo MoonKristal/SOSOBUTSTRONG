@@ -95,8 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       EMAIL = #{email},
 		       PHONE = #{phone},
 		       ADDRESS = #{address},
-		       GENDER = #{gender},
-		       BIRTH = #{birth}
+		       GENDER = #{gender}
 		 WHERE USER_ID = #{userId}    
 	</update>
 	

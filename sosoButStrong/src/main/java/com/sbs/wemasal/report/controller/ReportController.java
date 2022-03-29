@@ -179,11 +179,11 @@ public class ReportController {
 		int result = reportService.deleteReplyReport(re);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "신고되었습니다.");
-			return "redirect:communityReportList.re";
+			session.setAttribute("alertMsg", "삭제되었습니다.");
+			return "redirect:replyReportList.re";
 		}else {
 			session.setAttribute("alertMsg", "실패하였습니다.");
-			return "redirect:communityReportList.re";
+			return "redirect:replyReportList.re";
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class ReportController {
 		int result = reportService.rejectReplyReport(re);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "신고되었습니다.");
+			session.setAttribute("alertMsg", "반려되었습니다.");
 			return "redirect:replyReportList.re";
 		}else {
 			session.setAttribute("alertMsg", "실패하였습니다.");

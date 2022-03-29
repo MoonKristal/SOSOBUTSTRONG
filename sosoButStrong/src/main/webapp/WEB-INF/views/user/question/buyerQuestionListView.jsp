@@ -245,8 +245,7 @@
             <div class="listView">
                 <table class="table table-bordered" align="center">
                     <thead class="thead-light">
-                        <tr>
-                            <th>수정</th>
+                        <tr>                           
                             <th>글 번호</th>
                             <th>문의 날짜</th>
                             <th>판매자명</th>
@@ -266,13 +265,7 @@
                     		</c:when>
                     		<c:otherwise>
                     			<c:forEach var="q" items="${ list }">
-                    				<tr>
-			                            <td>
-			                            	<!--처리 상태(answer)가 "N"인 경우, 이 버튼이 보임-->
-			                            	<c:if test="${ q.answer eq 'N' }">
-			                            		<button onclick="location.href='updateForm.qu'">수정</button>
-			                            	</c:if>
-			                            </td>
+                    				<tr>			                            
 			                            <td class="qno">${ q.questionNo }</td>
 			                            <td>${ q.createDate }</td>
 			                            <td>${ q.sellerName }</td>

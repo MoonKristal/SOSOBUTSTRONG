@@ -215,7 +215,7 @@ public class SettlementController {
 	        
 	        cell = row.createCell(2);
 	        cell.setCellStyle(bodyStyle);
-	        cell.setCellValue(o.getUserId());
+	        cell.setCellValue(o.getOrderer());
 	        
 	        cell = row.createCell(3);
 	        cell.setCellStyle(bodyStyle);

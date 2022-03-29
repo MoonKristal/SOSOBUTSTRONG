@@ -79,7 +79,7 @@
 				<div>
 		        	<h6 class="join_title">생일</h6>
 				    	<span class="box">
-		           		<input type=text class="int" name="birth" value="${ loginUser.birth }" pattern="yyyy-MM-dd" >
+		           		<input type=text class="int" name="birth" value="${ loginUser.birth }" pattern="yyyy-MM-dd" placeholder="yyyy-MM-dd로 입력해주세요." readonly>
 		        	</span>
 		       	</div>
 		       	<script>

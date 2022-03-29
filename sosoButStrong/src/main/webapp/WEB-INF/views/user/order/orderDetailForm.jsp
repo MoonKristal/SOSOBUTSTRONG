@@ -30,7 +30,7 @@
                 <tr>
                     <td width="80%" colspan="2" style="font-weight: bold; font-size: 22px; border-top-style: solid; border-left-style: solid; border-right-style: solid; border-right-color:#ccc;"></td>                        
                     <td rowspan="3" class="btn3" style="border-bottom-style: solid; border-right-style: solid; border-top-style:solid;">
-                        <a href="#"><input type="button" class="order-btn question" value="판매자 문의하기"  ></a> <br>
+                        <a href="enrollForm.qu"><input type="button" class="order-btn question" value="판매자 문의하기"  ></a> <br>
 
                         <c:if test="${c.deliveryNo != null}">
                             <input type="button" class="order-btn delivery" value="배송조회" data-deliveryNo="${c.deliveryNo}"><br>                            

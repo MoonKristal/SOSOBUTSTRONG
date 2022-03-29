@@ -34,7 +34,7 @@
             <ul class="menubar">
                 <li><a href="memberBuyerList.ad">회원관리</a></li>
                 <li>
-                    <a href="#">판매자 관리</a>
+                    <a href="list.se">판매자 관리</a>
                     <ul>
                         <li><a href="list.se">판매자 승인 / 거절</a></li>
                         <li><a href="memberSellerList.ad">판매자 관리</a></li>
@@ -54,7 +54,7 @@
                     <a href="managerList.no">공지사항 관리</a>
                 </li>
                	<li>
-               		<a href="#">로그아웃</a>
+               		<a href="logout.me">로그아웃</a>
                	</li>
             </ul>
         </div>

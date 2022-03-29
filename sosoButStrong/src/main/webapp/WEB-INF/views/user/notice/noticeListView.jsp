@@ -6,15 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 목록</title>
+<link rel="stylesheet" href="resources/css/user/notice/noticeListView.css">
 </head>
 <body>
 	<!--2022.3.29(화) 8H50-->
 	
-	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>	
+	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>		
 
-	<h2>공지사항</h2>
-
+	<br>
 	<div class="listView">
+		<div class="title"><h2>공지사항</h2></div>
+
 		<table class="table table-bordered" align="center">
 			<thead class="thead-light">
 				<tr>
@@ -56,7 +58,45 @@
 				</c:choose>          
 			</tbody>                        
 		</table>
-	</div> <!--div class="listView" 영역 끝-->	
+	</div> <!--div class="listView" 영역 끝-->
+
+	<div id="paging-area">
+		<ul class="pagination justify-content-center" style="margin:20px 0">
+		
+			<c:choose>
+				<c:when test="${ pi.currentPage eq 1 }">
+					<li class="page-item disabled"><a class="page-link" href="#">&lt;&lt;</a></li>
+					   <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="list.no">&lt;&lt;</a></li>
+					<li class="page-item"><a class="page-link" href="list.no?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<c:choose>
+					<c:when test="${ p eq pi.currentPage }">
+						<li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="list.no?cpage=${ p }">${ p }</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${ pi.currentPage eq pi.maxPage }">
+					<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+					<li class="page-item disabled"><a class="page-link" href="#">&gt;&gt;</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled"><a class="page-link" href="list.no?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+					<li class="page-item disabled"><a class="page-link" href="list.no?cpage=${ pi.maxPage }">&gt;&gt;</a></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</div> <!—div id="paging-area" 영역 끝—>
 	
 	<jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 	
