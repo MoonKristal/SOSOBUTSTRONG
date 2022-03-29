@@ -130,5 +130,11 @@ public class QuestionServiceImpl implements QuestionService {
 	public int updateAnswer(int qno) {
 		return questionDao.updateAnswer(sqlSession, qno);
 	}
+	
+	// 2022.3.25(금) 14h50
+	@Override
+	public int updateScore(Answer a) {
+		return questionDao.updateScore(sqlSession, a);
+	}
 
 }

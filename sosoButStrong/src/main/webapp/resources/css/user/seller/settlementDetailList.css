@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+div{
+    /* border: 1px solid green; */
+    box-sizing: border-box;
+}
+
+/* 헤더 아래 영역 전체 */
+.outer{
+    width: 1200px;
+    margin: auto;
+    /* height: auto; */
+}
+
+/* 중간~우측 내용 영역 */
+.content{
+    width: 1000px;
+    height: 100%;
+	float: left;
+    padding: 50px 50px 50px 50px; /* 시계 방향으로 각각 지정 */
+}
+
+/* footer에 float 적용되지 않도록 해제 */
+.footer{
+    clear: both;
+}
+
+.greenBtn{
+    background-color: rgb(182, 238, 86);
+}
+
+.orangeBtn{
+    background-color: rgb(255, 163, 63);
+    color: white;
+}
+
+.grayBtn{
+    background-color: gray;
+    color: white;
+}
+
+/* .pagination{
+    text-align: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+.listView td[class=questionTitle]:hover{
+    color: rgb(182, 238, 86);
+    font-size: 17px;
+    font-weight: bolder;
+    cursor: pointer;
+}

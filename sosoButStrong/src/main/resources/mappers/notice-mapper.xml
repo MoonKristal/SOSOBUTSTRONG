@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<resultMap id="noticeResultSet" type="notice">
+		<result column="NOTICE_NO" property="noticeNo"/>	
+		<result column="NOTICE_WRITER" property="noticeWriter"/>	
+		<result column="CATEGORY" property="category"/>	
+		<result column="TITLE" property="title"/>	
+		<result column="CONTENT" property="content"/>	
+		<result column="CREATE_DATE" property="createDate"/>	
+		<result column="SHOW" property="show"/>	
+		<result column="TOP" property="top"/>	
+		<result column="COUNT" property="count"/>	
+		<result column="STATUS" property="status"/>	
+		<result column="ORIGIN_NAME" property="originName"/>	
+		<result column="CHANGE_NAME" property="changeName"/>	
+		<result column="" property=""/>	
+	</resultMap>
+
+	<!--  
+	<select id="selectManagerNoticeListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE WHERE STATUS = 'Y'
+	</select>
+	-->
+	
+	<select id="selectManagerNoticeList" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_WRITER, CREATE_DATE, CATEGORY, TITLE, SHOW, TOP, COUNT
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+	</select>
+	
+	<!--2022.3.29(화) 6h35-->
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, CATEGORY, TITLE, CONTENT, SHOW, TOP)
+		VALUES(SEQ_NNO.NEXTVAL, #{noticeWriter}, #{category}, #{title}, #{content}, #{show}, #{top})
+	</insert>
+	
+	<!--2022.3.29(화) 6h55-->
+	<insert id="insertNoticeAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , REF_NNO
+							  )
+					VALUES(
+							SEQ_ATNO.NEXTVAL
+						  , #{originName}
+						  , #{changeName}
+						  , SEQ_NNO.CURRVAL
+						  )
+	</insert>
+	
+	<!--2022.3.29(화) 8h10-->
+	<select id="selectManagerNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_WRITER, CATEGORY, TITLE, CONTENT, CREATE_DATE, SHOW, TOP, ORIGIN_NAME, CHANGE_NAME
+		FROM NOTICE
+		LEFT JOIN ATTACHMENT ON (NOTICE_NO = REF_NNO)
+		WHERE NOTICE_NO = #{nno}
+	</select>
+	
+	<!--2022.3.29(화) 8h45-->
+	<select id="selectNoticeListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectNoticeList" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_WRITER, CREATE_DATE, CATEGORY, TITLE
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+		ORDER BY NOTICE_NO DESC, TOP ASC
+	</select>
+	
+	<select id="selectNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_WRITER, CATEGORY, TITLE, CONTENT, CREATE_DATE, CHANGE_NAME
+		FROM NOTICE
+		LEFT JOIN ATTACHMENT ON (NOTICE_NO = REF_NNO)
+		WHERE NOTICE_NO = #{nno}
+	</select>
+
+</mapper>
