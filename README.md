@@ -11,13 +11,12 @@
 
  <br>
 
-## About Project
+## My Part
+- **뷰단** <br> 
+/sosoButStrong/src/main/webapp/WEB-INF/views/user/order/* 전부다 <br>
+/sosoButStrong/src/main/webapp/WEB-INF/views/user/seller/ -소영-부분만
 
-<br>
-
-## Results
-
-- 기능 [기능 흐름에 따라 / 기능 나열]
-
-- 결과 예시 화면
+- **컨트롤러, 모델 단** <br>
+/sosoButStrong/src/main/java/com/sbs/wemasal/order/controller/OrderController.java / <br>
+/sosoButStrong/src/main/java/com/sbs/wemasal/seller/controller/SellerController.java /
 
