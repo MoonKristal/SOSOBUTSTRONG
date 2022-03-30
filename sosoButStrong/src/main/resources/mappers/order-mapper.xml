@@ -281,7 +281,15 @@
 	</select>
 	
 	<select id="searchOrderManageList" parameterType="hashmap" resultMap="orderResultSet">
-		SELECT ORDER_DATE, ORDER_NO, ORDER_ITEM, ORDER_PRICE, QUANTITY, M.USER_ID ORDERER, O.STATUS, DELIVERY_NO, O.PRODUCT_NAME
+		SELECT ORDER_DATE
+				, ORDER_NO
+				, ORDER_ITEM
+				, ORDER_PRICE
+				, QUANTITY
+				, M.USER_ID ORDERER
+				, O.STATUS
+				, DELIVERY_NO
+				, O.PRODUCT_NAME
 		FROM "ORDER" O
 		JOIN MEMBER M ON (ORDERER = USER_NO)
 		WHERE SELLER = #{userNo}

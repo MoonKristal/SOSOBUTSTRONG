@@ -55,8 +55,10 @@ public class SellerOrderManageController {
 									String alertMsg,
 									String status,
 									Model model, 
-									HttpSession session) {		
-		
+									HttpSession session) {	
+		System.out.println(currentPage);
+		System.out.println(keyword);
+		System.out.println(month);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("userNo", String.valueOf(((Member)session.getAttribute("loginUser")).getUserNo())); 
 		map.put("keyword", keyword);

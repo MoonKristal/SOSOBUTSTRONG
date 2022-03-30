@@ -62,25 +62,29 @@ public class OrderController {
 			String orderNo = Long.toString((Long) orderList.get(0).get("orderNo"));	// 결제 고유 주문번호(나중에 환불도 이 고유번호로 해야함)		
 			
 			Member m = new Member();
-			m.setUserNo(userNo);
-			m.setPoint(usePoint);
-			
-			if(usePoint > 0) { //만약 사용포인트 0이상이라면 사용자 포인트 사업데이트
-				orderService.updatePoint(m); 
-			}			
+			m.setUserNo(userNo); //사용자번호 setter
+			m.setPoint(usePoint); // 사용적립금 setter	
 			
 			//주문번호 추가 
 			int result = orderService.insertOrderNo(orderNo);
 			
+			int result2 = 0; // 사용자 주문 INSERT 성공여부결과
 			//주문번호 추가에 성공했다면
 			if(result > 0) {
-				orderService.deleteCart(userNo); //사용자 카트 비우기(사용자고유넘버필요)
 				
 				for(Map<String, Object> map: orderList) { // 가지고온 주문서만큼 for문 돌려서 insert 해주기
-					orderService.insertOrder(map); //주문서 추가하기
+					result2 = orderService.insertOrder(map); //주문서 추가하기
 				}
 				
-				return "success"; //주문서추가 성공메세지
+				if(result2 > 0) { //만약 주문을 성공했다면
+					orderService.deleteCart(userNo); //사용자 카트 비우기(사용자고유넘버필요)
+					
+					if(usePoint > 0) { //만약 사용포인트 0이상이라면 사용자 적립금 업데이트
+						orderService.updatePoint(m); 
+					}			
+					return "success"; //주문서추가 성공메세지					
+				}
+				
 			}
 			
 			return "fail"; // 주문 실패			

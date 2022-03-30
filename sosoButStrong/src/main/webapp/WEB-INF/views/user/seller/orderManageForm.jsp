@@ -26,10 +26,9 @@
 
 			<div align="right">
 				<!-- 검색어 키워드로 주문목록 검색하기 -->
-				<form action="searchManage.se" name="searchForm" id="searchForm">
-					<input type="hidden" name="cpage" value="1">
+				<form action="searchManage.se" name="searchForm" id="searchForm">					
 					<button type="submit" style="color: #ccc; background: none; border-style:none;"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
-					<input type="search" name="keyword" class="form-control form-control-sm keyword" style="width: 300px; margin-bottom: 10px; display: inline-block;" placeholder="회원 아이디로 검색" value="${keyword}">
+					<input type="search" name="keyword" value="${keyword}" class="form-control form-control-sm keyword" style="width: 300px; margin-bottom: 10px; display: inline-block;" placeholder="회원 아이디로 검색">
 					<br>	
 				</form>
 				<form action="searchManage.se" id="statusForm">					
@@ -44,7 +43,7 @@
 				</form>
 			
 				<a href="searchManage.se?month=-6"><span class="badge badge-pill badge-success">최근 6개월</span></a>
-				<a href="searchManage.se?cpage=1&year=2021"><span class="badge badge-pill badge-success">2021</span></a>
+				<a href="searchManage.se?year=2021"><span class="badge badge-pill badge-success">2021</span></a>
 							
 			</div>
 

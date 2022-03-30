@@ -317,7 +317,7 @@
 				
 				
 				
-				// 결제 API
+				// 아임포트 결제 API
 				$('#btn-pay').click(function(){
 						
 						var IMP = window.IMP; // 생략가능
@@ -325,16 +325,13 @@
 						// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 						// ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
 						IMP.request_pay({
-							pg: $("input[name=payMethod]:checked").val(),
-							pay_method: $("input[name=payMethod]:checked").attr('data-pay'),
+							pg: $("input[name=payMethod]:checked").val(), //사용할 pg사
+							pay_method: $("input[name=payMethod]:checked").attr('data-pay'), //카드냐, 휴대폰결제냐
 							merchant_uid: $orderNo,
 							
 							name: 'We Make Salad 결제',
-							// 결제창에서 보여질 이름
-							// name: '주문명 : ${auction.a_title}',
-							// 위와같이 model에 담은 정보를 넣어 쓸수도 있습니다.
-							amount: $('#finalPay').attr('data-final'),
-							// amount: ${bid.b_bid},
+							// 결제창에서 보여질 이름							
+							amount: $('#finalPay').attr('data-final'),							
 							// 가격 
 							buyer_name: '${loginUser.userName}',
 							buyer_email: '${loginUser.email}'
