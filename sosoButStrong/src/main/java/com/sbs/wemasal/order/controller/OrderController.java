@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sbs.wemasal.cart.model.vo.Cart;
 import com.sbs.wemasal.common.model.vo.PageInfo;
 import com.sbs.wemasal.common.template.Pagination;
+import com.sbs.wemasal.member.model.service.MemberService;
 import com.sbs.wemasal.member.model.vo.Member;
 import com.sbs.wemasal.order.model.service.OrderService;
 import com.sbs.wemasal.order.model.vo.Order;
@@ -29,6 +30,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	// 주문페이지
 	@RequestMapping("orderForm.od")
@@ -38,7 +42,7 @@ public class OrderController {
 		
 		ArrayList<Cart> list = orderService.selectCart(userNo); //회원 고유식별번호
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", list);		
 		
 		return "user/order/orderForm";
 	}
@@ -53,7 +57,7 @@ public class OrderController {
 	// 주문하기 컨트롤러
 		@ResponseBody
 		@RequestMapping(value="insertOrder.od", produces="text/html; charset=utf-8")
-		public String AjaxinsertOrder(@RequestParam String data) throws IOException {			
+		public String AjaxinsertOrder(@RequestParam String data, HttpSession session) throws IOException {			
 					
 			List<Map<String, Object>> orderList = JSONArray.fromObject(data); //자바스크립트 객체를 자바 List로 객체화시키기
 			
@@ -73,14 +77,20 @@ public class OrderController {
 			if(result > 0) {
 				
 				for(Map<String, Object> map: orderList) { // 가지고온 주문서만큼 for문 돌려서 insert 해주기
-					result2 = orderService.insertOrder(map); //주문서 추가하기
+					result2 = orderService.insertOrder(map); //주문서 추가하기					
 				}
 				
 				if(result2 > 0) { //만약 주문을 성공했다면
 					orderService.deleteCart(userNo); //사용자 카트 비우기(사용자고유넘버필요)
 					
-					if(usePoint > 0) { //만약 사용포인트 0이상이라면 사용자 적립금 업데이트
-						orderService.updatePoint(m); 
+					if(usePoint > 0) { //만약 사용포인트 0이상이라면 사용자 적립금 업데이트						
+						orderService.updatePoint(m); 					
+						String userId = ((Member)session.getAttribute("loginUser")).getUserId(); //다시 재로그인을 위해 아이디 추출
+						session.removeAttribute("loginUser"); //포인트에 변동이 생겼기때문에 새로 DB에 저장된 적립금을 불러와야해서 지움
+						Member m1 = new Member();//객체 생성
+						m1.setUserId(userId);// 맴버객체에 userId setting
+						Member loginUser = memberService.loginMember(m1); //다시 재로그인해서 업데이트된 적립금 정보 받아옴
+						session.setAttribute("loginUser", loginUser); //다시 세션에 로그인한 회원정보 setting
 					}			
 					return "success"; //주문서추가 성공메세지					
 				}
