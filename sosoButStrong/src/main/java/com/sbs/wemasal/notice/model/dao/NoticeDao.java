@@ -54,5 +54,35 @@ public class NoticeDao {
 	public Notice selectNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.selectOne("noticeMapper.selectNotice", nno);
 	}
+	
+	// 2022.4.3(일) 16h55
+	public int increaseCount(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.increaseCount", nno);
+	}
+
+	// 2022.4.2(토) 18h10
+	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.deleteNotice", nno);
+	}
+	
+	// 2022.4.2(토) 19h45
+	public int deleteNoticAttachment(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.delete("noticeMapper.deleteNoticAttachment", nno);
+	}
+	
+	// 2022.4.3(일) 15h30
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+
+	// 2022.4.3(일) 14h45
+	public int updateNoticeAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("noticeMapper.updateNoticeAttachment", at);
+	}
+
+	// 2022.4.3(일) 15h35
+	public int insertNewNoticeAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("noticeMapper.insertNewNoticeAttachment", at);
+	}
 
 }

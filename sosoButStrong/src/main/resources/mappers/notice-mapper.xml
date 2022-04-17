@@ -69,6 +69,7 @@
 		SELECT NOTICE_NO, NOTICE_WRITER, CREATE_DATE, CATEGORY, TITLE
 		FROM NOTICE
 		WHERE STATUS = 'Y'
+		<!--AND SHOW = 'Y' 2022.4.3(일) 16h20 이 조건 있으면 좋은데 + select절에 TOP 컬럼도 포함시켜야 하는데 + '중요' 공지사항 위에 나열되게 하려면 ORDER BY TOP ASC, NOTICE_NO DESC으로 했어야 하는데 ㅠ.ㅠ-->
 		ORDER BY NOTICE_NO DESC, TOP ASC
 	</select>
 	
@@ -78,5 +79,71 @@
 		LEFT JOIN ATTACHMENT ON (NOTICE_NO = REF_NNO)
 		WHERE NOTICE_NO = #{nno}
 	</select>
+	
+	<!--2022.4.3(일) 17h-->
+	<update id="increaseCount" parameterType="_int">
+		UPDATE NOTICE
+		SET COUNT = NVL(COUNT, 0) + 1
+		WHERE NOTICE_NO = #{nno}
+	</update>
+	
+	<!--2022.4.2(토) 18h10-->
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE
+				NOTICE
+		   SET 
+		   		STATUS = 'N'
+		 WHERE
+		 		NOTICE_NO = #{nno}	
+	</update>
+	
+	<!--2022.4.2(토) 19h45-->
+	<delete id="deleteNoticAttachment" parameterType="_int">
+		DELETE
+		FROM ATTACHMENT
+		WHERE REF_NNO = #{nno}
+	</delete>
+	
+	<!--2022.4.3(일) 15h30-->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE
+				NOTICE
+		   SET
+		   		CATEGORY = #{category}
+		   	  , TITLE = #{title}
+		   	  , CONTENT = #{content}
+		   	  , SHOW = #{show}
+		   	  , TOP = #{top}
+		 WHERE
+		 		NOTICE_NO = #{noticeNo} 
+	</update>
+	
+	<!--2022.4.3(일) 14h50-->
+	<update id="updateNoticeAttachment" parameterType="attachment">
+		UPDATE
+				ATTACHMENT
+		   SET 
+				ORIGIN_NAME = #{originName}
+			  , CHANGE_NAME = #{changeName}
+			  , UPLOAD_DATE = SYSDATE
+		 WHERE
+		 		REF_NNO = #{refNno}
+	</update>
+	
+	<!--2022.4.3(일) 15h35-->
+	<insert id="insertNewNoticeAttachment" parameterType="attachment">
+		INSERT INTO ATTACHMENT(
+								FILE_NO
+							  , ORIGIN_NAME
+							  , CHANGE_NAME
+							  , REF_NNO
+							  )
+					VALUES(
+							SEQ_ATNO.NEXTVAL
+						  , #{originName}
+						  , #{changeName}
+						  , #{refNno}
+						  )
+	</insert>
 
 </mapper>

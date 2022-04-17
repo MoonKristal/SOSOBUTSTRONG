@@ -1,13 +1,20 @@
 package com.sbs.wemasal.question.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +40,10 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionService questionService;
+	
+	// 2022.3.30(수) 19h10 답변 이메일로 보내기 구현하며 추가
+	@Autowired
+	private JavaMailSender sender;
 	
 	// 2022.3.17(목) 14h30 구매자 마이페이지 메인으로 forwarding
 	@RequestMapping("buyerMyPage.me")
@@ -163,7 +174,7 @@ public class QuestionController {
 	
 	// 2022.3.25(금) 11h35
 	@RequestMapping("sellerInsert.qu")
-	public String insertSellerAnswer(Answer a, MultipartFile upfile, Attachment at, HttpSession session, Model model) {
+	public String insertSellerAnswer(Answer a, MultipartFile upfile, Attachment at, HttpSession session, Model model) throws MessagingException {
 		int result1 = questionService.insertSellerAnswer(a);
 		
 		int result2 = 1;
@@ -180,9 +191,31 @@ public class QuestionController {
 		if (result1 * result2 > 0) { // 답변 글 및 관련 첨부파일을 각 테이블에 INSERT 성공하면,
 			questionService.updateAnswer(a.getQuestionNo());
 			
-			/* 아래 문자열 배열에 email이 포함된 경우 답변 내용을 이메일로 or/and sms가 포함된 경우 답변 내용을 문자 메시지로 전송
+			// 아래 문자열 배열에 email이 포함된 경우 답변 내용을 이메일로 or/and sms가 포함된 경우 답변 내용을 문자 메시지로 전송
+			// 2022.3.30(수) 18h30 구현
 			String[] answerModes = a.getAnswerMode().split(",");
-			*/		
+			System.out.println(Arrays.toString(answerModes)); // 2022.3.30(수) 18h40 테스트 시 그냥 syso(배열이름) 써서 [Ljava.lang.String;@5178591a 출력됨 vs 2022.3.30(수) 20h 테스트 시 [email, sms] 출력됨
+			if (answerModes != null && answerModes[0].equals("email")) {
+//				System.out.println("이메일로 답변 보낼 준비됨"); // 2022.3.30(수) 18h40 테스트 시, console에 찍힘
+				
+				MimeMessage message = sender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+				helper.setTo(a.getQuestionWriterEmail());
+				helper.setSubject("[위메샐] 1:1문의 내역에 대한 답변이 도착했습니다");
+				
+				String htmlContent = a.getQuestionCreateDate() + "자 " + a.getSellerName() + "앞 나의 1:1 문의 내역 : " + a.getQuestionContent() + "<br>";
+				htmlContent += a.getSellerName() + "의 답변 : " + a.getAnswerContent();
+				helper.setText(htmlContent, true); // 2022.3.30(수) 20h 테스트 시 true 인자 값 안 썼더니 plain text로 발송된 듯 -> <br>이 그대로 메일 내용으로 찍힘(o) 의도한대로 해당 부분 줄바꿈(x)
+				
+				// 2022.4.2(토) 13h35 파일 첨부 테스트
+				if (!upfile.getOriginalFilename().equals("")) { // 판매자의 답변에 첨부파일이 있는 경우
+					DataSource source = new FileDataSource("C:/final2/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/" + at.getChangeName());
+					// 내 로컬 서버 상 첨부파일이 저장된 위치 = C:/final2/SOSOBUTSTRONG2/sosoButStrong/src/main/webapp/resources/uploadFiles
+					helper.addAttachment(source.getName(), source);
+				}
+				
+				sender.send(message);
+			}
 			
 			session.setAttribute("alertMsg", "1:1문의 답변 등록이 완료되었습니다.");
 			return "redirect:sellerList.qu";
@@ -275,7 +308,7 @@ public class QuestionController {
 		map.put("category", category);
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-//		System.out.println(map);
+		System.out.println(map); // 2022.3.30(수) 20h45 테스트 시 {condition=, answer=, endDate=2022-03-30, questionWriter=4, category=, keyword=, startDate=2022-02-28}
 		
 		int listCount = questionService.selectBuyerQuestionSearchListCount(map);
 //		System.out.println(listCount);
@@ -332,7 +365,8 @@ public class QuestionController {
 	@ResponseBody
 	@RequestMapping("answerRating.qu")
 	public String ajaxUpdateScore(Answer a) {
-		System.out.println(a);
+//		System.out.println(a); // 2022.3.30(수) 18h40 Answer(answerNo=1, questionNo=0, answerWriter=0, answerContent=null, createDate=null, score=6, originName=null, changeName=null, answerMode=null)
+		// vs 오류 = java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for questionMapper.updateScore
 		
 		return questionService.updateScore(a) > 0? "success" : "fail";
 	}

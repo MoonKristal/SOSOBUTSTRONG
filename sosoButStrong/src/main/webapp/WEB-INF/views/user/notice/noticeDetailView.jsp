@@ -25,6 +25,7 @@
 	
 				<tr>
 					<td colspan="2">
+						<!--2022.4.3(일) 15h50 테스트 시 버그 = db에서 originName은 안 받아오기 때문에, changeName으로 조건 걸어야 함 ㅠ.ㅠ-->
 						<c:choose>
 							  <c:when test="${ n.originName eq null }">
 								  -
@@ -37,7 +38,7 @@
 				</tr>
 	
 				<tr>
-					<td align="center" colspan="2"><pre name="content" style="width: 700px; height: 500px; border-style: solid; padding: 20px; text-align: left !important; font-size: 20px;" >${ n.content }</pre></td>
+					<td align="center" colspan="2"><pre name="content" style="width: 700px; height: 500px; border-style: solid; padding: 20px; text-align: left !important; font-size: 20px;">${ n.content }</pre></td>
 				</tr>
 			</table>
 		</div> <!—div class="listView" 영역 끝—>

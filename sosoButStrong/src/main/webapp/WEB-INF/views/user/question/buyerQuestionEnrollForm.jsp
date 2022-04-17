@@ -368,7 +368,13 @@
 							// let $selectedSeller = "";
 
 							result.forEach(function(seller) { // 이 반복문 형태 공부해야 함 ㅠ.ㅠ
-								if (seller.sellerName.indexOf($searchSellerName) > -1) { // 만약 입력된 데이터가 가져온 데이터에 비슷한 경우면,
+								// 2022.4.1(금) code review 발표 준비하다가 indexOf 확인 안 해도 되나 싶어서 테스트해봄
+								/*
+								$("#autoComplete").append($("<div>").text(seller.sellerName));
+								$("#autoComplete").append($("<input>").attr("type", "hidden").attr("name", "userNo").val(seller.userNo));
+								*/
+								// 2022.4.1(금) 16h 생각+테스트해보니, 나는 이미 db에서 해당 검색어 들어가는 업체명만 받아왔기 때문에, 아래 조건문 필요 없음
+								if (seller.sellerName.indexOf($searchSellerName) > -1) { // 만약 입력된 데이터가 가져온 데이터에 비슷한 경우면; JavaScript의 indexOf(찾고자 하는 문자가 없을 경우는 -1을 return) = jQuery의 search() 메소드
 									// 인터넷 검색 + 수정님 댓글 신고 구현 시 논의한 것 참고
 									// $("#autoComplete").append($("<div>").text(seller.sellerName).attr({"data-userNo":seller.userNo}));
 

@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <th class="label">내용</th>
-                        <td><textarea name="content" id="editorTxt" rows="25" cols="120" required>${ n.content }</textarea></td>
+                        <td><pre name="content" style="width: 700px; height: 500px;">${ n.content }</pre></td>
                     </tr>
                     <tr>
                         <th class="label">첨부파일</th>
@@ -61,10 +61,38 @@
                         </td>
                     </tr>
                 </table>
+                <br><br>
 
+                <!--2022.4.2(토) 18h 추가-->
+                <div align="center" style="float: right;">
+                    <button type="button" onclick="location.href='managerList.no'">목록으로 돌아가기</button>
+    
+                    <button type="button" class="orangeBtn" onclick="postFormSubmit(1);">수정</button>
+                    <button type="button" class="grayBtn" onclick="postFormSubmit(2);">삭제</button>
+                    
+                    <!--post 방식으로 요청 보내면서 name 속성 값을 보낼 수 있는 방법-->
+                    <form method="post" action="" id="postForm">
+                        <input type="hidden" name="nno" value="${ n.noticeNo }">
+                        <input type="hidden" name="filePath" value="${ n.changeName }">
+                    </form>
+                    <br>                
+                </div>
             </div> 
         </div>
-    </div>	
+    </div>
+
+    <script>
+        function postFormSubmit(num) {
+            if (num == 1) {
+                $("#postForm").attr("action", "updateForm.no").submit();
+            }
+            else {
+                if (window.confirm("이 공지사항을 정말로 삭제하시겠습니까??")) {
+                    $("#postForm").attr("action", "delete.no").submit();
+                }                
+            }
+        }
+    </script>
 
 </body>
 </html>

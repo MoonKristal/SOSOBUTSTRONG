@@ -56,6 +56,10 @@
 		
 		<result column="USER_ID" property="userId"/>
 		<result column="USER_NAME" property="userName"/>
+		<result column="EMAIL" property="email"/>
+		
+		<result column="SELLER_NAME" property="sellerName"/>
+		
 		<result column="ANSWER_DATE" property="answerDate"/>
 		<result column="SCORE" property="score"/>
 	</resultMap>
@@ -217,7 +221,7 @@
 		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
 		WHERE QUESTION_WRITER = #{questionWriter} AND Q.STATUS = 'Y'
 		<if test="startDate != ''">
-			AND CREATE_DATE BETWEEN #{startDate} and #{endDate}
+			AND TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') BETWEEN #{startDate} and #{endDate}
 		</if>
 		<if test="answer != ''">
 			AND ANSWER = #{answer}
@@ -248,16 +252,16 @@
 		FROM QUESTION Q
 		LEFT JOIN SELLER ON (QUESTION_SELLER = USER_NO)
 		WHERE QUESTION_WRITER = #{questionWriter} AND Q.STATUS = 'Y'
-		<if test="startDate != ''">
-			AND CREATE_DATE BETWEEN #{startDate} and #{endDate}
+		<if test="startDate != null and startDate != ''">
+			AND TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') BETWEEN #{startDate} and #{endDate}
 		</if>
-		<if test="answer != ''">
+		<if test="answer != null and answer != ''">
 			AND ANSWER = #{answer}
 		</if>
-		<if test="category != ''">
+		<if test="category != null and category != ''">
 			AND CATEGORY = #{category}
 		</if>
-		<if test="condition != ''">
+		<if test="condition != null and condition != ''">
 			<choose>
 				<when test="condition == 'sellerName'">
 					AND SELLER_NAME LIKE '%' || #{keyword} || '%'
@@ -295,9 +299,10 @@
 	<select id="selectSellerQuestion" parameterType="_int" resultMap="questionResultSet">
 		<!--문의 글 번호, 문의 날짜, 구매자 id+이름(MEMBER 테이블), 처리 상태, 카테고리, 주문번호, 제목, 답변 수신 방법, 내용, 관련 첨부파일 원본명+수정명(ATTACHMENT 테이블)
 			db상 컬럼 번호 1, 3, 4, 5, 7, 8, 9, 10-->
-		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_WRITER, USER_ID, USER_NAME, ANSWER, CATEGORY, ORDER_NO, QUESTION_TITLE, QUESTION_CONTENT, ANSWER_MODE, ORIGIN_NAME, CHANGE_NAME
+		SELECT QUESTION_NO, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') "CREATE_DATE", QUESTION_WRITER, USER_ID, EMAIL, USER_NAME, SELLER_NAME, ANSWER, CATEGORY, ORDER_NO, QUESTION_TITLE, QUESTION_CONTENT, ANSWER_MODE, ORIGIN_NAME, CHANGE_NAME
 		FROM QUESTION
-		LEFT JOIN MEMBER ON (QUESTION_WRITER = USER_NO)
+		LEFT JOIN MEMBER M ON (QUESTION_WRITER = M.USER_NO)
+		LEFT JOIN SELLER S ON (QUESTION_SELLER = S.USER_NO)
 		LEFT JOIN ATTACHMENT ON (QUESTION_NO = REF_QNO)
 		WHERE QUESTION_NO = #{qno}
 	</select>
@@ -317,5 +322,12 @@
 		LEFT JOIN ATTACHMENT ON (ANSWER_NO = REF_ANO)
 		WHERE QUESTION_NO = #{qno}
 	</select>
+	
+	<!--2022.3.30(수) 18h55-->
+	<update id="updateScore" parameterType="answer">
+		UPDATE ANSWER
+		SET SCORE = #{score}
+		WHERE ANSWER_NO = #{answerNo}
+	</update>
 
 </mapper>

@@ -226,11 +226,11 @@
                                             <td class="nTitle">${ n.title }</td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${ n.show eq 'N' }">
-                                                        <span class="badge badge-danger">게시 종료</span>
+                                                    <c:when test="${ n.show eq 'Y' }">
+                                                        <span class="badge badge-success">게시 중</span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="badge badge-success">게시 중</span>
+                                                        <span class="badge badge-danger">게시 종료</span>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
@@ -285,8 +285,8 @@
                                 <li class="page-item disabled"><a class="page-link" href="#">&gt;&gt;</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item disabled"><a class="page-link" href="managerList.no?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-                                <li class="page-item disabled"><a class="page-link" href="managerList.no?cpage=${ pi.maxPage }">&gt;&gt;</a></li>
+                                <li class="page-item"><a class="page-link" href="managerList.no?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+                                <li class="page-item"><a class="page-link" href="managerList.no?cpage=${ pi.maxPage }">&gt;&gt;</a></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

@@ -65,8 +65,16 @@
 	<!--2022.3.28(월) 21h15-->
 	<select id="selectSalesGraph" parameterType="hashmap" resultMap="dailysalesResultSet">
 		SELECT TO_CHAR(TO_DATE(#{currentDate})) "CURRENT_DATE",
-		       (SELECT COUNT(*) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate})) AND STATUS != '결제취소') "NEW_ORDERS_COUNT",
-		       (SELECT NVL(TO_CHAR(SUM(ORDER_PRICE * QUANTITY), '999,999,999,999'), 0) FROM "ORDER" WHERE SELLER = #{sellerNo} AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate})) AND STATUS != '결제취소') "NEW_ORDERS_AMOUNT"
+		       (SELECT COUNT(*)
+		       	FROM "ORDER"
+				WHERE SELLER = #{sellerNo}
+					AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate}))
+					AND STATUS != '결제취소') "NEW_ORDERS_COUNT",
+		       (SELECT NVL(TO_CHAR(SUM(ORDER_PRICE * QUANTITY), '999,999,999,999'), 0)
+		       	FROM "ORDER"
+		       	WHERE SELLER = #{sellerNo}
+		       		AND TO_CHAR(ORDER_DATE) = TO_CHAR(TO_DATE(#{currentDate}))
+		       		AND STATUS != '결제취소') "NEW_ORDERS_AMOUNT"
 		FROM "ORDER"
 		WHERE SELLER = #{sellerNo}
 		GROUP BY SELLER

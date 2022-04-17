@@ -139,6 +139,7 @@ public class OrderController {
 	public String orderDetail(String orderNo, String alertMsg, Model model) {
 		
 		ArrayList<Order> list = orderService.selectOrderDetail(orderNo); //주문번호
+//		System.out.println(list); // 2022.4.2(토) 은영 테스트
 		
 		model.addAttribute("list", list);
 		model.addAttribute("alertMsg", alertMsg);

@@ -38,6 +38,7 @@
 						<c:forEach var="n" items="${ list }">
 							<tr>
 								<td class="nno">
+									<!--2022.4.3(일) 16h35 은영 발견 = db로부터 TOP 컬럼 값을 안 받아와서, 아래와 같이 의도한대로 화면 출력 안 됨-->
 									<c:choose>
 										<c:when test="${ n.top eq 'Y' }">
 											[중요]
@@ -91,12 +92,12 @@
 					<li class="page-item disabled"><a class="page-link" href="#">&gt;&gt;</a></li>
 				</c:when>
 				<c:otherwise>
-					<li class="page-item disabled"><a class="page-link" href="list.no?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-					<li class="page-item disabled"><a class="page-link" href="list.no?cpage=${ pi.maxPage }">&gt;&gt;</a></li>
+					<li class="page-item"><a class="page-link" href="list.no?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+					<li class="page-item"><a class="page-link" href="list.no?cpage=${ pi.maxPage }">&gt;&gt;</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>
-	</div> <!—div id="paging-area" 영역 끝—>
+	</div> <!--div id="paging-area" 영역 끝-->
 	
 	<jsp:include page="/WEB-INF/views/user/common/footer.jsp"/>	
 	

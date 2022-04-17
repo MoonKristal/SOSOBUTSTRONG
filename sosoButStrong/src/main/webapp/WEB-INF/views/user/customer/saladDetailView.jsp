@@ -21,6 +21,9 @@
               </div>
               <div class="col-sm-5">
                
+               <!--지만님 code review
+               	   1. form 태그에 onsubmit 속성을 이용하면 submit 요청을 제어할 수 있음 -> onsubmit 속성으로 메소드를 호출하고 그 리턴값(true or false)에 따라 submit을 하거나 하지 않도록 설정
+				   2. form 태그에 action 속성을 주지 않고, 버튼에 formaction이라는 속성에 요청 url 값을 줘서 요청이 가능함 -> 그래서 버튼을 여러 개 생성하고 하나의 form 태그 안에서 원하는 요청을 각기 다르게 할 수 있음-->
                <form method="post" onsubmit="return checkLogin();"> <!-- 주문/장바구니 영역 -->
                     <table class="table table-borderless">
                         <tr>

@@ -21,4 +21,9 @@ public class Answer {
 	private String changeName;
 	
 	private String answerMode; // 2022.3.25(금) 13h10 추가
+	// 2022.3.20(수) 19h25 추가
+	private String questionWriterEmail;
+	private String questionCreateDate;
+	private String sellerName;
+	private String questionContent;
 }

@@ -25,5 +25,20 @@ public interface NoticeService {
 
 	// 2022.3.29(화) 9h15
 	Notice selectNotice(int nno);
+	// 2022.4.3(일) 16h55
+	int increaseCount(int nno);
+
+	// 2022.4.2(토) 18h10
+	int deleteNotice(int nno);
+	
+	// 2022.4.3(일) 15h30
+	int updateNotice(Notice n);
+	// 2022.4.2(토) 19h45
+	int deleteNoticeAttachment(int nno);
+	// 2022.4.3(일) 14h45
+	int updateNoticeAttachment(Attachment at);
+
+	// 2022.4.3(일) 15h35
+	int insertNewNoticeAttachment(Attachment at);
 
 }

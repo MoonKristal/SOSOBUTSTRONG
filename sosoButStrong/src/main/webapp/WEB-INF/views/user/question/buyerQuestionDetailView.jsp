@@ -123,11 +123,21 @@
 	
 	            <div id="answerRatingArea">
 	                <span>답변에 만족하셨나요? 더 나은 서비스를 위해 만족도를 평가해 주세요.</span>
-	                <!--참고: https://gurtn.tistory.com/80, https://stackoverflow.com/questions/2124351/setting-width-as-a-percentage-using-jquery-->              
+	                <!--참고: https://gurtn.tistory.com/80, https://stackoverflow.com/questions/2124351/setting-width-as-a-percentage-using-jquery
+	                	2022.3.30(수) 20h20 나의 생각 = 구매자가 답변 평가를 한 뒤, 이 상세 페이지를 다시 열었을 때, 기존에 평가한 점수만큼 별이 표시되어있어야 하는디 -> 20h30 구현 완료-->              
 	                <span class="star">                    
 	                   	 ★★★★★
 	                    <span id="colorStar">★★★★★</span>
-	                    <input type="range" oninput="drawStar(this.value)" value="1" step="1" min="0" max="10">                   
+	                    <c:choose>
+	                    	<c:when test="${ a.score eq 999 }">
+	                    		<input type="range" oninput="drawStar(this.value)" value="1" step="1" min="0" max="10">  
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<input type="range" value="${ a.score }" oninput="drawStar(this.value)" step="1" min="0" max="10">
+	                    		<!--<span>${ a.score }</span>-->
+	                    	</c:otherwise>
+	                    </c:choose>
+	                                     
 	                </span>
 	                <br><br>
 	            </div>
@@ -182,6 +192,13 @@
         	})
 
         }
+        
+        // 2022.3.30(수) 20h20 추가
+        $(function() {
+        	if (${ a.score } != 999) {
+        		$("#colorStar").width((${ a.score } * 10) + '%');
+        	}
+        })
     </script>
 
 </body>

@@ -56,7 +56,7 @@
                         </tr>
                         <tr>
                             <th class="label">내용*</th>
-                            <td><textarea name="content" id="editorTxt" rows="25" cols="120" required></textarea></td>
+                            <td><textarea name="content" id="editorTxt" rows="25" cols="90" required></textarea></td>
                         </tr>
                         <tr>
                             <th class="label">첨부파일</th>

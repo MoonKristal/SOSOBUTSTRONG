@@ -61,6 +61,7 @@ public class SettlementController {
 		} else { // num = 2 -> '매출 통계' 그래프 조회
 			// 2022.3.28(월) 18h25
 			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("sellerNo", String.valueOf(sellerNo));
 			
 			// 2022.3.28(월) 20h Java의 정석 p.536 참고
 			Calendar today = Calendar.getInstance(); // 기본적으로 현재 날짜와 시간으로 설정됨
@@ -83,7 +84,6 @@ public class SettlementController {
 			
 			for (int n = 1; currentDate.before(today) || currentDate.equals(today); currentDate.add(Calendar.DATE, 1)) {
 //							System.out.println(sdf.format(startDate.getTime())); // 20220226 ~ 20220328 31개 날짜 찍힘
-				map.put("sellerNo", String.valueOf(sellerNo));
 				map.put("currentDate", sdf.format(currentDate.getTime())); // 22h20 vo 클래스의 필드 자료형 String으로 바꿔서 넘김
 				
 				DailySales ds2 = settlementService.selectSalesGraph(map);

@@ -65,5 +65,41 @@ public class NoticeServiceImpl implements NoticeService {
 	public Notice selectNotice(int nno) {
 		return noticeDao.selectNotice(sqlSession, nno);
 	}
+	
+	// 2022.4.3(일) 16h55
+	@Override
+	public int increaseCount(int nno) {
+		return noticeDao.increaseCount(sqlSession, nno);
+	}
+
+	// 2022.4.2(토) 18h10
+	@Override
+	public int deleteNotice(int nno) {
+		return noticeDao.deleteNotice(sqlSession, nno);
+	}
+	
+	// 2022.4.3(일) 15h30
+	@Override
+	public int updateNotice(Notice n) {
+		return noticeDao.updateNotice(sqlSession, n);
+	}
+
+	// 2022.4.2(토) 19h45
+	@Override
+	public int deleteNoticeAttachment(int nno) {
+		return noticeDao.deleteNoticAttachment(sqlSession, nno);
+	}
+	
+	// 2022.4.3(일) 14h45
+	@Override
+	public int updateNoticeAttachment(Attachment at) {
+		return noticeDao.updateNoticeAttachment(sqlSession, at);
+	}
+
+	// 2022.4.3(일) 15h35
+	@Override
+	public int insertNewNoticeAttachment(Attachment at) {
+		return noticeDao.insertNewNoticeAttachment(sqlSession, at);
+	}
 
 }

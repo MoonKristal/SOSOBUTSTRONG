@@ -161,6 +161,12 @@
                         <input type="hidden" name="answerWriter" value="${ loginUser.userNo }">
                         <input type="hidden" name="questionNo" value="${ q.questionNo }">
                         <input type="hidden" name="answerMode" value="${ q.answerMode }">
+                        
+                        <!--2022.3.30(수) 19h30 추가-->
+                        <input type="hidden" name="questionWriterEmail" value="${ q.email }">
+                        <input type="hidden" name="questionCreateDate" value="${ q.createDate }">
+                        <input type="hidden" name="sellerName" value="${ q.sellerName }">
+                        <input type="hidden" name="questionContent" value="${ q.questionContent }">
 
                         <table class="table table-bordered" align="center">                            
                             <tr>

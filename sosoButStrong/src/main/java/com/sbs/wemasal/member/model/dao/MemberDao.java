@@ -33,7 +33,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
 	
-	// 판매자 회원가입
+	// 판매자 회원가입 -> 'Transactional' annotation 2022.4.4(월) 소윤 설명 = 15h50 쿼리문이 하나라도 실행 실패 시 rollback 
 	@Transactional
 	public int insertSeller (SqlSessionTemplate sqlSession, Member m, Seller s) {
 		int result = sqlSession.insert("memberMapper.insertSeller1", m);

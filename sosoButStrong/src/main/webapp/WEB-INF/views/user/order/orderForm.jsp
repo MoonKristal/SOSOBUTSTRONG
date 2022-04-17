@@ -271,7 +271,7 @@
 						arr.push(order);
 				</c:forEach>					
 				
-				/* 주문하기 연습코드
+				// 주문하기 연습코드
 				$('#btn-pay').click(function(){						
 					// 공통배송정보데이터 객체배열에 마저 추가
 					for(var i in arr){						
@@ -305,7 +305,7 @@
 													}
 													var qr = $.param(query); //쿼리스트링 만들어주는 메소드													
 	
-													location.href='orderForm.od"; // 결제 주문하기 페이지로 다시 돌아감
+													location.href='orderForm.od'; // 결제 주문하기 페이지로 다시 돌아감
 												}
 											}		
 											,error: function(){
@@ -313,10 +313,9 @@
 											}		
 									})		
 				})
-				*/	
 				
 				
-				
+				/*
 				// 결제 API
 				$('#btn-pay').click(function(){
 						
@@ -393,6 +392,7 @@
 							}
 						});
 					})
+					*/
 					
 					
 				})

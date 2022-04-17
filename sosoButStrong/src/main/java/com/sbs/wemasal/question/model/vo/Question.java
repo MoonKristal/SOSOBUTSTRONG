@@ -41,6 +41,8 @@ public class Question {
 	// 2022.3.25(금) 10h 구매자 문의 관리 list 조회해오며 추가
 	private String userId;
 	private String userName;
+	private String email; // 2022.3.30(수) 19h20 판매자가 답변할 때 이메일 보내기 위해 추가
+	
 	private String answerDate;
 	private int score; // 구매자가 답변에 대해 평가한 만족도(0~10 정수 + 미평가/자료없는 경우 999)
 }
